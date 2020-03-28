@@ -1,1 +1,0 @@
-# scotthmccoy.github.io
