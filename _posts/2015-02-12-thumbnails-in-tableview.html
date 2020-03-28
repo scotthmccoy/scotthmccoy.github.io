@@ -1,0 +1,12 @@
+---
+layout: post
+title: Thumbnails in a TableView
+date: '2015-02-12T18:08:00.003-08:00'
+author: Scott McCoy
+tags: 
+modified_time: '2015-02-12T18:47:23.065-08:00'
+blogger_id: tag:blogger.com,1999:blog-250956833460526415.post-2336711526973746750
+blogger_orig_url: https://scotthmccoy.blogspot.com/2015/02/thumbnails-in-tableview.html
+---
+
+At Hautelook we constantly faced the challenge of thumbnails updating with the wrong product, or the program crashing due to thread locks or whatever.<br /><br />Here's a solution that gets around the cell-reuse thread sync problem:<br /><br /><b>Have all the downloading save stuff to an array of images and downloadstates:</b><br /><br />Have two arrays indexed by indexPath.row: downloadBegun<bool> and downloadedImage<uiimage></uiimage></bool><br /><br /><br /><b>On viewWillAppear</b>, Have an operationQueue start downloading all thumbnails from the top of the tableview to the bottom. (You can fiddle with numCuncurrentOperations to tweak the user experience during slow scrolls. Also some servers limit the number of max connections, so this might be neccessary)<br /><br />On start of downloading, check:<br />downloadedImage. If we have a value, then it's already completed downloading.<br />If not, check if downloadBegun[indexpath.row] is true. If it is, this means a cell has already started downloading the image.<br />On image download success, update&nbsp;downloadedImage. Then check if the corresponding cell is visible, dispatchAsync to main&nbsp;thread to fade in its image.<br />(On Failure, retry a couple times.)<br /><br /><br /><br /><br /><b>On cellForRowAtIndexPath</b>,<br /><br />dequeueReusableCellWithIdentifier. Similar to the operationQueue, check the arrays to see:<br /><br />Image is ready: use it right away. Since we're on the main thread in cellForRowAtIndexPath, we don't have to force to the main thread here.<br />Download has begun: Use a default image. The operationQueue has already DLing the image and update it when it's ready.<br />Download has not begun: Use a default image. update the downloadBegun array for the image and begin downloading it.<br /><br />NSURLConnection sendAsynchronousRequest, on response, save the image into the image Array and then<br />dispatch_async onto the main_queue to check if the cell is still visible and then fetch the image out of the image array and update the imageView.<br /><br /><br /><br />Note: could also use&nbsp;NSCache, which automatically evicts objects as memory becomes low.<br /><br />

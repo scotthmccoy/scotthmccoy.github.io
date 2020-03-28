@@ -1,0 +1,12 @@
+---
+layout: post
+title: Monitoring Network Traffic
+date: '2011-05-09T15:43:00.000-07:00'
+author: Unknown
+tags: 
+modified_time: '2011-05-09T16:17:22.534-07:00'
+blogger_id: tag:blogger.com,1999:blog-250956833460526415.post-4666800280936476834
+blogger_orig_url: https://scotthmccoy.blogspot.com/2011/05/monitoring-network-traffic.html
+---
+
+From http://magp.ie/2011/04/19/find-process-using-port-number-in-bash/:<br /><br />What files each process has open:<br /><pre>lsof</pre><br /><br />More interestingly, this shows you what network connections are open:<br /><pre>lsof -i</pre><br /><br />For example:<br /><pre><br />iChatAgen 89293 user    6u  IPv4 0x0ef7c44c      0t0  UDP localhost:59568->localhost:59568<br />iChatAgen 89293 user    8u  IPv4 0x1e2c4ef8      0t0  TCP mac09.tuesday.com:52620->bos-d033b-rdr4.blue.aol.com:aol (ESTABLISHED)<br />iChatAgen 89293 user   11u  IPv4 0x1e2d0334      0t0  TCP mac09.tuesday.com:52619->bos-d041b-rdr4.blue.aol.com:aol (ESTABLISHED)<br /></pre><br />So we can tell that iChatAgent (PID of 89293) is talking on ports 52620 and 52619.<br /><br /><br /><br /><br />You can use netstat to see what processes are using which ports but I didn't experiment with it that much.<br /><br />tcpdump looks promising. It supposedly shows full packet data. I've gotten some interesting data by running:<br /><br /><pre>sudo tcpdump -vv -i en0</pre><br /><br />And this seems to light up whenever I send chats in iChat:<br /><pre>sudo tcpdump -vv -i en0 port 52620</pre><br /><br />All iChat traffic:<br /><pre>sudo tcpdump -X -s 0 -i en0 port 52619 or 52620</pre>

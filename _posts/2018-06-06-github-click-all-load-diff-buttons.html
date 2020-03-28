@@ -1,0 +1,12 @@
+---
+layout: post
+title: Github Click all Load Diff Buttons
+date: '2018-06-06T13:31:00.001-07:00'
+author: Scott McCoy
+tags: 
+modified_time: '2018-06-18T13:33:36.483-07:00'
+blogger_id: tag:blogger.com,1999:blog-250956833460526415.post-7521252474059093566
+blogger_orig_url: https://scotthmccoy.blogspot.com/2018/06/github-click-all-load-diff-buttons.html
+---
+
+Chrome: command+opt+J, paste in:<br /><br /><pre class="prettyprint " style="-webkit-font-smoothing: subpixel-antialiased !important; background-color: white; border-radius: 3px; border: none; caret-color: rgb(51, 51, 51); color: #333333; font-family: Menlo, &quot;Bitstream Vera Sans Mono&quot;, &quot;DejaVu Sans Mono&quot;, Monaco, Consolas, monospace; font-size: 12px; line-height: 1.5; padding: 10px; text-size-adjust: auto; white-space: pre-wrap;"><span class="pln" style="-webkit-font-smoothing: subpixel-antialiased !important;">document</span><span class="pun" style="-webkit-font-smoothing: subpixel-antialiased !important;">.</span><span class="pln" style="-webkit-font-smoothing: subpixel-antialiased !important;">querySelectorAll</span><span class="pun" style="-webkit-font-smoothing: subpixel-antialiased !important;">(</span><span class="str" style="-webkit-font-smoothing: subpixel-antialiased !important; color: #c42b44;">'.load-diff-button'</span><span class="pun" style="-webkit-font-smoothing: subpixel-antialiased !important;">).</span><span class="pln" style="-webkit-font-smoothing: subpixel-antialiased !important;">forEach</span><span class="pun" style="-webkit-font-smoothing: subpixel-antialiased !important;">(</span><span class="pln" style="-webkit-font-smoothing: subpixel-antialiased !important;">node </span><span class="pun" style="-webkit-font-smoothing: subpixel-antialiased !important;">=&gt;</span><span class="pln" style="-webkit-font-smoothing: subpixel-antialiased !important;"> node</span><span class="pun" style="-webkit-font-smoothing: subpixel-antialiased !important;">.</span><span class="pln" style="-webkit-font-smoothing: subpixel-antialiased !important;">click</span><span class="pun" style="-webkit-font-smoothing: subpixel-antialiased !important;">())</span></pre><pre class="prettyprint " style="background-color: white; border-radius: 3px; border: none; line-height: 1.5; padding: 10px;"><span class="pun" style="color: #333333; font-family: menlo, bitstream vera sans mono, dejavu sans mono, monaco, consolas, monospace; font-size: 12px; white-space: pre-wrap;">document.querySelectorAll('.show-outdated-button').forEach(node =&gt; node.click())</span></pre>
