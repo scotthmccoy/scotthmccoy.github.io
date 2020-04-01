@@ -35,4 +35,4 @@ IdentityFile ~/.ssh/id_rsa_vrtcalsdkdev
 ```
 
 Then refer to the repo like so:
-![](/images/multiple_ssh_github.png)
+![]({{ site.url }}/images/multiple_ssh_github.png)
