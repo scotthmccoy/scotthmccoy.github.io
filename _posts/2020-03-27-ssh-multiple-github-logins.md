@@ -33,3 +33,6 @@ Port 22
 User git
 IdentityFile ~/.ssh/id_rsa_vrtcalsdkdev
 ```
+
+Then refer to the repo like so:
+![](/images/multiple_ssh_github.png)
