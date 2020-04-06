@@ -34,5 +34,17 @@ User git
 IdentityFile ~/.ssh/id_rsa_vrtcalsdkdev
 ```
 
+Test the connection on each account:
+```
+scotts-mbp:ios-sdk scottmccoy$ ssh -T git@vrtcalsdkdev-github
+Hi vrtcalsdkdev! You've successfully authenticated, but GitHub does not provide shell access.
+```
+
+```
+scotts-mbp:ios-sdk scottmccoy$ ssh -T git@scotthmccoy-github
+Hi scotthmccoy! You've successfully authenticated, but GitHub does not provide shell access.
+```
+
+
 Then refer to the repo like so:
 ![]({{ site.url }}/images/multiple_ssh_github.png)
