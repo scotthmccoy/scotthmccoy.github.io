@@ -57,12 +57,10 @@ If the framework uses Swift 5.1+, the host app uses Swift 5.0+, and the app targ
 
 So, we're effectively in the same boat we were in back in 2017 or 2018: Using swift in a framework has the potential for incompatibility with the host app and may increase download sizes by about 5 megs.  
 
-Assuming that 1 major version of iOS is dropped from general support per year and with iOS 9 finally getting killed off this year (2020), 12.1 may not be killed until 2022 or 2023 at which point we can finally write a framework in Swift and be able to guarantee that it won't cause any problems for a major publisher. It's likely that prior to that enough major publishers will adopt Swift 5.1+ that the balance shifts and it becomes the rule rather than the exception that a framework will be written in Swift, but I don't think we're there yet.
+Assuming that 1 major version of iOS is dropped from general support per year and with iOS 9 finally getting killed off this year (2020), 12.1 may not be killed until 2022 or 2023 at which point we can finally write a framework in Swift and be able to guarantee that it won't cause these kinds of integration problems for a major publisher. It's likely that prior to that enough major publishers will adopt Swift 5.1+ that the balance shifts and it becomes the rule rather than the exception that a framework will be written in Swift, but I don't think we're there yet.
 
 
 # Modules and Modulemaps
-
-In 2013, Xcode 5 added "Enable Modules" under Build Settings -> Apple Clang - Language - Modules. This is set to Yes by default. Later in In 2014 with Xcode 6, support for user-defined modules was added. 
 
 This [Video from WWDC 2013](https://developer.apple.com/videos/play/wwdc2013/404/) explains it very well:  The `#include` preprocessor directive just pastes the included file right into the code. The `#import` directive does the same but it checks if it has been included before. Since both essentially do a copypaste job, it can result in chaos if you accidentally `#define` something that the include/import uses (like strong or readonly). It also results in a cross-product increase in code size in the eyes of the compiler since most of your files grow by the size of the common includes:
 
@@ -80,42 +78,22 @@ This says
 2. Next it says "Anything that I import is a submodule"
 3. It also says "Link against the UIKit Framework"
 
+## Modern Usage
 
+In 2013, Xcode 5 added "Enable Modules" under Build Settings -> Apple Clang - Language - Modules. This is set to Yes by default. Later in In 2014 with Xcode 6, support for user-defined modules was added, and "Defines Module" is now set to Yes by default. Thus, any modern user-defined framework project has a modulemap and can be imported via `@import`. [This article](http://blog.bjhomer.com/2015/05/defining-modules-for-custom-libraries.html) static modules, but I have not tested to see if it works or if the steps are still necessary.
 
+## Mixing Swift & Objective C in a Framework
+This requires the use of a modulemap because bridging headers can't be used inside framework projects. [https://medium.com/allatoneplace/challenges-building-a-swift-framework-d882867c97f9](Example). 
 
-
-
-
-Questions:
-3. Why did libraries containing a mix of Swift and ObjC NEED a modulemap? 
-
-
-
-https://theswiftdev.com/deep-dive-into-swift-frameworks/
-Defines Module - set by default to YES when creating a project with a  
-And
-Mach-O Type
-
-
-
-
-
-# #import versus @import
-  If clang can find a modulemap with with the same name,  https://stackoverflow.com/questions/18947516/import-vs-import-ios-7
-* https://releases.llvm.org/3.3/tools/clang/docs/Modules.html
-* https://clang.llvm.org/docs/Modules.html#module-map-language
-
-# The otool and lipo command line tools
-
-# Other Terms
-* *Umbrella Framework* - a framework that contains other frameworks. It is [possible but not officially supported on iOS](https://medium.com/@andreamiotz/ios-umbrella-framework-with-cocoapods-57d2d3c2daa9). Normally, when you create a framework which has a dependency, the app is responsible for adding that dependency along with your framework into the project. 
-* *Modular Framework* - a framework which contains a .modulemap file inside. Modules can contains submodules. The main advantage is that you save a build time with Modular Framework. Note
 
 # Defunct Topics
 ## Real versus Fake Frameworks
 You can safely skip this section as this distinction is no longer of any real significance, Xcode having fixed this bug(?) in 2014 with the release of Xcode 6. 
 
 In disallowing dynamically linked libraries for iOS Apple accidentally(?) removed static iOS framework creation functionality. Developers responded with the "relocatable object file" bundle hack, which tricked Xcode into building something that mostly resembles a framework, but is really a bundle. Alternately, with some tweaking of Xcode itself you could add the ability to create a static iOS framework back into Xcode using this plugin: [iOS-Universal-Framework](https://github.com/kstenerud/iOS-Universal-Framework). 
+
+## Umbrella Framework
+A framework that contains other frameworks. It is [possible but not officially supported on iOS](https://medium.com/@andreamiotz/ios-umbrella-framework-with-cocoapods-57d2d3c2daa9). Normally, when you create a framework which has a dependency, the app is responsible for adding that dependency along with your framework into the project.
 
 ## Code Signing a Framework
 According to [this Stackoverflow post](https://stackoverflow.com/questions/30963294/creating-ios-osx-frameworks-is-it-necessary-to-codesign-them-before-distributin):

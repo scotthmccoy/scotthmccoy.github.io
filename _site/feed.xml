@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-07-21T17:16:36-07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Scott McCoy’s Developer Blog</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">Libraries &amp;amp; Frameworks</title><link href="http://localhost:4000/2020/07/17/libraries-frameworks.html" rel="alternate" type="text/html" title="Libraries &amp; Frameworks" /><published>2020-07-17T10:17:00-07:00</published><updated>2020-07-17T10:17:00-07:00</updated><id>http://localhost:4000/2020/07/17/libraries-frameworks</id><content type="html" xml:base="http://localhost:4000/2020/07/17/libraries-frameworks.html">&lt;h1 id=&quot;files-directories-packages-bundles-and-frameworks&quot;&gt;Files, Directories, Packages, Bundles and Frameworks:&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-07-21T17:46:28-07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Scott McCoy’s Developer Blog</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">Libraries &amp;amp; Frameworks</title><link href="http://localhost:4000/2020/07/17/libraries-frameworks.html" rel="alternate" type="text/html" title="Libraries &amp; Frameworks" /><published>2020-07-17T10:17:00-07:00</published><updated>2020-07-17T10:17:00-07:00</updated><id>http://localhost:4000/2020/07/17/libraries-frameworks</id><content type="html" xml:base="http://localhost:4000/2020/07/17/libraries-frameworks.html">&lt;h1 id=&quot;files-directories-packages-bundles-and-frameworks&quot;&gt;Files, Directories, Packages, Bundles and Frameworks:&lt;/h1&gt;
 &lt;p&gt;A &lt;code class=&quot;highlighter-rouge&quot;&gt;package&lt;/code&gt; is any directory that the Finder presents to the user as if it were a single file.
 Finder considers a directory to be a package if &lt;strong&gt;any&lt;/strong&gt; of the following conditions are true:&lt;/p&gt;
 &lt;ol&gt;
@@ -77,11 +77,9 @@ A &lt;code class=&quot;highlighter-rouge&quot;&gt;bundle&lt;/code&gt; is type of
 
 &lt;p&gt;So, we’re effectively in the same boat we were in back in 2017 or 2018: Using swift in a framework has the potential for incompatibility with the host app and may increase download sizes by about 5 megs.&lt;/p&gt;
 
-&lt;p&gt;Assuming that 1 major version of iOS is dropped from general support per year and with iOS 9 finally getting killed off this year (2020), 12.1 may not be killed until 2022 or 2023 at which point we can finally write a framework in Swift and be able to guarantee that it won’t cause any problems for a major publisher. It’s likely that prior to that enough major publishers will adopt Swift 5.1+ that the balance shifts and it becomes the rule rather than the exception that a framework will be written in Swift, but I don’t think we’re there yet.&lt;/p&gt;
+&lt;p&gt;Assuming that 1 major version of iOS is dropped from general support per year and with iOS 9 finally getting killed off this year (2020), 12.1 may not be killed until 2022 or 2023 at which point we can finally write a framework in Swift and be able to guarantee that it won’t cause these kinds of integration problems for a major publisher. It’s likely that prior to that enough major publishers will adopt Swift 5.1+ that the balance shifts and it becomes the rule rather than the exception that a framework will be written in Swift, but I don’t think we’re there yet.&lt;/p&gt;
 
 &lt;h1 id=&quot;modules-and-modulemaps&quot;&gt;Modules and Modulemaps&lt;/h1&gt;
-
-&lt;p&gt;In 2013, Xcode 5 added “Enable Modules” under Build Settings -&amp;gt; Apple Clang - Language - Modules. This is set to Yes by default. Later in In 2014 with Xcode 6, support for user-defined modules was added.&lt;/p&gt;
 
 &lt;p&gt;This &lt;a href=&quot;https://developer.apple.com/videos/play/wwdc2013/404/&quot;&gt;Video from WWDC 2013&lt;/a&gt; explains it very well:  The &lt;code class=&quot;highlighter-rouge&quot;&gt;#include&lt;/code&gt; preprocessor directive just pastes the included file right into the code. The &lt;code class=&quot;highlighter-rouge&quot;&gt;#import&lt;/code&gt; directive does the same but it checks if it has been included before. Since both essentially do a copypaste job, it can result in chaos if you accidentally &lt;code class=&quot;highlighter-rouge&quot;&gt;#define&lt;/code&gt; something that the include/import uses (like strong or readonly). It also results in a cross-product increase in code size in the eyes of the compiler since most of your files grow by the size of the common includes:&lt;/p&gt;
 
@@ -101,36 +99,21 @@ This says&lt;/p&gt;
   &lt;li&gt;It also says “Link against the UIKit Framework”&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;Questions:&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;Why did libraries containing a mix of Swift and ObjC NEED a modulemap?&lt;/li&gt;
-&lt;/ol&gt;
+&lt;h2 id=&quot;modern-usage&quot;&gt;Modern Usage&lt;/h2&gt;
 
-&lt;p&gt;https://theswiftdev.com/deep-dive-into-swift-frameworks/
-Defines Module - set by default to YES when creating a project with a&lt;br /&gt;
-And
-Mach-O Type&lt;/p&gt;
+&lt;p&gt;In 2013, Xcode 5 added “Enable Modules” under Build Settings -&amp;gt; Apple Clang - Language - Modules. This is set to Yes by default. Later in In 2014 with Xcode 6, support for user-defined modules was added, and “Defines Module” is now set to Yes by default. Thus, any modern user-defined framework project has a modulemap and can be imported via &lt;code class=&quot;highlighter-rouge&quot;&gt;@import&lt;/code&gt;. &lt;a href=&quot;http://blog.bjhomer.com/2015/05/defining-modules-for-custom-libraries.html&quot;&gt;This article&lt;/a&gt; static modules, but I have not tested to see if it works or if the steps are still necessary.&lt;/p&gt;
 
-&lt;h1 id=&quot;import-versus-import&quot;&gt;#import versus @import&lt;/h1&gt;
-&lt;p&gt;If clang can find a modulemap with with the same name,  https://stackoverflow.com/questions/18947516/import-vs-import-ios-7&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;https://releases.llvm.org/3.3/tools/clang/docs/Modules.html&lt;/li&gt;
-  &lt;li&gt;https://clang.llvm.org/docs/Modules.html#module-map-language&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&quot;the-otool-and-lipo-command-line-tools&quot;&gt;The otool and lipo command line tools&lt;/h1&gt;
-
-&lt;h1 id=&quot;other-terms&quot;&gt;Other Terms&lt;/h1&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;em&gt;Umbrella Framework&lt;/em&gt; - a framework that contains other frameworks. It is &lt;a href=&quot;https://medium.com/@andreamiotz/ios-umbrella-framework-with-cocoapods-57d2d3c2daa9&quot;&gt;possible but not officially supported on iOS&lt;/a&gt;. Normally, when you create a framework which has a dependency, the app is responsible for adding that dependency along with your framework into the project.&lt;/li&gt;
-  &lt;li&gt;&lt;em&gt;Modular Framework&lt;/em&gt; - a framework which contains a .modulemap file inside. Modules can contains submodules. The main advantage is that you save a build time with Modular Framework. Note&lt;/li&gt;
-&lt;/ul&gt;
+&lt;h2 id=&quot;mixing-swift--objective-c-in-a-framework&quot;&gt;Mixing Swift &amp;amp; Objective C in a Framework&lt;/h2&gt;
+&lt;p&gt;This requires the use of a modulemap because bridging headers can’t be used inside framework projects. &lt;a href=&quot;Example&quot;&gt;https://medium.com/allatoneplace/challenges-building-a-swift-framework-d882867c97f9&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h1 id=&quot;defunct-topics&quot;&gt;Defunct Topics&lt;/h1&gt;
 &lt;h2 id=&quot;real-versus-fake-frameworks&quot;&gt;Real versus Fake Frameworks&lt;/h2&gt;
 &lt;p&gt;You can safely skip this section as this distinction is no longer of any real significance, Xcode having fixed this bug(?) in 2014 with the release of Xcode 6.&lt;/p&gt;
 
 &lt;p&gt;In disallowing dynamically linked libraries for iOS Apple accidentally(?) removed static iOS framework creation functionality. Developers responded with the “relocatable object file” bundle hack, which tricked Xcode into building something that mostly resembles a framework, but is really a bundle. Alternately, with some tweaking of Xcode itself you could add the ability to create a static iOS framework back into Xcode using this plugin: &lt;a href=&quot;https://github.com/kstenerud/iOS-Universal-Framework&quot;&gt;iOS-Universal-Framework&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;umbrella-framework&quot;&gt;Umbrella Framework&lt;/h2&gt;
+&lt;p&gt;A framework that contains other frameworks. It is &lt;a href=&quot;https://medium.com/@andreamiotz/ios-umbrella-framework-with-cocoapods-57d2d3c2daa9&quot;&gt;possible but not officially supported on iOS&lt;/a&gt;. Normally, when you create a framework which has a dependency, the app is responsible for adding that dependency along with your framework into the project.&lt;/p&gt;
 
 &lt;h2 id=&quot;code-signing-a-framework&quot;&gt;Code Signing a Framework&lt;/h2&gt;
 &lt;p&gt;According to &lt;a href=&quot;https://stackoverflow.com/questions/30963294/creating-ios-osx-frameworks-is-it-necessary-to-codesign-them-before-distributin&quot;&gt;this Stackoverflow post&lt;/a&gt;:&lt;/p&gt;
