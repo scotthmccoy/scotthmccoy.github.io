@@ -45,8 +45,8 @@ From [https://stackoverflow.com/questions/2567498/objective-c-categories-in-stat
 
 ## Static vs Dynamic Frameworks and Swift
 * It used to be the case that a framework that used Swift **had to** be dynamic, probably because the Swift libraries must be included in the framework package because of Swifts ABI instability prior to 5.0, and the fact that because they were system libraries, they were distributed as dylibs. 
-* ABI Stability came in March of 2019 with Swift 5. This allowed the App Store to [thin app downloads](https://developer.apple.com/documentation/xcode-release-notes/swift-5-release-notes-for-xcode-10_2) of their Swift dylibs so long as the device is running iOS 12.2 or higher (and thus came with the Swift dylibs already installed). For prior iOS versions, the Swift dylibs would still have to be included in the app and downloaded by the user.
-* Module Stability came in September of 2019 with Swift 5.1. This allowed true [backwards compatibility](https://www.donnywals.com/what-is-module-stability-in-swift-and-why-should-you-care/) with prior versions of Swift (at the time, only 5.0 and 5.0.1):
+* ABI Stability came with Swift 5 in Xcode 10.2 (March of 2019). This allowed the App Store to [thin app downloads](https://developer.apple.com/documentation/xcode-release-notes/swift-5-release-notes-for-xcode-10_2) of their Swift dylibs so long as the device is running iOS 12.2 or higher (and thus came with the Swift dylibs already installed). For prior iOS versions, the Swift dylibs would still have to be included in the app and downloaded by the user.
+* Module Stability came in Swift 5.1 with Xcode 11.0 (September of 2019). This allowed true [backwards compatibility](https://www.donnywals.com/what-is-module-stability-in-swift-and-why-should-you-care/) with prior versions of Swift (at the time, only 5.0 and 5.0.1):
 > While ABI Stability allows programs written with different versions of Swift to exist in a shared runtime, Module Stability allows you to use frameworks compiled with different versions of Swift in a project that might use yet another version of Swift.
 * You can now make a Swift static library. This [article](https://medium.com/onfido-tech/distributing-compiled-ios-swift-static-libraries-and-swift-static-frameworks-7fecc4f3d182) gives pretty detailed instructions, including what to do with the .swiftmodule. 
 
@@ -83,7 +83,7 @@ This says
 In 2013, Xcode 5 added "Enable Modules" under Build Settings -> Apple Clang - Language - Modules. This is set to Yes by default. Later in In 2014 with Xcode 6, support for user-defined modules was added, and "Defines Module" is now set to Yes by default. Thus, any modern user-defined framework project has a modulemap and can be imported via `@import`. [This article](http://blog.bjhomer.com/2015/05/defining-modules-for-custom-libraries.html) static modules, but I have not tested to see if it works or if the steps are still necessary.
 
 ### Mixing Swift & Objective C in a Framework
-This requires the use of a modulemap because bridging headers can't be used inside framework projects. [https://medium.com/allatoneplace/challenges-building-a-swift-framework-d882867c97f9](Example). 
+This requires the use of a modulemap because bridging headers can't be used inside framework projects. [Example](https://medium.com/allatoneplace/challenges-building-a-swift-framework-d882867c97f9). 
 
 
 ## Defunct Topics
@@ -105,3 +105,36 @@ According to [this Stackoverflow post](https://stackoverflow.com/questions/30963
 4. As of Xcode 9.4 (May 2018), the IDE will ask you to disable code signing for iOS Cocoa Touch Frameworks. Apple now says it is not recommended that you code sign your .framework.
 
 I don't remember ever coming accross code signing issues with frameworks, probably because the framework projects I've worked on always used `lipo` to alter the architecture slices in the binary before shipping.
+
+
+## Cocoapods
+By default, Cocoapods compiles all your pods into a big static library.  Prior to March 2019, Swift could not support static libraries because of Swift's ABI instability - the swift dylibs had to be included in th framework, forcing it to be a dynamic framework. Cocoapods thus offered the `use_frameworks!` directive which tells it to use dynamic frameworks 
+instead of making a big static library. According to [Cocoapod's 0.36 Release Notes](https://blog.cocoapods.org/CocoaPods-0.36/),
+>This is an all or nothing approach per integrated targets, because we can't ensure to properly build frameworks, whose transitive dependencies are static libraries.
+
+However with with the ABI Stability offered by Swift 5 in Xcode 10.2 (March of 2019), swift static libraries finally became possible, and Cocoapods 1.5.0 (April 2019) offered `use_modular_headers!` instead. 
+>In this release, you will be able to opt into stricter header search paths (and module map generation for Objective-C pods). As a pod author, you can add 'DEFINES_MODULE' => 'YES' to your pod_target_xcconfig. Alternatively, in your Podfile you can add use_modular_headers! to enable the stricter search paths and module map generation for all of your pods, or you can add :modular_headers => true to a single pod declaration to enable for only that pod.
+
+### MoPub's Cocoapod
+
+According to [this](http://onebigfunction.com/ios/2015/12/31/mopub-mo-problems/), using MoPub's Cocoapod in a swift project seem to require either adding MoPub to your bridging header or you're forced to use `use_frameworks!`, and laments that there's not a way to configure your Podfile such that it applies only to a single pod instead of your whole project. This is probably because MoPub is in the akward postion of wanting to support all of the following:
+
+1. A source distribution
+2. Objective-C Apps that don't want any Swift
+3. Swift apps
+4. Compilation as a framework
+
+It seems like kind of a miss for such a well-established company to just imply that you should use `use_frameworks!` and end the conversation there, but given that their own [Canary project](https://github.com/mopub/mopub-ios-sdk/tree/master/Canary) has them using it, maybe it's just something they're not super aware of. 
+
+### pod_target_xcconfig
+This is where you can add 'DEFINES_MODULE' => 'YES'. Documented [here](https://guides.cocoapods.org/syntax/podspec.html#pod_target_xcconfig). According to [this](https://stackoverflow.com/questions/51227921/is-there-any-downside-to-setting-defines-module-yes-in-my-podspec) there's no real downside for doing so.
+
+### frameworks
+The `frameworks` directive in a podfile specifies [a list of system frameworks that the user’s target needs to link against](https://guides.cocoapods.org/syntax/podspec.html#frameworks).
+
+
+### weak_frameworks
+The `frameworks` directive in a podfile specifies [a list of frameworks that the user’s target needs to **weakly** link against](https://guides.cocoapods.org/syntax/podspec.html#frameworks). This means that the pod is written such that if the framework is not available it will still run.
+
+[Example](https://stackoverflow.com/questions/23354840/what-does-weak-framework-mean-in-xcodes-build-settings):
+>For example, one might want to mark SpriteKit as optional, so the app could still run on an OS that doesn't have it (for example, anything older than 7.0).
