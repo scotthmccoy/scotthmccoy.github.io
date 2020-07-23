@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-07-21T19:53:41-07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Scott McCoy’s Developer Blog</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">Libraries &amp;amp; Frameworks</title><link href="http://localhost:4000/2020/07/17/libraries-frameworks.html" rel="alternate" type="text/html" title="Libraries &amp; Frameworks" /><published>2020-07-17T10:17:00-07:00</published><updated>2020-07-17T10:17:00-07:00</updated><id>http://localhost:4000/2020/07/17/libraries-frameworks</id><content type="html" xml:base="http://localhost:4000/2020/07/17/libraries-frameworks.html">&lt;h2 id=&quot;files-directories-packages-bundles-and-frameworks&quot;&gt;Files, Directories, Packages, Bundles and Frameworks&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-07-22T16:48:50-07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Scott McCoy’s Developer Blog</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">Libraries &amp;amp; Frameworks</title><link href="http://localhost:4000/2020/07/17/libraries-frameworks.html" rel="alternate" type="text/html" title="Libraries &amp; Frameworks" /><published>2020-07-17T10:17:00-07:00</published><updated>2020-07-17T10:17:00-07:00</updated><id>http://localhost:4000/2020/07/17/libraries-frameworks</id><content type="html" xml:base="http://localhost:4000/2020/07/17/libraries-frameworks.html">&lt;h2 id=&quot;files-directories-packages-bundles-and-frameworks&quot;&gt;Files, Directories, Packages, Bundles and Frameworks&lt;/h2&gt;
 &lt;p&gt;A &lt;code class=&quot;highlighter-rouge&quot;&gt;package&lt;/code&gt; is any directory that the Finder presents to the user as if it were a single file.
 Finder considers a directory to be a package if &lt;strong&gt;any&lt;/strong&gt; of the following conditions are true:&lt;/p&gt;
 &lt;ol&gt;
@@ -43,6 +43,44 @@ A &lt;code class=&quot;highlighter-rouge&quot;&gt;bundle&lt;/code&gt; is type of
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
+
+&lt;h2 id=&quot;identifying-whether-a-framework-is-static-or-dynamic&quot;&gt;Identifying whether a framework is Static or Dynamic&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://stackoverflow.com/questions/32591878/ios-is-it-a-static-or-a-dynamic-framework&quot;&gt;From&lt;/a&gt;, you can use the &lt;code class=&quot;highlighter-rouge&quot;&gt;file&lt;/code&gt; command:&lt;/p&gt;
+
+&lt;p&gt;A Static framework looks like this:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd iOS/Crashlytics.framework
+$ ls -l
+total 9984
+-rwxr-xr-x  1 andy  staff  4710656 11 Sep 17:11 Crashlytics
+drwxr-xr-x  8 andy  staff      272 11 Sep 17:11 Headers
+-rw-r--r--  1 andy  staff     1553 11 Sep 17:11 Info.plist
+drwxr-xr-x  3 andy  staff      102 11 Sep 17:11 Modules
+-rwxr-xr-x  1 andy  staff   146164 11 Sep 17:11 run
+-rwxr-xr-x  1 andy  staff   241688 11 Sep 17:11 submit
+$ file Crashlytics 
+Crashlytics: Mach-O universal binary with 5 architectures
+Crashlytics (for architecture armv7):   current ar archive random library
+Crashlytics (for architecture armv7s):  current ar archive random library
+Crashlytics (for architecture i386):    current ar archive random library
+Crashlytics (for architecture x86_64):  current ar archive random library
+Crashlytics (for architecture arm64):   current ar archive random library
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;A dynamic framework will look like this:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd /Library/Frameworks/iTunesLibrary.framework/
+$ ls -l
+total 40
+lrwxr-xr-x  1 root  wheel   24 10 Sep 17:38 Headers -&amp;gt; Versions/Current/Headers
+lrwxr-xr-x  1 root  wheel   24 10 Sep 17:38 Modules -&amp;gt; Versions/Current/Modules
+lrwxr-xr-x  1 root  wheel   26 10 Sep 17:38 Resources -&amp;gt; Versions/Current/Resources
+drwxr-xr-x  4 root  wheel  136 10 Sep 17:41 Versions
+lrwxr-xr-x  1 root  wheel   22 10 Sep 17:38 XPCServices -&amp;gt; Versions/A/XPCServices
+lrwxr-xr-x  1 root  wheel   30 10 Sep 17:38 iTunesLibrary -&amp;gt; Versions/Current/iTunesLibrary
+$ file Versions/Current/iTunesLibrary 
+Versions/Current/iTunesLibrary: Mach-O universal binary with 2 architectures
+Versions/Current/iTunesLibrary (for architecture i386): Mach-O dynamically linked shared library i386
+Versions/Current/iTunesLibrary (for architecture x86_64):   Mach-O 64-bit dynamically linked shared library x86_64
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;potential-gains-from-switching-to-from-dynamic-to-static-libsframeworks&quot;&gt;Potential Gains from switching to From Dynamic to Static Libs/Frameworks&lt;/h2&gt;
 &lt;p&gt;In an example using 27 frameworks, &lt;a href=&quot;https://medium.com/@acecilia/static-vs-dynamic-frameworks-in-swift-an-in-depth-analysis-ff61a77eec65&quot;&gt;this dev&lt;/a&gt;:&lt;/p&gt;
@@ -145,16 +183,16 @@ instead of making a big static library. According to &lt;a href=&quot;https://bl
 
 &lt;h3 id=&quot;mopubs-cocoapod&quot;&gt;MoPub’s Cocoapod&lt;/h3&gt;
 
-&lt;p&gt;According to &lt;a href=&quot;http://onebigfunction.com/ios/2015/12/31/mopub-mo-problems/&quot;&gt;this&lt;/a&gt;, using MoPub’s Cocoapod in a swift project seem to require either adding MoPub to your bridging header or you’re forced to use &lt;code class=&quot;highlighter-rouge&quot;&gt;use_frameworks!&lt;/code&gt;, and laments that there’s not a way to configure your Podfile such that it applies only to a single pod instead of your whole project. This is probably because MoPub is in the akward postion of wanting to support all of the following:&lt;/p&gt;
+&lt;p&gt;According to &lt;a href=&quot;http://onebigfunction.com/ios/2015/12/31/mopub-mo-problems/&quot;&gt;this&lt;/a&gt;, using MoPub’s Cocoapod in a swift project seem to require either adding MoPub to your bridging header or you’re forced to use &lt;code class=&quot;highlighter-rouge&quot;&gt;use_frameworks!&lt;/code&gt;, and laments that there’s not a way to configure your Podfile such &lt;code class=&quot;highlighter-rouge&quot;&gt;use_frameworks!&lt;/code&gt; can be applied on a case-by-case basis instead of to your whole project. My guess is because MoPub is in the akward postion of wanting to support all of the following:&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;A source distribution&lt;/li&gt;
-  &lt;li&gt;Objective-C Apps that don’t want any Swift&lt;/li&gt;
-  &lt;li&gt;Swift apps&lt;/li&gt;
   &lt;li&gt;Compilation as a framework&lt;/li&gt;
+  &lt;li&gt;Swift apps that don’t want to use a bridging header&lt;/li&gt;
+  &lt;li&gt;Objective-C Apps that don’t want any Swift&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;It seems like kind of a miss for such a well-established company to just imply that you should use &lt;code class=&quot;highlighter-rouge&quot;&gt;use_frameworks!&lt;/code&gt; and end the conversation there, but given that their own &lt;a href=&quot;https://github.com/mopub/mopub-ios-sdk/tree/master/Canary&quot;&gt;Canary project&lt;/a&gt; has them using it, maybe it’s just something they’re not super aware of.&lt;/p&gt;
+&lt;p&gt;It seems like kind of a miss for such a well-established company to just &lt;em&gt;imply&lt;/em&gt; that you should use &lt;code class=&quot;highlighter-rouge&quot;&gt;use_frameworks!&lt;/code&gt;, not explain why and end the conversation there but given that their own &lt;a href=&quot;https://github.com/mopub/mopub-ios-sdk/tree/master/Canary&quot;&gt;Canary project&lt;/a&gt; has them using it, maybe it’s just something they’re not super aware of.&lt;/p&gt;
 
 &lt;h3 id=&quot;pod_target_xcconfig&quot;&gt;pod_target_xcconfig&lt;/h3&gt;
 &lt;p&gt;This is where you can add ‘DEFINES_MODULE’ =&amp;gt; ‘YES’. Documented &lt;a href=&quot;https://guides.cocoapods.org/syntax/podspec.html#pod_target_xcconfig&quot;&gt;here&lt;/a&gt;. According to &lt;a href=&quot;https://stackoverflow.com/questions/51227921/is-there-any-downside-to-setting-defines-module-yes-in-my-podspec&quot;&gt;this&lt;/a&gt; there’s no real downside for doing so.&lt;/p&gt;
