@@ -157,21 +157,20 @@ However with with the ABI Stability offered by Swift 5 in Xcode 10.2 (March of 2
 
 ### MoPub's Cocoapod
 
-According to [this](http://onebigfunction.com/ios/2015/12/31/mopub-mo-problems/), using MoPub's Cocoapod in a swift project seem to require either adding MoPub to your bridging header or you're forced to use `use_frameworks!`, and laments that there's not a way to configure your Podfile such `use_frameworks!` can be applied on a case-by-case basis instead of to your whole project. My guess is because MoPub is in the akward postion of wanting to support all of the following:
+According to [this](http://onebigfunction.com/ios/2015/12/31/mopub-mo-problems/), using MoPub's Cocoapod in a swift project seems to require either adding MoPub to your bridging header using `use_frameworks!`. The author laments that there's not a way to configure your Podfile such that `use_frameworks!` can be applied on a case-by-case basis instead of to your whole project. My guess is because MoPub is in the akward postion of wanting to support *all* of the following:
 
 1. A source distribution
 2. Compilation as a framework
 3. Swift apps that don't want to use a bridging header
 4. Objective-C Apps that don't want any Swift
 
-It seems like kind of a miss for such a well-established company to just *imply* that you should use `use_frameworks!`, not explain why and end the conversation there but given that their own [Canary project](https://github.com/mopub/mopub-ios-sdk/tree/master/Canary) has them using it, maybe it's just something they're not super aware of. 
+It seems like an oversite for such a well-established company to just *imply* that you should use `use_frameworks!`, not explain why and end the conversation there but given that their own [Canary project](https://github.com/mopub/mopub-ios-sdk/tree/master/Canary) has them using it, maybe it's just something they're not super aware of. 
 
 ### pod_target_xcconfig
-This is where you can add 'DEFINES_MODULE' => 'YES'. Documented [here](https://guides.cocoapods.org/syntax/podspec.html#pod_target_xcconfig). According to [this](https://stackoverflow.com/questions/51227921/is-there-any-downside-to-setting-defines-module-yes-in-my-podspec) there's no real downside for doing so.
+This is where you can add 'DEFINES_MODULE' => 'YES'. Documented [here](https://guides.cocoapods.org/syntax/podspec.html#pod_target_xcconfig). According to [this](https://stackoverflow.com/questions/51227921/is-there-any-downside-to-setting-defines-module-yes-in-my-podspec) there's no real downside for doing so, but I tested it with a MoPub Adapter Pod that used MoPub as a dependency and it seemed like it caused MoPub to be included twice, so I had to leave it out.  
 
 ### frameworks
 The `frameworks` directive in a podfile specifies [a list of system frameworks that the user’s target needs to link against](https://guides.cocoapods.org/syntax/podspec.html#frameworks).
-
 
 ### weak_frameworks
 The `frameworks` directive in a podfile specifies [a list of frameworks that the user’s target needs to **weakly** link against](https://guides.cocoapods.org/syntax/podspec.html#frameworks). This means that the pod is written such that if the framework is not available it will still run.
