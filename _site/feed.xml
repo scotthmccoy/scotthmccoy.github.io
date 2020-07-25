@@ -1,16 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-07-25T14:58:01-07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Scott McCoy’s Developer Blog</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">Crusty Array Compare</title><link href="http://localhost:4000/2020/07/25/crusty-array-compare.html" rel="alternate" type="text/html" title="Crusty Array Compare" /><published>2020-07-25T14:52:00-07:00</published><updated>2020-07-25T14:52:00-07:00</updated><id>http://localhost:4000/2020/07/25/crusty-array-compare</id><content type="html" xml:base="http://localhost:4000/2020/07/25/crusty-array-compare.html">&lt;p&gt;This is an explanation for the nifty array compare implementation In the famous Crusty video at &lt;a href=&quot;https://www.youtube.com/watch?v=xE5EcHuz52I#t=38m38s&quot;&gt;38m and 38s&lt;/a&gt;.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-07-25T14:59:37-07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Scott McCoy’s Developer Blog</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">Crusty Array Compare</title><link href="http://localhost:4000/2020/07/25/crusty-array-compare.html" rel="alternate" type="text/html" title="Crusty Array Compare" /><published>2020-07-25T14:52:00-07:00</published><updated>2020-07-25T14:52:00-07:00</updated><id>http://localhost:4000/2020/07/25/crusty-array-compare</id><content type="html" xml:base="http://localhost:4000/2020/07/25/crusty-array-compare.html">This is an explanation for the nifty array compare implementation In the famous Crusty video at [38m and 38s](https://www.youtube.com/watch?v=xE5EcHuz52I#t=38m38s).
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;import Foundation
+```
+import Foundation
 import XCTest
 
 class ArrayCompareTest : XCTestCase {
     
-    func arrayCompare&amp;lt;T:Comparable&amp;gt;(lhs:[T], rhs:[T]) -&amp;gt; Bool {
+    func arrayCompare&lt;T:Comparable&gt;(lhs:[T], rhs:[T]) -&gt; Bool {
         //This is an incredibly elegant if nearly inscrutable implementation of array match.
         
         //Use `zip` to merge the arrays into an array of tuples, then use `contains` *without an Element arg* to walk each element of the
         //zipped array and bail on the first non-match.
-        return lhs.count == rhs.count &amp;amp;&amp;amp; !zip(lhs, rhs).contains {
+        return lhs.count == rhs.count &amp;&amp; !zip(lhs, rhs).contains {
             return $0 != $1
         }
     }
@@ -21,7 +22,7 @@ class ArrayCompareTest : XCTestCase {
         XCTAssertFalse(arrayCompare(lhs:[1,2,3], rhs:[4,5,6]))
     }
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">This is an explanation for the nifty array compare implementation In the famous Crusty video at 38m and 38s.</summary></entry><entry><title type="html">Libraries &amp;amp; Frameworks</title><link href="http://localhost:4000/2020/07/17/libraries-frameworks.html" rel="alternate" type="text/html" title="Libraries &amp; Frameworks" /><published>2020-07-17T10:17:00-07:00</published><updated>2020-07-17T10:17:00-07:00</updated><id>http://localhost:4000/2020/07/17/libraries-frameworks</id><content type="html" xml:base="http://localhost:4000/2020/07/17/libraries-frameworks.html">## Files, Directories, Packages, Bundles and Frameworks
+```</content><author><name></name></author><summary type="html">This is an explanation for the nifty array compare implementation In the famous Crusty video at 38m and 38s.</summary></entry><entry><title type="html">Libraries &amp;amp; Frameworks</title><link href="http://localhost:4000/2020/07/17/libraries-frameworks.html" rel="alternate" type="text/html" title="Libraries &amp; Frameworks" /><published>2020-07-17T10:17:00-07:00</published><updated>2020-07-17T10:17:00-07:00</updated><id>http://localhost:4000/2020/07/17/libraries-frameworks</id><content type="html" xml:base="http://localhost:4000/2020/07/17/libraries-frameworks.html">## Files, Directories, Packages, Bundles and Frameworks
 A `package` is any directory that the Finder presents to the user as if it were a single file.
 Finder considers a directory to be a package if **any** of the following conditions are true:
 1. The directory has a known filename extension: .app, .bundle, .framework, .plugin, .kext, and so on.
