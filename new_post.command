@@ -31,7 +31,7 @@ if [ $? = 0 ];
 then
 	#open the newest file in the _posts directory
 	cd _posts
-	ls -t | grep md | tail -1 | xargs open -a "/Applications/Sublime Text.app"
+	ls -t | grep md | head -1 | xargs open -a "/Applications/Sublime Text.app"
 else 
 	red "Error creating post"
 fi;
