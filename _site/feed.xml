@@ -1,4 +1,71 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-07-25T14:59:37-07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Scott McCoy’s Developer Blog</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">Crusty Array Compare</title><link href="http://localhost:4000/2020/07/25/crusty-array-compare.html" rel="alternate" type="text/html" title="Crusty Array Compare" /><published>2020-07-25T14:52:00-07:00</published><updated>2020-07-25T14:52:00-07:00</updated><id>http://localhost:4000/2020/07/25/crusty-array-compare</id><content type="html" xml:base="http://localhost:4000/2020/07/25/crusty-array-compare.html">This is an explanation for the nifty array compare implementation In the famous Crusty video at [38m and 38s](https://www.youtube.com/watch?v=xE5EcHuz52I#t=38m38s).
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-07-25T16:15:38-07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Scott McCoy’s Developer Blog</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">Crusty Comparable Array - Bridge Building Between Static and Dynamic Worlds</title><link href="http://localhost:4000/2020/07/25/crusty-comparable-array.html" rel="alternate" type="text/html" title="Crusty Comparable Array - Bridge Building Between Static and Dynamic Worlds" /><published>2020-07-25T16:09:00-07:00</published><updated>2020-07-25T16:09:00-07:00</updated><id>http://localhost:4000/2020/07/25/crusty-comparable-array</id><content type="html" xml:base="http://localhost:4000/2020/07/25/crusty-comparable-array.html">&lt;p&gt;In the Crusty Video at &lt;a href=&quot;https://www.youtube.com/watch?v=xE5EcHuz52I#t=41m5s&quot;&gt;41m5s&lt;/a&gt;, they show how you can build a bridge between&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Equatable&lt;/code&gt; has &lt;code class=&quot;highlighter-rouge&quot;&gt;Self&lt;/code&gt; requirements, so putting it on Drawable puts it into the dynamically dispatched world - but we don’t want that, we want Drawable to live in the Statically dispatched world so that that we can make an array of Drawable! So we need our own function that does comparison, without using &lt;code class=&quot;highlighter-rouge&quot;&gt;Self&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;protocol Drawable {
+    func draw()
+    
+    //Adding this here forces you to implement it in your Drawable struct so you can guarantee that an array of Drawables will be comparable even without Equatable.
+    //But if you just make your Drawable implementation also implement Equatable, then you get the default implementation of compareDrawable provided by the `Drawble where Self : Equatable` protocol extension!
+    //As an added bonus, since Equatable on a struct auto-synthesizes the == function by comparing member properties, the default implementation can just lean on == if the class types match.
+    func compareDrawable(other: Drawable) -&amp;gt; Bool
+}
+
+extension Drawable where Self : Equatable {
+    func compareDrawable(other: Drawable) -&amp;gt; Bool {
+        
+        //If the class types don't match, bail.
+        guard let o = other as? Self else {
+            return false
+        }
+        
+        //Lean on the auto-synthesized == provided by Equatable-on-struct
+        //(Or if you implement Drawable on class, your own implementation of ==)
+        return self == o
+    }
+}
+
+
+struct DrawableA : Drawable, Equatable {
+    var a:Int
+    func draw() {
+        print(&quot;drawing DrawableAndEquatable&quot;)
+    }
+}
+
+struct DrawableB : Drawable, Equatable {
+    var b:Int
+    func draw() {
+        print(&quot;drawing DrawableButNotEquatable&quot;)
+    }
+}
+
+let drawableA1 = DrawableA(a:1)
+let drawableA2 = DrawableA(a:2)
+let drawableB = DrawableB(b:3)
+
+var isEqual:Bool
+
+//False since 1 != 2
+isEqual = drawableA1 == drawableA2
+
+//Tautology
+isEqual = drawableB == drawableB
+
+
+
+
+//Can't do this since they are different classes!
+//var isEqual = drawableA1 == drawableB
+
+//But we *can* do this using the compareDrawable default definition/implementation:
+drawableA1.compareDrawable(other: drawableB)
+
+//So we should standardize to using default definition/implementation of scootyEqualTo to compare Drawables:
+drawableA1.compareDrawable(other: drawableA1)
+drawableA1.compareDrawable(other: drawableA2)
+drawableA1.compareDrawable(other: drawableB)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">In the Crusty Video at 41m5s, they show how you can build a bridge between</summary></entry><entry><title type="html">Crusty Array Compare</title><link href="http://localhost:4000/2020/07/25/crusty-array-compare.html" rel="alternate" type="text/html" title="Crusty Array Compare" /><published>2020-07-25T14:52:00-07:00</published><updated>2020-07-25T14:52:00-07:00</updated><id>http://localhost:4000/2020/07/25/crusty-array-compare</id><content type="html" xml:base="http://localhost:4000/2020/07/25/crusty-array-compare.html">This is an explanation for the nifty array compare implementation In the famous Crusty video at [38m and 38s](https://www.youtube.com/watch?v=xE5EcHuz52I#t=38m38s).
 
 ```
 import Foundation
@@ -588,4 +655,4 @@ A self requirement puts it in the homogeneous, statically dispatched world. But 
 
 You want to use classes when copying or comparing instances doesn't make sense (Window)
 Instance lifetime is tied to external effects. The compiler does lots of optimization on value types' lifetimes but a class sticks around.
-When the class would be a &quot;sink&quot;; a write-only conduit to an external state.</content><author><name>Scott McCoy</name></author><summary type="html">Most common data formats (Json, Plist, XML) support arrays of mixed types like: [&quot;foo&quot;, 1, {&quot;a&quot;:3}] and I often find myself wanting to mirror that in Swift. For example, I often find myself wanting to make a generic AppSetting class that can consume/represent any data type, wraps UserDefaults and provides functionality like CustomStringConvertible:</summary></entry><entry><title type="html">TIL - Use of Selector or #selector now requires the function be @objc</title><link href="http://localhost:4000/2020/01/08/til-use-of-selector-or-selector-now.html" rel="alternate" type="text/html" title="TIL - Use of Selector or #selector now requires the function be @objc" /><published>2020-01-08T12:21:00-08:00</published><updated>2020-01-08T12:21:00-08:00</updated><id>http://localhost:4000/2020/01/08/til-use-of-selector-or-selector-now</id><content type="html" xml:base="http://localhost:4000/2020/01/08/til-use-of-selector-or-selector-now.html">That's it, that's the post.</content><author><name>Scott McCoy</name></author><summary type="html">That’s it, that’s the post.</summary></entry></feed>
+When the class would be a &quot;sink&quot;; a write-only conduit to an external state.</content><author><name>Scott McCoy</name></author><summary type="html">Most common data formats (Json, Plist, XML) support arrays of mixed types like: [&quot;foo&quot;, 1, {&quot;a&quot;:3}] and I often find myself wanting to mirror that in Swift. For example, I often find myself wanting to make a generic AppSetting class that can consume/represent any data type, wraps UserDefaults and provides functionality like CustomStringConvertible:</summary></entry></feed>
