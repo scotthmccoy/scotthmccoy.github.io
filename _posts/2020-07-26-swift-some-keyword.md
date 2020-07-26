@@ -1,8 +1,9 @@
 ---
 layout: post
-title: 🐦 Swift Some Keyword
+title: Swift Some Keyword
 date: 2020-07-26 01:21 -0700
 ---
+
 
 ## The Problem
 
