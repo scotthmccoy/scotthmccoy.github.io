@@ -1,18 +1,120 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-07-25T16:21:14-07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Scott McCoy’s Developer Blog</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">Crusty Comparable Array - Bridge Building Between Static and Dynamic Worlds</title><link href="http://localhost:4000/2020/07/25/crusty-comparable-array.html" rel="alternate" type="text/html" title="Crusty Comparable Array - Bridge Building Between Static and Dynamic Worlds" /><published>2020-07-25T16:09:00-07:00</published><updated>2020-07-25T16:09:00-07:00</updated><id>http://localhost:4000/2020/07/25/crusty-comparable-array</id><content type="html" xml:base="http://localhost:4000/2020/07/25/crusty-comparable-array.html">&lt;p&gt;In the Crusty Video at &lt;a href=&quot;https://www.youtube.com/watch?v=xE5EcHuz52I#t=41m5s&quot;&gt;41m5s&lt;/a&gt;, they show how you can build a bridge between&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-07-26T15:57:32-07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Scott McCoy’s Developer Blog</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">Swift Property Wrappers</title><link href="http://localhost:4000/2020/07/26/swift-property-wrappers.html" rel="alternate" type="text/html" title="Swift Property Wrappers" /><published>2020-07-26T02:14:00-07:00</published><updated>2020-07-26T02:14:00-07:00</updated><id>http://localhost:4000/2020/07/26/swift-property-wrappers</id><content type="html" xml:base="http://localhost:4000/2020/07/26/swift-property-wrappers.html">Property Wrappers are a neat way to define and reuse input validators. You just need to use the `@propertyWrapper` keyword and define a `wrappedValue`:
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Equatable&lt;/code&gt; has &lt;code class=&quot;highlighter-rouge&quot;&gt;Self&lt;/code&gt; requirements, so putting it on Drawable puts it into the dynamically dispatched world - but we don’t want that, we want Drawable to live in the Statically dispatched world so that that we can make an array of Drawable! So we need our own function that does comparison, without using &lt;code class=&quot;highlighter-rouge&quot;&gt;Self&lt;/code&gt;.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;protocol Drawable {
+```
+@propertyWrapper
+struct TwelveOrLess {
+    private var number: Int
+    init() { self.number = 0 }
+    var wrappedValue: Int {
+        get { return number }
+        set { number = min(newValue, 12) }
+    }
+}
+
+struct SmallRectangle {
+    @TwelveOrLess var height: Int
+    @TwelveOrLess var width: Int
+}
+```
+
+
+You can also add a `projectedValue` which is accessible by prefixing the var with a $.
+
+```
+@propertyWrapper
+struct SmallNumber {
+    private var number: Int
+    var projectedValue: Bool
+    init() {
+        self.number = 0
+        self.projectedValue = false
+    }
+    var wrappedValue: Int {
+        get { return number }
+        set {
+            if newValue &gt; 12 {
+                number = 12
+                projectedValue = true
+            } else {
+                number = newValue
+                projectedValue = false
+            }
+        }
+    }
+}
+struct SomeStructure {
+    @SmallNumber var someNumber: Int
+}
+var someStructure = SomeStructure()
+
+someStructure.someNumber = 4
+print(someStructure.$someNumber)
+```</content><author><name></name></author><summary type="html">Property Wrappers are a neat way to define and reuse input validators. You just need to use the @propertyWrapper keyword and define a wrappedValue:</summary></entry><entry><title type="html">🐦 Swift Some Keyword</title><link href="http://localhost:4000/2020/07/26/swift-some-keyword.html" rel="alternate" type="text/html" title="🐦 Swift Some Keyword" /><published>2020-07-26T01:21:00-07:00</published><updated>2020-07-26T01:21:00-07:00</updated><id>http://localhost:4000/2020/07/26/swift-some-keyword</id><content type="html" xml:base="http://localhost:4000/2020/07/26/swift-some-keyword.html">## The Problem
+
+Say you want to return an Equatable from a function. This causes two errors - one when you try to implement it and another when you try to consume the result:  
+
+```
+func foo() -&gt; Equatable { //🛑 Protocol 'Equatable' can only be used as a generic constraint because it has Self or associated type requirements
+    return &quot;strings are Equatable&quot;
+}
+
+let x = foo()
+let y = foo()
+print(x == y) //🛑 Binary operator '==' cannot be applied to two 'Equatable' operands
+```
+
+## The Solution
+
+Add the `some` keyword to the return type of the function. In the eyes of the compiler, this changes the return type to `String`:
+
+```
+func foo() -&gt; some Equatable {
+    return &quot;strings are Equatable&quot;
+}
+
+let x = foo()
+let y = foo()
+print(x == y)
+
+
+print(type(of: x)) //Prints &quot;String&quot;
+```
+
+## How is this Useful? Why not just have it return String?
+
+The use of an opaque result type allows you to make the actual return type an implementation detail by exposing only the interface provided by the protocol. This gives you flexibility of changing the concrete type later down the line without breaking any code that depends on the function.
+
+For example, you could make the following replacement:
+
+```
+func foo() -&gt; some Equatable {
+    //return &quot;strings are Equatable&quot;
+    return 42
+}
+
+let x = foo()
+let y = foo()
+print(x == y) //Prints &quot;True&quot;
+
+print(type(of: x)) //Prints &quot;Int&quot;
+```</content><author><name></name></author><summary type="html">The Problem</summary></entry><entry><title type="html">Crusty Comparable Array - Bridge Building Between Static and Dynamic Worlds</title><link href="http://localhost:4000/2020/07/25/crusty-comparable-array.html" rel="alternate" type="text/html" title="Crusty Comparable Array - Bridge Building Between Static and Dynamic Worlds" /><published>2020-07-25T16:09:00-07:00</published><updated>2020-07-25T16:09:00-07:00</updated><id>http://localhost:4000/2020/07/25/crusty-comparable-array</id><content type="html" xml:base="http://localhost:4000/2020/07/25/crusty-comparable-array.html">In the Crusty Video at [41m5s](https://www.youtube.com/watch?v=xE5EcHuz52I#t=41m5s), they show how you can build a bridge between 
+
+`Equatable` has `Self` requirements, so putting it on Drawable puts it into the dynamically dispatched world - but we don't want that, we want Drawable to live in the Statically dispatched world so that that we can make an array of Drawable! So we need our own function that does comparison, without using `Self`.
+
+
+```
+protocol Drawable {
     func draw()
     
     //Adding this here forces you to implement it in your Drawable struct so you can guarantee that an array of Drawables will be comparable even without Equatable.
     //But if you just make your Drawable implementation also implement Equatable, then you get the default implementation of compareDrawable provided by the `Drawble where Self : Equatable` protocol extension!
     //As an added bonus, since Equatable on a struct auto-synthesizes the == function by comparing member properties, the default implementation can just lean on == if the class types match.
-    func compareDrawable(other: Drawable) -&amp;gt; Bool
+    func compareDrawable(other: Drawable) -&gt; Bool
 }
 
 extension Drawable where Self : Equatable {
-    func compareDrawable(other: Drawable) -&amp;gt; Bool {
+    func compareDrawable(other: Drawable) -&gt; Bool {
         
         //If the class types don't match, bail.
         guard let o = other as? Self else {
@@ -65,19 +167,20 @@ drawableA1.compareDrawable(other: drawableB)
 drawableA1.compareDrawable(other: drawableA1)
 drawableA1.compareDrawable(other: drawableA2)
 drawableA1.compareDrawable(other: drawableB)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">In the Crusty Video at 41m5s, they show how you can build a bridge between</summary></entry><entry><title type="html">Crusty Array Compare</title><link href="http://localhost:4000/2020/07/25/crusty-array-compare.html" rel="alternate" type="text/html" title="Crusty Array Compare" /><published>2020-07-25T14:52:00-07:00</published><updated>2020-07-25T14:52:00-07:00</updated><id>http://localhost:4000/2020/07/25/crusty-array-compare</id><content type="html" xml:base="http://localhost:4000/2020/07/25/crusty-array-compare.html">&lt;p&gt;This is an explanation for the nifty array compare implementation In the famous Crusty video at &lt;a href=&quot;https://www.youtube.com/watch?v=xE5EcHuz52I#t=38m38s&quot;&gt;38m and 38s&lt;/a&gt;.&lt;/p&gt;
+```</content><author><name></name></author><summary type="html">In the Crusty Video at 41m5s, they show how you can build a bridge between</summary></entry><entry><title type="html">Crusty Array Compare</title><link href="http://localhost:4000/2020/07/25/crusty-array-compare.html" rel="alternate" type="text/html" title="Crusty Array Compare" /><published>2020-07-25T14:52:00-07:00</published><updated>2020-07-25T14:52:00-07:00</updated><id>http://localhost:4000/2020/07/25/crusty-array-compare</id><content type="html" xml:base="http://localhost:4000/2020/07/25/crusty-array-compare.html">This is an explanation for the nifty array compare implementation In the famous Crusty video at [38m and 38s](https://www.youtube.com/watch?v=xE5EcHuz52I#t=38m38s).
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;import Foundation
+```
+import Foundation
 import XCTest
 
 class ArrayCompareTest : XCTestCase {
     
-    func arrayCompare&amp;lt;T:Comparable&amp;gt;(lhs:[T], rhs:[T]) -&amp;gt; Bool {
+    func arrayCompare&lt;T:Comparable&gt;(lhs:[T], rhs:[T]) -&gt; Bool {
         //This is an incredibly elegant if nearly inscrutable implementation of array match.
         
         //Use `zip` to merge the arrays into an array of tuples, then use `contains` *without an Element arg* to walk each element of the
         //zipped array and bail on the first non-match.
-        return lhs.count == rhs.count &amp;amp;&amp;amp; !zip(lhs, rhs).contains {
+        return lhs.count == rhs.count &amp;&amp; !zip(lhs, rhs).contains {
             return $0 != $1
         }
     }
@@ -88,7 +191,7 @@ class ArrayCompareTest : XCTestCase {
         XCTAssertFalse(arrayCompare(lhs:[1,2,3], rhs:[4,5,6]))
     }
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">This is an explanation for the nifty array compare implementation In the famous Crusty video at 38m and 38s.</summary></entry><entry><title type="html">Libraries &amp;amp; Frameworks</title><link href="http://localhost:4000/2020/07/17/libraries-frameworks.html" rel="alternate" type="text/html" title="Libraries &amp; Frameworks" /><published>2020-07-17T10:17:00-07:00</published><updated>2020-07-17T10:17:00-07:00</updated><id>http://localhost:4000/2020/07/17/libraries-frameworks</id><content type="html" xml:base="http://localhost:4000/2020/07/17/libraries-frameworks.html">## Files, Directories, Packages, Bundles and Frameworks
+```</content><author><name></name></author><summary type="html">This is an explanation for the nifty array compare implementation In the famous Crusty video at 38m and 38s.</summary></entry><entry><title type="html">Libraries &amp;amp; Frameworks</title><link href="http://localhost:4000/2020/07/17/libraries-frameworks.html" rel="alternate" type="text/html" title="Libraries &amp; Frameworks" /><published>2020-07-17T10:17:00-07:00</published><updated>2020-07-17T10:17:00-07:00</updated><id>http://localhost:4000/2020/07/17/libraries-frameworks</id><content type="html" xml:base="http://localhost:4000/2020/07/17/libraries-frameworks.html">## Files, Directories, Packages, Bundles and Frameworks
 A `package` is any directory that the Finder presents to the user as if it were a single file.
 Finder considers a directory to be a package if **any** of the following conditions are true:
 1. The directory has a known filename extension: .app, .bundle, .framework, .plugin, .kext, and so on.
@@ -354,278 +457,4 @@ Then refer to the repo like so:
 hash node
 [lunchvote@server /]$ node --version
 v10.18.1
-```</content><author><name>Scott McCoy</name></author><summary type="html">Sometimes when installing new versions of software, the path that bash has saved gets corrupted. Running the hash command on that command can fix it, or just running hash -r</summary></entry><entry><title type="html">CentOS 7 - Unblock a port</title><link href="http://localhost:4000/2020/02/08/centos-7-unblock-port.html" rel="alternate" type="text/html" title="CentOS 7 - Unblock a port" /><published>2020-02-08T15:31:00-08:00</published><updated>2020-02-08T15:31:00-08:00</updated><id>http://localhost:4000/2020/02/08/centos-7-unblock-port</id><content type="html" xml:base="http://localhost:4000/2020/02/08/centos-7-unblock-port.html">To unblock a port normally you'd use iptables which firewall-cmd is a wrapper for:&lt;br /&gt;&lt;br /&gt;iptables -I INPUT -p tcp --dport 12345 --syn -j ACCEPT&lt;br /&gt;service iptables save</content><author><name>Scott McCoy</name></author><summary type="html">To unblock a port normally you’d use iptables which firewall-cmd is a wrapper for:iptables -I INPUT -p tcp –dport 12345 –syn -j ACCEPTservice iptables save</summary></entry><entry><title type="html">Use lsof to see what processes are listening on which ports</title><link href="http://localhost:4000/2020/02/08/lsof-to-see-what-processes-are.html" rel="alternate" type="text/html" title="Use lsof to see what processes are listening on which ports" /><published>2020-02-08T15:19:00-08:00</published><updated>2020-02-08T15:19:00-08:00</updated><id>http://localhost:4000/2020/02/08/lsof-to-see-what-processes-are</id><content type="html" xml:base="http://localhost:4000/2020/02/08/lsof-to-see-what-processes-are.html">I learned a bit about how to see what's listening. If it doesn't say * in the rightmost column, the listed host is the only one with access. In this example, node is only accessible *from* localhost.&lt;br /&gt;&lt;br /&gt;sudo lsof -i -P -n | grep LISTEN&lt;br /&gt;&lt;br /&gt;systemd&amp;nbsp; &amp;nbsp; &amp;nbsp; 1&amp;nbsp; &amp;nbsp; &amp;nbsp; root&amp;nbsp; &amp;nbsp;29u&amp;nbsp; IPv4&amp;nbsp; &amp;nbsp;85062376&amp;nbsp; &amp;nbsp; &amp;nbsp; 0t0&amp;nbsp; TCP *:111 (LISTEN)&lt;br /&gt;httpd&amp;nbsp; &amp;nbsp; &amp;nbsp; 119&amp;nbsp; &amp;nbsp; &amp;nbsp; root&amp;nbsp; &amp;nbsp; 4u&amp;nbsp; IPv6&amp;nbsp; &amp;nbsp;85063110&amp;nbsp; &amp;nbsp; &amp;nbsp; 0t0&amp;nbsp; TCP *:80 (LISTEN)&lt;br /&gt;sendmail&amp;nbsp; &amp;nbsp;180&amp;nbsp; &amp;nbsp; &amp;nbsp; root&amp;nbsp; &amp;nbsp; 4u&amp;nbsp; IPv4&amp;nbsp; &amp;nbsp;85063338&amp;nbsp; &amp;nbsp; &amp;nbsp; 0t0&amp;nbsp; TCP 127.0.0.1:25 (LISTEN)&lt;br /&gt;rpcbind&amp;nbsp; &amp;nbsp; 707&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;rpc&amp;nbsp; &amp;nbsp; 4u&amp;nbsp; IPv4&amp;nbsp; &amp;nbsp;85062376&amp;nbsp; &amp;nbsp; &amp;nbsp; 0t0&amp;nbsp; TCP *:111 (LISTEN)&lt;br /&gt;rpcbind&amp;nbsp; &amp;nbsp; 707&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;rpc&amp;nbsp; &amp;nbsp;11u&amp;nbsp; IPv6&amp;nbsp; &amp;nbsp;93778193&amp;nbsp; &amp;nbsp; &amp;nbsp; 0t0&amp;nbsp; TCP *:111 (LISTEN)&lt;br /&gt;httpd&amp;nbsp; &amp;nbsp; &amp;nbsp;5967&amp;nbsp; &amp;nbsp; apache&amp;nbsp; &amp;nbsp; 4u&amp;nbsp; IPv6&amp;nbsp; &amp;nbsp;85063110&amp;nbsp; &amp;nbsp; &amp;nbsp; 0t0&amp;nbsp; TCP *:80 (LISTEN)&lt;br /&gt;httpd&amp;nbsp; &amp;nbsp; &amp;nbsp;6058&amp;nbsp; &amp;nbsp; apache&amp;nbsp; &amp;nbsp; 4u&amp;nbsp; IPv6&amp;nbsp; &amp;nbsp;85063110&amp;nbsp; &amp;nbsp; &amp;nbsp; 0t0&amp;nbsp; TCP *:80 (LISTEN)&lt;br /&gt;httpd&amp;nbsp; &amp;nbsp; &amp;nbsp;6059&amp;nbsp; &amp;nbsp; apache&amp;nbsp; &amp;nbsp; 4u&amp;nbsp; IPv6&amp;nbsp; &amp;nbsp;85063110&amp;nbsp; &amp;nbsp; &amp;nbsp; 0t0&amp;nbsp; TCP *:80 (LISTEN)&lt;br /&gt;httpd&amp;nbsp; &amp;nbsp; &amp;nbsp;7369&amp;nbsp; &amp;nbsp; apache&amp;nbsp; &amp;nbsp; 4u&amp;nbsp; IPv6&amp;nbsp; &amp;nbsp;85063110&amp;nbsp; &amp;nbsp; &amp;nbsp; 0t0&amp;nbsp; TCP *:80 (LISTEN)&lt;br /&gt;httpd&amp;nbsp; &amp;nbsp; &amp;nbsp;8282&amp;nbsp; &amp;nbsp; apache&amp;nbsp; &amp;nbsp; 4u&amp;nbsp; IPv6&amp;nbsp; &amp;nbsp;85063110&amp;nbsp; &amp;nbsp; &amp;nbsp; 0t0&amp;nbsp; TCP *:80 (LISTEN)&lt;br /&gt;node&amp;nbsp; &amp;nbsp; &amp;nbsp;10934 lunchvote&amp;nbsp; &amp;nbsp;14u&amp;nbsp; IPv4 1986748894&amp;nbsp; &amp;nbsp; &amp;nbsp; 0t0&amp;nbsp; TCP 127.0.0.1:5858 (LISTEN)&lt;br /&gt;node&amp;nbsp; &amp;nbsp; &amp;nbsp;10934 lunchvote&amp;nbsp; &amp;nbsp;18u&amp;nbsp; IPv4 1986749280&amp;nbsp; &amp;nbsp; &amp;nbsp; 0t0&amp;nbsp; TCP 127.0.0.1:3001 (LISTEN)&lt;br /&gt;sshd&amp;nbsp; &amp;nbsp; &amp;nbsp;10984&amp;nbsp; &amp;nbsp; &amp;nbsp; root&amp;nbsp; &amp;nbsp; 3u&amp;nbsp; IPv4 1989274030&amp;nbsp; &amp;nbsp; &amp;nbsp; 0t0&amp;nbsp; TCP *:22 (LISTEN)&lt;br /&gt;sshd&amp;nbsp; &amp;nbsp; &amp;nbsp;10984&amp;nbsp; &amp;nbsp; &amp;nbsp; root&amp;nbsp; &amp;nbsp; 4u&amp;nbsp; IPv6 1989274032&amp;nbsp; &amp;nbsp; &amp;nbsp; 0t0&amp;nbsp; TCP *:22 (LISTEN)&lt;br /&gt;&lt;div&gt;&lt;br /&gt;&lt;/div&gt;</content><author><name>Scott McCoy</name></author><summary type="html">I learned a bit about how to see what’s listening. If it doesn’t say * in the rightmost column, the listed host is the only one with access. In this example, node is only accessible from localhost.sudo lsof -i -P -n grep LISTENsystemd      1      root   29u  IPv4   85062376      0t0  TCP *:111 (LISTEN)httpd      119      root    4u  IPv6   85063110      0t0  TCP *:80 (LISTEN)sendmail   180      root    4u  IPv4   85063338      0t0  TCP 127.0.0.1:25 (LISTEN)rpcbind    707       rpc    4u  IPv4   85062376      0t0  TCP *:111 (LISTEN)rpcbind    707       rpc   11u  IPv6   93778193      0t0  TCP *:111 (LISTEN)httpd     5967    apache    4u  IPv6   85063110      0t0  TCP *:80 (LISTEN)httpd     6058    apache    4u  IPv6   85063110      0t0  TCP *:80 (LISTEN)httpd     6059    apache    4u  IPv6   85063110      0t0  TCP *:80 (LISTEN)httpd     7369    apache    4u  IPv6   85063110      0t0  TCP *:80 (LISTEN)httpd     8282    apache    4u  IPv6   85063110      0t0  TCP *:80 (LISTEN)node     10934 lunchvote   14u  IPv4 1986748894      0t0  TCP 127.0.0.1:5858 (LISTEN)node     10934 lunchvote   18u  IPv4 1986749280      0t0  TCP 127.0.0.1:3001 (LISTEN)sshd     10984      root    3u  IPv4 1989274030      0t0  TCP *:22 (LISTEN)sshd     10984      root    4u  IPv6 1989274032      0t0  TCP *:22 (LISTEN)&amp;lt;div&amp;gt;&amp;lt;/div&amp;gt;</summary></entry><entry><title type="html">Fix corrupted path with hash command</title><link href="http://localhost:4000/2020/01/27/hash-command.html" rel="alternate" type="text/html" title="Fix corrupted path with hash command" /><published>2020-01-27T14:03:00-08:00</published><updated>2020-01-27T14:03:00-08:00</updated><id>http://localhost:4000/2020/01/27/hash-command</id><content type="html" xml:base="http://localhost:4000/2020/01/27/hash-command.html">Sometimes when installing new versions of software, the path that bash has saved gets corrupted. Running the hash command on that command can fix it, or just running hash -r
-
-
-```
-[lunchvote@server /]$ node
--bash: /usr/local/bin/node: No such file or directory
-hash node
-[lunchvote@server /]$ node --version
-v10.18.1
-```</content><author><name>Scott McCoy</name></author><summary type="html">Sometimes when installing new versions of software, the path that bash has saved gets corrupted. Running the hash command on that command can fix it, or just running hash -r</summary></entry><entry><title type="html">Swift - Arrays of Generics of Mixed Types, Why Not To Do That, and why Type Erasure is Not A Solution</title><link href="http://localhost:4000/2020/01/14/swift-array-of-generics-of-mixed-types.html" rel="alternate" type="text/html" title="Swift - Arrays of Generics of Mixed Types, Why Not To Do That, and why Type Erasure is Not A Solution" /><published>2020-01-14T12:03:00-08:00</published><updated>2020-01-14T12:03:00-08:00</updated><id>http://localhost:4000/2020/01/14/swift-array-of-generics-of-mixed-types</id><content type="html" xml:base="http://localhost:4000/2020/01/14/swift-array-of-generics-of-mixed-types.html">&lt;p&gt;Most common data formats (Json, Plist, XML) support arrays of mixed types like: &lt;code class=&quot;highlighter-rouge&quot;&gt;[&quot;foo&quot;, 1, {&quot;a&quot;:3}]&lt;/code&gt; and I often find myself wanting to mirror that in Swift. For example, I often find myself wanting to make a generic AppSetting class that can consume/represent any data type, wraps UserDefaults and provides functionality like CustomStringConvertible:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class AppSetting&amp;lt;T&amp;gt; {
-    var data:T
-    
-    init(_ data:T) {
-        self.data = data
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Unfortunately, once the generic class definition is resolved to a concrete type, say  &lt;code class=&quot;highlighter-rouge&quot;&gt;AppSetting&amp;lt;Int&amp;gt;&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;AppSetting&amp;lt;String&amp;gt;&lt;/code&gt;, they’re just as different from each other as an &lt;code class=&quot;highlighter-rouge&quot;&gt;Int&lt;/code&gt; and a &lt;code class=&quot;highlighter-rouge&quot;&gt;String&lt;/code&gt; are and you get the same “Don’t mix types” errors if you try to put them into an array:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let firstElem = AppSetting(1)
-let secondElem = AppSetting(&quot;Foo&quot;)
-let arr = [firstElem, secondElem]
-🛑 Heterogeneous collection literal could only be inferred to '[Any]'; add explicit type annotation if this is intentional
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;non-solutions&quot;&gt;Non-Solutions&lt;/h2&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;Making it an array of &lt;code class=&quot;highlighter-rouge&quot;&gt;AppSetting&amp;lt;Any&amp;gt;&lt;/code&gt; doesn’t work because that’s &lt;em&gt;also&lt;/em&gt; a distinct type:&lt;/p&gt;
-
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; let firstElem = AppSetting(1)
- let secondElem = AppSetting(&quot;Foo&quot;)
- let arr:[AppSetting&amp;lt;Any&amp;gt;] = [firstElem, secondElem]
- 🛑 Cannot convert value of type 'AppSetting&amp;lt;Int&amp;gt;' to expected element type 'AppSetting'
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Make the elements explicitly of type &lt;code class=&quot;highlighter-rouge&quot;&gt;AppSetting&amp;lt;Any&amp;gt;&lt;/code&gt; compiles, but it wipes out the usefulness of generics.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; let firstElem:AppSetting&amp;lt;Any&amp;gt; = AppSetting(1)
- let secondElem:AppSetting&amp;lt;Any&amp;gt; = AppSetting(&quot;Foo&quot;)
- let arr:[MyClass&amp;lt;Any&amp;gt;] = [firstElem, secondElem]
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-
-    &lt;p&gt;This wipes out the utility of having MyClass be generic since elements of the array are now explicitly &lt;code class=&quot;highlighter-rouge&quot;&gt;MyClass&amp;lt;Any&amp;gt;&lt;/code&gt; rather than &lt;code class=&quot;highlighter-rouge&quot;&gt;MyClass&amp;lt;Int&amp;gt;&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;MyClass&amp;lt;String&amp;gt;&lt;/code&gt;.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Making array of type  &lt;code class=&quot;highlighter-rouge&quot;&gt;Any&lt;/code&gt; is arguably the most faithful mirror of the typeless JSON array we’re trying to mimic, but we’d obviously like &lt;em&gt;some&lt;/em&gt; kind of type checking:
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; let firstElem = AppSetting(1)
- let secondElem = AppSetting(&quot;Foo&quot;)
- let arr:[Any] = [firstElem, secondElem]
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;So what’s the nost elegant way to get an array of mixed types, but with some type checking?&lt;/p&gt;
-
-&lt;h2 id=&quot;solutions&quot;&gt;Solutions&lt;/h2&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;Create a dummy protocol &lt;code class=&quot;highlighter-rouge&quot;&gt;AppSettingProtocol&lt;/code&gt; which &lt;code class=&quot;highlighter-rouge&quot;&gt;AppSetting&lt;/code&gt; conforms to and then make a &lt;code class=&quot;highlighter-rouge&quot;&gt;[AppSettingProtocol]&lt;/code&gt; array, essentially &lt;em&gt;obscuring&lt;/em&gt; the &lt;code class=&quot;highlighter-rouge&quot;&gt;AppSetting&amp;lt;T&amp;gt;&lt;/code&gt; type.&lt;/p&gt;
-
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; protocol AppSettingProtocol{}
-
- class AppSetting&amp;lt;T&amp;gt; : AppSettingProtocol {
-     var data:T
-        
-     init(_ data:T) {
-         self.data = data
-     }
- }
-     
- let firstElem = AppSetting(1)
- let secondElem = AppSetting(&quot;Foo&quot;)
- let arr:[AppSettingProtocol] = [firstElem, secondElem]
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-
-    &lt;p&gt;This is sort of like having an abstract superclass.&lt;/p&gt;
-
-    &lt;p&gt;It’s tempting to add an &lt;code class=&quot;highlighter-rouge&quot;&gt;Associated Type&lt;/code&gt; to the protocol so you know something about what’s in the array, but Protocols with associated types have the same effective restrictions that Generics do and for many of the same reasons:&lt;/p&gt;
-
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; protocol MyProtocol {
-     associatedtype MyType    
- }
- &quot;Protocol 'SettingProtocol' can only be used as a generic constraint because it has Self or associated type requirements&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-
-    &lt;p&gt;It’s also good to know that MyProtocol can’t have Self requirements (like Equatable does) if you want to have it be the type of an array. This keeps you from making an array of Equatable which makes sense since if you could, you could have an array of objects of mixed types that might not be Equatable with each &lt;em&gt;other&lt;/em&gt;. For example, two Doubles are Equatable, but you  &lt;a href=&quot;https://www.bignerdranch.com/blog/why-associated-type-requirements-become-generic-constraints/&quot;&gt;Self requirements&lt;/a&gt; like this in a little more depth.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Enums with Associated Values&lt;/p&gt;
-
-    &lt;p&gt;Example from &lt;a href=&quot;https://github.com/VinceBurn/SwiftyPlist/blob/master/Pod/Classes/Plist.swift&quot;&gt;SwiftyPlist&lt;/a&gt;:&lt;/p&gt;
-
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; enum EntityType {
-     case string(String)
-     case number(NSNumber)
-     case date(Date)
-     case data(Data)
-     case array([Plist])
-     case dictionary([String : Plist])
- }
-
- let arr = [EntityType.string(&quot;Foo&quot;), EntityType.date(Date())]
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-
-    &lt;p&gt;As you can see, writing to an enum with an associated type is quite elegant. But getting a primitive value back out from one requires a lot of awful switch case code:&lt;/p&gt;
-
-    &lt;p&gt;My impulse was to immediately try to encapsulate the accessor code away behind a StringSetting or IntSetting class that knows exactly what data type it’s managing and can expose a primitive property. Which brings me back around to my original idea…&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Just make an abstract class with very limited functionality and make subclasses that explicitly expose a primitive of the the type they handle:&lt;/p&gt;
-
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; let arr:[AbstractSetting] = [StringSetting(&quot;Foo&quot;), IntSetting(1)]
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;the-type-erasure-pattern&quot;&gt;The Type Erasure Pattern&lt;/h2&gt;
-&lt;p&gt;The Type Erasure Pattern is a solution to a &lt;em&gt;different&lt;/em&gt; problem.&lt;/p&gt;
-
-&lt;p&gt;You create 3 classes - an Abstract Base which subclassed in order to bind the generic type constraint to our protocol’s associated type, a Box, and a Public Wrapper. The 
-&lt;a href=&quot;https://www.bignerdranch.com/blog/breaking-down-type-erasure-in-swift&quot;&gt;Big Nerd Ranch&lt;/a&gt; discusses this in depth.
-The Type Erasure Pattern is a solution to a &lt;em&gt;different&lt;/em&gt; problem. Instead of letting you make an array of &lt;em&gt;different&lt;/em&gt; types, it allows you to make an array of &lt;em&gt;different class instances that conform to the same protocol&lt;/em&gt; so long as they have the same &lt;em&gt;associated type&lt;/em&gt;. So it won’t let you fake your way to &lt;code class=&quot;highlighter-rouge&quot;&gt;[1, &quot;2&quot;, Dictionary]&lt;/code&gt;, but it will let you make something like&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let arr:[AnyHandler&amp;lt;Int&amp;gt;] = [IntHandler(1), DifferentKindOfIntHandler(1), VeryDifferentIntHandler(1)]
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;Where AnyHandler conforms to&lt;/p&gt;
-
-&lt;p&gt;Since the Type Erasure Pattern essentially substitutes a class for the protocol, to me this seems functionally equivalent to making an abstract generic &lt;code class=&quot;highlighter-rouge&quot;&gt;MyClass&amp;lt;T&amp;gt;&lt;/code&gt; and then making an array of &lt;code class=&quot;highlighter-rouge&quot;&gt;MyClass&amp;lt;Int&amp;gt;&lt;/code&gt; but with extra steps. The payoff for those steps is that you then get to effectively use a protocol instead of a class which can be a big help in a complex project, but YAGNI, probably.&lt;/p&gt;
-
-&lt;p&gt;Note: Type Erasure is a CS term that in &lt;em&gt;Swift&lt;/em&gt; means “use generics”, and the Type Erasure &lt;em&gt;Pattern&lt;/em&gt; is a particular software design pattern relying heavily on the use of generics.&lt;/p&gt;
-
-&lt;p&gt;When is the Type Erasure Pattern &lt;em&gt;Useful&lt;/em&gt;?&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;protocol Identifiable {
-    associatedtype ID
-    var id: ID { get set }
-}
-
-struct Person: Identifiable {
-    var id: String
-}
-
-struct Website: Identifiable {
-    var id: URL
-}
-
-func compareThing1(_ thing1: Identifiable, against thing2: Identifiable) -&amp;gt; Bool {
-    return true
-}
-
-🛑 protocol 'Identifiable' can only be used as a generic constraint because it has Self or associated type requirements
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;This makes sense, if we didn’t have this compilation error we’d be able to make an array of all &lt;code class=&quot;highlighter-rouge&quot;&gt;Equatable&lt;/code&gt;s or something equally maddening.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://medium.com/capital-one-tech/an-alternative-to-type-erasure-for-generic-protocols-a9a48e96618a&quot;&gt;This Guy&lt;/a&gt;’s approach to the associated type problem is to just not use associated types&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;protocol Fetchable {
-    associatedtype DataType
-    func fetch(completionBlock: @escaping ([DataType]?) -&amp;gt; Void)
-}
-
-protocol FetchableType {}
-
-protocol Fetchable {
-    func fetch(completionBlock: @escaping (FetchableType) -&amp;gt; Void)
-}
-
-struct FlightBookingsWrapper: FetchableType {
-    let bookings: [FlightBooking]?
-}
-
-struct HotelBookingsWrapper: FetchableType {
-    let bookings: [HotelBooking]?
-}
-
-struct RentalBookingsWrapper: FetchableType {
-    let bookings: [RentalBooking]?
-}
-
-struct FlightBookingFetcher: Fetchable {
-    func fetch(completionBlock: @escaping (FetchableType) -&amp;gt; Void) {
-        completionBlock(
-            FlightBookingsWrapper(bookings: [
-                FlightBooking(identifier: &quot;VX-XUJURM&quot;,
-                              startDate: Date.bookingDate(from: &quot;2017-11-12T10:30:00+0000&quot;),
-                              endDate: Date.bookingDate(from: &quot;2017-11-16T09:00:00+0000&quot;),
-                              flightNumber: &quot;VX-1511&quot;,
-                              from: &quot;SFO&quot;,
-                              to: &quot;SEA&quot;,
-                              isRoundTrip: true)
-                ]))
-    }
-}
-
-struct HotelBookingFetcher: Fetchable {
-    func fetch(completionBlock: @escaping (FetchableType) -&amp;gt; Void) {
-        completionBlock(
-            HotelBookingsWrapper(bookings: [
-                HotelBooking(identifier: &quot;MC-83027626&quot;,
-                             startDate: Date.bookingDate(from: &quot;2017-11-12T00:00:00+0000&quot;),
-                             endDate: Date.bookingDate(from: &quot;2017-11-16T00:00:00+0000&quot;),
-                             roomNumber: 304)
-                ]))
-    }
-}
-
-struct RentalBookingFetcher: Fetchable {
-    func fetch(completionBlock: @escaping (FetchableType) -&amp;gt; Void) {
-        completionBlock(
-            RentalBookingsWrapper(bookings: [
-                RentalBooking(identifier: &quot;ENT-2856847&quot;,
-                              startDate: Date.bookingDate(from: &quot;2017-11-12T00:00:00+0000&quot;),
-                              endDate: Date.bookingDate(from: &quot;2017-11-16T00:00:00+0000&quot;),
-                              model: &quot;Fiesta&quot;,
-                              make: &quot;Ford&quot;)
-                ]))
-    }
-}
-
-struct BookingCoordinator {
-    public func fetch() {
-        let fetchers: [Fetchable] = [FlightBookingFetcher(), HotelBookingFetcher(), RentalBookingFetcher()]
-        for fetcher in fetchers {
-            fetcher.fetch { (bookings) in
-                print(bookings)
-            }
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;This is honestly not bad, but I think the point of the Type Erasure Pattern is to create 3 new classes and then you can use &lt;em&gt;anything&lt;/em&gt; that conforms to that protocol in that array,&lt;/p&gt;
-
-&lt;p&gt;The Crusty Video&lt;/p&gt;
-
-&lt;p&gt;Instead of classes, make structs that implement protocols.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Protocols essentially give you multiple inheritance.&lt;/li&gt;
-  &lt;li&gt;Structs are Value types - faster and more thread safe!&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Dave &amp;amp; Crusty made the following:&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;Some Shape structs that implmented a Drawable protocol&lt;/li&gt;
-  &lt;li&gt;A TestRenderer struct that implemented a Renderer protocol&lt;/li&gt;
-  &lt;li&gt;An extension on CGContext so that it implements Renderer(!!!)&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;protocol Drawable {
-    func draw(renderer:Renderer)
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;The assertion is that protocols and Generics are much better than mocks for testability.&lt;/p&gt;
-
-&lt;p&gt;protocol extensions not only do not extend the contract explicit in the original protocol, they &lt;em&gt;require&lt;/em&gt; you to implement 
-In an extension protocol, you can create a default implementation.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Mocks are inherently fragile; You have to couple testing code to the implementation details of the code under test.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Constrained extensions&lt;/p&gt;
-
-&lt;p&gt;You can make a protocol extension (with a nice default implementation!!) that only applies where an associated type is also something else.
-Instead of having to apply an extension to a bunch of different classes, potentially infinite, you make the protocol extension opt into applying only when the associated type is also something else!&lt;/p&gt;
-
-&lt;p&gt;A self requirement puts it in the homogeneous, statically dispatched world. But Diagram really needs a heterogeneous array of Drawables so we can put polygons and circles in the same array.&lt;/p&gt;
-
-&lt;p&gt;You want to use classes when copying or comparing instances doesn’t make sense (Window)
-Instance lifetime is tied to external effects. The compiler does lots of optimization on value types’ lifetimes but a class sticks around.
-When the class would be a “sink”; a write-only conduit to an external state.&lt;/p&gt;</content><author><name>Scott McCoy</name></author><summary type="html">Most common data formats (Json, Plist, XML) support arrays of mixed types like: [&quot;foo&quot;, 1, {&quot;a&quot;:3}] and I often find myself wanting to mirror that in Swift. For example, I often find myself wanting to make a generic AppSetting class that can consume/represent any data type, wraps UserDefaults and provides functionality like CustomStringConvertible:</summary></entry></feed>
+```</content><author><name>Scott McCoy</name></author><summary type="html">Sometimes when installing new versions of software, the path that bash has saved gets corrupted. Running the hash command on that command can fix it, or just running hash -r</summary></entry><entry><title type="html">CentOS 7 - Unblock a port</title><link href="http://localhost:4000/2020/02/08/centos-7-unblock-port.html" rel="alternate" type="text/html" title="CentOS 7 - Unblock a port" /><published>2020-02-08T15:31:00-08:00</published><updated>2020-02-08T15:31:00-08:00</updated><id>http://localhost:4000/2020/02/08/centos-7-unblock-port</id><content type="html" xml:base="http://localhost:4000/2020/02/08/centos-7-unblock-port.html">To unblock a port normally you'd use iptables which firewall-cmd is a wrapper for:&lt;br /&gt;&lt;br /&gt;iptables -I INPUT -p tcp --dport 12345 --syn -j ACCEPT&lt;br /&gt;service iptables save</content><author><name>Scott McCoy</name></author><summary type="html">To unblock a port normally you’d use iptables which firewall-cmd is a wrapper for:iptables -I INPUT -p tcp –dport 12345 –syn -j ACCEPTservice iptables save</summary></entry><entry><title type="html">Use lsof to see what processes are listening on which ports</title><link href="http://localhost:4000/2020/02/08/lsof-to-see-what-processes-are.html" rel="alternate" type="text/html" title="Use lsof to see what processes are listening on which ports" /><published>2020-02-08T15:19:00-08:00</published><updated>2020-02-08T15:19:00-08:00</updated><id>http://localhost:4000/2020/02/08/lsof-to-see-what-processes-are</id><content type="html" xml:base="http://localhost:4000/2020/02/08/lsof-to-see-what-processes-are.html">I learned a bit about how to see what's listening. If it doesn't say * in the rightmost column, the listed host is the only one with access. In this example, node is only accessible *from* localhost.&lt;br /&gt;&lt;br /&gt;sudo lsof -i -P -n | grep LISTEN&lt;br /&gt;&lt;br /&gt;systemd&amp;nbsp; &amp;nbsp; &amp;nbsp; 1&amp;nbsp; &amp;nbsp; &amp;nbsp; root&amp;nbsp; &amp;nbsp;29u&amp;nbsp; IPv4&amp;nbsp; &amp;nbsp;85062376&amp;nbsp; &amp;nbsp; &amp;nbsp; 0t0&amp;nbsp; TCP *:111 (LISTEN)&lt;br /&gt;httpd&amp;nbsp; &amp;nbsp; &amp;nbsp; 119&amp;nbsp; &amp;nbsp; &amp;nbsp; root&amp;nbsp; &amp;nbsp; 4u&amp;nbsp; IPv6&amp;nbsp; &amp;nbsp;85063110&amp;nbsp; &amp;nbsp; &amp;nbsp; 0t0&amp;nbsp; TCP *:80 (LISTEN)&lt;br /&gt;sendmail&amp;nbsp; &amp;nbsp;180&amp;nbsp; &amp;nbsp; &amp;nbsp; root&amp;nbsp; &amp;nbsp; 4u&amp;nbsp; IPv4&amp;nbsp; &amp;nbsp;85063338&amp;nbsp; &amp;nbsp; &amp;nbsp; 0t0&amp;nbsp; TCP 127.0.0.1:25 (LISTEN)&lt;br /&gt;rpcbind&amp;nbsp; &amp;nbsp; 707&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;rpc&amp;nbsp; &amp;nbsp; 4u&amp;nbsp; IPv4&amp;nbsp; &amp;nbsp;85062376&amp;nbsp; &amp;nbsp; &amp;nbsp; 0t0&amp;nbsp; TCP *:111 (LISTEN)&lt;br /&gt;rpcbind&amp;nbsp; &amp;nbsp; 707&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;rpc&amp;nbsp; &amp;nbsp;11u&amp;nbsp; IPv6&amp;nbsp; &amp;nbsp;93778193&amp;nbsp; &amp;nbsp; &amp;nbsp; 0t0&amp;nbsp; TCP *:111 (LISTEN)&lt;br /&gt;httpd&amp;nbsp; &amp;nbsp; &amp;nbsp;5967&amp;nbsp; &amp;nbsp; apache&amp;nbsp; &amp;nbsp; 4u&amp;nbsp; IPv6&amp;nbsp; &amp;nbsp;85063110&amp;nbsp; &amp;nbsp; &amp;nbsp; 0t0&amp;nbsp; TCP *:80 (LISTEN)&lt;br /&gt;httpd&amp;nbsp; &amp;nbsp; &amp;nbsp;6058&amp;nbsp; &amp;nbsp; apache&amp;nbsp; &amp;nbsp; 4u&amp;nbsp; IPv6&amp;nbsp; &amp;nbsp;85063110&amp;nbsp; &amp;nbsp; &amp;nbsp; 0t0&amp;nbsp; TCP *:80 (LISTEN)&lt;br /&gt;httpd&amp;nbsp; &amp;nbsp; &amp;nbsp;6059&amp;nbsp; &amp;nbsp; apache&amp;nbsp; &amp;nbsp; 4u&amp;nbsp; IPv6&amp;nbsp; &amp;nbsp;85063110&amp;nbsp; &amp;nbsp; &amp;nbsp; 0t0&amp;nbsp; TCP *:80 (LISTEN)&lt;br /&gt;httpd&amp;nbsp; &amp;nbsp; &amp;nbsp;7369&amp;nbsp; &amp;nbsp; apache&amp;nbsp; &amp;nbsp; 4u&amp;nbsp; IPv6&amp;nbsp; &amp;nbsp;85063110&amp;nbsp; &amp;nbsp; &amp;nbsp; 0t0&amp;nbsp; TCP *:80 (LISTEN)&lt;br /&gt;httpd&amp;nbsp; &amp;nbsp; &amp;nbsp;8282&amp;nbsp; &amp;nbsp; apache&amp;nbsp; &amp;nbsp; 4u&amp;nbsp; IPv6&amp;nbsp; &amp;nbsp;85063110&amp;nbsp; &amp;nbsp; &amp;nbsp; 0t0&amp;nbsp; TCP *:80 (LISTEN)&lt;br /&gt;node&amp;nbsp; &amp;nbsp; &amp;nbsp;10934 lunchvote&amp;nbsp; &amp;nbsp;14u&amp;nbsp; IPv4 1986748894&amp;nbsp; &amp;nbsp; &amp;nbsp; 0t0&amp;nbsp; TCP 127.0.0.1:5858 (LISTEN)&lt;br /&gt;node&amp;nbsp; &amp;nbsp; &amp;nbsp;10934 lunchvote&amp;nbsp; &amp;nbsp;18u&amp;nbsp; IPv4 1986749280&amp;nbsp; &amp;nbsp; &amp;nbsp; 0t0&amp;nbsp; TCP 127.0.0.1:3001 (LISTEN)&lt;br /&gt;sshd&amp;nbsp; &amp;nbsp; &amp;nbsp;10984&amp;nbsp; &amp;nbsp; &amp;nbsp; root&amp;nbsp; &amp;nbsp; 3u&amp;nbsp; IPv4 1989274030&amp;nbsp; &amp;nbsp; &amp;nbsp; 0t0&amp;nbsp; TCP *:22 (LISTEN)&lt;br /&gt;sshd&amp;nbsp; &amp;nbsp; &amp;nbsp;10984&amp;nbsp; &amp;nbsp; &amp;nbsp; root&amp;nbsp; &amp;nbsp; 4u&amp;nbsp; IPv6 1989274032&amp;nbsp; &amp;nbsp; &amp;nbsp; 0t0&amp;nbsp; TCP *:22 (LISTEN)&lt;br /&gt;&lt;div&gt;&lt;br /&gt;&lt;/div&gt;</content><author><name>Scott McCoy</name></author><summary type="html">I learned a bit about how to see what’s listening. If it doesn’t say * in the rightmost column, the listed host is the only one with access. In this example, node is only accessible from localhost.sudo lsof -i -P -n grep LISTENsystemd      1      root   29u  IPv4   85062376      0t0  TCP *:111 (LISTEN)httpd      119      root    4u  IPv6   85063110      0t0  TCP *:80 (LISTEN)sendmail   180      root    4u  IPv4   85063338      0t0  TCP 127.0.0.1:25 (LISTEN)rpcbind    707       rpc    4u  IPv4   85062376      0t0  TCP *:111 (LISTEN)rpcbind    707       rpc   11u  IPv6   93778193      0t0  TCP *:111 (LISTEN)httpd     5967    apache    4u  IPv6   85063110      0t0  TCP *:80 (LISTEN)httpd     6058    apache    4u  IPv6   85063110      0t0  TCP *:80 (LISTEN)httpd     6059    apache    4u  IPv6   85063110      0t0  TCP *:80 (LISTEN)httpd     7369    apache    4u  IPv6   85063110      0t0  TCP *:80 (LISTEN)httpd     8282    apache    4u  IPv6   85063110      0t0  TCP *:80 (LISTEN)node     10934 lunchvote   14u  IPv4 1986748894      0t0  TCP 127.0.0.1:5858 (LISTEN)node     10934 lunchvote   18u  IPv4 1986749280      0t0  TCP 127.0.0.1:3001 (LISTEN)sshd     10984      root    3u  IPv4 1989274030      0t0  TCP *:22 (LISTEN)sshd     10984      root    4u  IPv6 1989274032      0t0  TCP *:22 (LISTEN)&amp;lt;div&amp;gt;&amp;lt;/div&amp;gt;</summary></entry></feed>
