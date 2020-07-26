@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Store git credentials
+title: 🐙🐈 Git - Store Credentials
 date: '2019-10-29T12:58:00.003-07:00'
 author: Scott McCoy
 tags: 

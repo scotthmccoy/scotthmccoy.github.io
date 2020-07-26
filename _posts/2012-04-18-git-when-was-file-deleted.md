@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Git - Restore deleted file. Or, when was a file modified?
+title: 🐙🐈 Git - Restore deleted file. Or, when was a file modified?
 date: '2012-04-18T15:36:00.006-07:00'
 author: Scott McCoy
 tags:

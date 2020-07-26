@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Swift Arrays of Generics of Mixed Types, Why Not To Do That, and why Type Erasure is Not A Solution
+title: 🐦 Swift Arrays of Generics of Mixed Types, Why Not To Do That, and why Type Erasure is Not A Solution
 date: '2020-01-14T12:03:00.000-08:00'
 author: Scott McCoy
 tags: 

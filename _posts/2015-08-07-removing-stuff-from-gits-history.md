@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Removing stuff from git's history
+title: 🐙🐈 Git - Removing file or folder from git's history
 date: '2015-08-07T15:48:00.002-07:00'
 author: Scott McCoy
 tags:

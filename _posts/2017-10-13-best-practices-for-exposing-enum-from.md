@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Best Practices for exposing an enum from Swift to OBJC
+title: 🐦 Best Practices for exposing an enum from Swift to OBJC
 date: '2017-10-13T15:09:00.002-07:00'
 author: Scott McCoy
 tags: 

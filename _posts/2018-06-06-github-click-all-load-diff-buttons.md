@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Github Click all Load Diff Buttons
+title: 🐙🐈 Github - Click all Load Diff Buttons
 date: '2018-06-06T13:31:00.001-07:00'
 author: Scott McCoy
 tags: 
