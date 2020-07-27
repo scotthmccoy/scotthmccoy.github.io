@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 'TIL - Use of Selector or #selector now requires the function be @objc'
+title: '🐦 Swift - Use of Selector or #selector requires the function be @objc'
 date: '2020-01-08T12:21:00.000-08:00'
 author: Scott McCoy
 tags: 
