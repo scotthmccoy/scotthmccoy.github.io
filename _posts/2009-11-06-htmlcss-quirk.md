@@ -1,6 +1,6 @@
 ---
 layout: post
-title: HTML/CSS Quirk
+title: Position relative undefined for table cells
 date: '2009-11-06T09:51:00.000-08:00'
 author: Unknown
 tags: 

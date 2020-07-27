@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Swift - Enums and wildcard matches
+title: 🐦 Swift - Enums and wildcard matches
 date: '2014-10-01T10:24:00.000-07:00'
 author: Scott McCoy
 tags:
@@ -10,4 +10,43 @@ blogger_id: tag:blogger.com,1999:blog-250956833460526415.post-672231268968412249
 blogger_orig_url: https://scotthmccoy.blogspot.com/2014/10/swift-enums-and-wildcard-matches.html
 ---
 
-<div class="p1"><span class="s1">func</span> fizzBuzzBang(number: <span class="s2">Int</span>) -&gt; <span class="s2">String</span> {</div><div class="p1">&nbsp; &nbsp; <span class="s1">switch</span> (number % <span class="s3">3</span>, number % <span class="s3">5</span>, number % <span class="s3">7</span>) {</div><div class="p1">&nbsp; &nbsp; <span class="s1">case</span> (<span class="s3">0</span>, <span class="s3">0</span>, <span class="s3">0</span>):</div><div class="p2"><span class="s4">&nbsp; &nbsp; &nbsp; &nbsp; </span>// number divides by both 3, 5 and 7</div><div class="p3"><span class="s4">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="s1">return</span><span class="s4"> </span>"FizzBuzzBang!"</div><div class="p4">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;</div><div class="p1">&nbsp; &nbsp; <span class="s1">case</span> (<span class="s3">0</span>, <span class="s3">0</span>, <span class="s1">_</span>):</div><div class="p2"><span class="s4">&nbsp; &nbsp; &nbsp; &nbsp; </span>// number divides by both 3 and 5</div><div class="p3"><span class="s4">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="s1">return</span><span class="s4"> </span>"FizzBuzz!"</div><div class="p4">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;</div><div class="p1">&nbsp; &nbsp; <span class="s1">case</span> (<span class="s3">0</span>, <span class="s1">_</span>, <span class="s3">0</span>):</div><div class="p2"><span class="s4">&nbsp; &nbsp; &nbsp; &nbsp; </span>// number divides by both 3 and 7</div><div class="p3"><span class="s4">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="s1">return</span><span class="s4"> </span>"FizzBang!"</div><div class="p4">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;</div><div class="p1">&nbsp; &nbsp; <span class="s1">case</span> (<span class="s1">_</span>, <span class="s3">0</span>, <span class="s3">0</span>):</div><div class="p2"><span class="s4">&nbsp; &nbsp; &nbsp; &nbsp; </span>// number divides by 5 and 7</div><div class="p3"><span class="s4">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="s1">return</span><span class="s4"> </span>"BuzzBang!"</div><div class="p4">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;</div><div class="p1">&nbsp; &nbsp; <span class="s1">case</span> (<span class="s3">0</span>, <span class="s1">_</span>, <span class="s1">_</span>):</div><div class="p2"><span class="s4">&nbsp; &nbsp; &nbsp; &nbsp; </span>// number divides by 3</div><div class="p1">&nbsp; &nbsp; &nbsp; &nbsp; <span class="s1">return</span> <span class="s5">"Fizz!"</span></div><div class="p4">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;</div><div class="p1">&nbsp; &nbsp; <span class="s1">case</span> (<span class="s1">_</span>, <span class="s3">0</span>, <span class="s1">_</span>):</div><div class="p2"><span class="s4">&nbsp; &nbsp; &nbsp; &nbsp; </span>// number divides by 5</div><div class="p1">&nbsp; &nbsp; &nbsp; &nbsp; <span class="s1">return</span> <span class="s5">"Buzz!"</span></div><div class="p4">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;</div><div class="p1">&nbsp; &nbsp; <span class="s1">case</span> (<span class="s1">_</span>, <span class="s1">_</span>, <span class="s3">0</span>):</div><div class="p2"><span class="s4">&nbsp; &nbsp; &nbsp; &nbsp; </span>// number divides by 7</div><div class="p1">&nbsp; &nbsp; &nbsp; &nbsp; <span class="s1">return</span> <span class="s5">"Bang!"</span></div><div class="p4">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;</div><div class="p1">&nbsp; &nbsp; <span class="s1">case</span> (<span class="s1">_</span>, <span class="s1">_</span>, <span class="s1">_</span>):</div><div class="p2"><span class="s4">&nbsp; &nbsp; &nbsp; &nbsp; </span>// number does not divide by either 3 or 5</div><div class="p1">&nbsp; &nbsp; &nbsp; &nbsp; <span class="s1">return</span> <span class="s5">"</span>\(number)<span class="s5">"</span></div><div class="p4">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;</div><div class="p5"><span class="s4">&nbsp; &nbsp; </span>default<span class="s4">:</span></div><div class="p1">&nbsp; &nbsp; &nbsp; &nbsp; <span class="s1">return</span> <span class="s5">"Foo"</span></div><div class="p1">&nbsp; &nbsp; }</div><br /><div class="p1">}</div>
+```
+func fizzBuzzBang(number: Int) -> String {
+    switch (number % 3, number % 5, number % 7) {
+    case (0, 0, 0):
+        // number divides by both 3, 5 and 7
+        return "FizzBuzzBang!"
+        
+    case (0, 0, _):
+        // number divides by both 3 and 5
+        return "FizzBuzz!"
+        
+    case (0, _, 0):
+        // number divides by both 3 and 7
+        return "FizzBang!"
+        
+    case (_, 0, 0):
+        // number divides by 5 and 7
+        return "BuzzBang!"
+        
+    case (0, _, _):
+        // number divides by 3
+        return "Fizz!"
+        
+    case (_, 0, _):
+        // number divides by 5
+        return "Buzz!"
+        
+    case (_, _, 0):
+        // number divides by 7
+        return "Bang!"
+        
+    case (_, _, _):
+        // number does not divide by either 3 or 5
+        return "\(number)"
+        
+    default:
+        return "Foo"
+    }
+}
+```

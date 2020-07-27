@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Threading in IOS notes
+title: Various Threading Tools in iOS
 date: '2015-02-13T19:24:00.000-08:00'
 author: Scott McCoy
 tags: 
@@ -9,4 +9,20 @@ blogger_id: tag:blogger.com,1999:blog-250956833460526415.post-817701791019310262
 blogger_orig_url: https://scotthmccoy.blogspot.com/2015/02/threading-in-ios-notes.html
 ---
 
-You want to use the highest level of abstraction that makes sense. NSOperation Wraps GCD.<br /><br />Different threading tools:<br /><br /><ul><li>NSOperation, NSOperationQueue</li><li>performSelectorInBackground&nbsp;</li><li>NSLock</li><li>@synchronized</li><li>atomic properties, which are like an @synchronized(self) block around the property. They're pretty much useless.</li><ul><li>You won't get "garbage" in the sense that you won't get a read halfway through a write. But...</li><ul><li>Consider an XYZPerson object in which both a person’s first and last names are changed using atomic accessors from one thread. If another thread accesses both names at the same time, the atomic getter methods will return complete strings (without crashing), but there’s no guarantee that those values will be the right names relative to each other. If the first name is accessed before the change, but the last name is accessed after the change, you’ll end up with an inconsistent, mismatched pair of names.</li><li>Also consider a balance and currencyType pair of properties. If you convert your balance from dollars to pennies and back, the operation has to be serially queued.</li><li>if you had say a gold Pieces property on a player, and want to buy a battleaxe, you have to queue up both the check, the decrement, and the adding of the item to your inventory&nbsp;<i>as a single serial operation</i>, or else two different threads might check the balance and report you have enough gold and you end up with two battleaxes or a gold dupe bug or whatever.</li></ul></ul><li>dispatch_sync,&nbsp;which submits your&nbsp;block to a queue and waits until the block finishes</li><li>dispatch_async, which submits your block and doesn't wait.</li><li>dispatch_semaphore. if 0 then it's good for synchronization of tasks, if greater than 0 it's good for managing a finite pool of stuff.</li><li>dispatch_queue_create - lets you create your own serialized or concurrent queue. Great for the goldPieces or&nbsp;</li><li>dispatch_barrier_async - like having an NSOperationQueue do a waitUntilDone</li></ul><br />dispatch_async can use <b>dispatch_get_main_queue()</b> or <b>dispatch_get_global_queue()</b>, which has three flavors:<br /><br /><ul><li>DISPATCH_QUEUE_PRIORITY_MAIN (which is the highest priority and the equivalent of&nbsp;dispatch_get_main_queue)</li><li>DISPATCH_QUEUE_PRIORITY_HIGH</li><li>DISPATCH_QUEUE_PRIORITY_DEFAULT</li><li>DISPATCH_QUEUE_PRIORITY_LOW</li></ul><div><br /></div>
+You want to use the highest level of abstraction that makes sense:
+
+* NSOperation NSOperationQueue. Wraps GCD.
+* performSelectorInBackground
+* NSLock
+* @synchronized
+* atomic properties, which are like an @synchronized(self) block around the property. They're great for isolated values but useless when values depend on each other, like currencyAmount and currencyType. 
+* dispatch_sync which submits your block to a queue and waits until the block finishes
+* dispatch_async, which submits your block and doesn't wait.
+* dispatch_semaphore. if 0 then it's good for synchronization of tasks, if greater than 0 it's good for managing a finite pool of stuff.
+* dispatch_queue_create - lets you create your own serialized or concurrent queue.
+* dispatch_barrier_async - like having an NSOperationQueue do a waitUntilDone
+* dispatch_async can use dispatch_get_main_queue() dispatch_get_global_queue() which has four flavors:
+1. DISPATCH_QUEUE_PRIORITY_MAIN (The main thread) 
+2. DISPATCH_QUEUE_PRIORITY_HIGH
+3. DISPATCH_QUEUE_PRIORITY_DEFAULT
+4. DISPATCH_QUEUE_PRIORITY_LOW
