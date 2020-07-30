@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 🐦 Swift Some Keyword
+title: 🐦 Swift - Some Keyword
 date: 2020-07-26 01:21 -0700
 ---
 
@@ -39,7 +39,7 @@ print(type(of: x)) //Prints "String"
 
 The use of an opaque result type allows you to make the actual return type an implementation detail by exposing only the interface provided by the protocol. This gives you flexibility of changing the concrete type later down the line without breaking any code that depends on the function.
 
-For example, you could make the following replacement:
+For example, you could make the following replacement (change the return from a string to an Int) and not have to change *anything* else about your code, because you're dealing with the return as though **the only thing about it that matters is that it's Equatable**:
 
 ```
 func foo() -> some Equatable {

@@ -1,21 +1,22 @@
 ---
 layout: post
-title: Crusty Comparable Array - Bridge Building Between Static and Dynamic Worlds
+title: 🐦 Swift - Crusty - Protocol Extensions
 date: 2020-07-25 16:09 -0700
 ---
 
-In the Crusty Video at [41m5s](https://www.youtube.com/watch?v=xE5EcHuz52I#t=41m5s), they show how you can build a bridge between 
+In the Crusty Video at [41m5s](https://www.youtube.com/watch?v=xE5EcHuz52I#t=41m5s)...
 
-`Equatable` has `Self` requirements, so putting it on Drawable puts it into the dynamically dispatched world - but we don't want that, we want Drawable to live in the Statically dispatched world so that that we can make an array of Drawable! So we need our own function that does comparison, without using `Self`.
+`Equatable` has `Self` requirements, so putting it on Drawable puts it into the homogeneous, statically dispatched, compile-time world. We want Drawable to live in the heterogenous, dynamically-dispatched, run-time world so that that we can make an array of Drawable! So we need our own function that does comparison, but without without using a `Self` requirement. We do that using a `protocol extension`:
 
 
 ```
+
+//Adding `compareDrawable` here forces you to implement it in your Drawable struct so you can guarantee that an array of Drawables will be comparable even without Equatable.
+//But if you just make your Drawable implementation also implement Equatable, then you get the default implementation of compareDrawable provided by the `Drawble where Self : Equatable` protocol extension!
+//As an added bonus, since Equatable on a struct auto-synthesizes the == function by comparing member properties, the default implementation of Equatable can just lean on == if the class types match.
+
 protocol Drawable {
     func draw()
-    
-    //Adding this here forces you to implement it in your Drawable struct so you can guarantee that an array of Drawables will be comparable even without Equatable.
-    //But if you just make your Drawable implementation also implement Equatable, then you get the default implementation of compareDrawable provided by the `Drawble where Self : Equatable` protocol extension!
-    //As an added bonus, since Equatable on a struct auto-synthesizes the == function by comparing member properties, the default implementation can just lean on == if the class types match.
     func compareDrawable(other: Drawable) -> Bool
 }
 

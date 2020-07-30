@@ -1,15 +1,13 @@
 ---
 layout: post
-title: 🐦 Swift Arrays of Generics of Mixed Types, Why Not To Do That, and why Type Erasure is Not A Solution
+title: 🐦 Swift - Heterogeneous Arrays
 date: '2020-01-14T12:03:00.000-08:00'
 author: Scott McCoy
 tags: 
 modified_time: '2020-01-15T12:43:18.667-08:00'
-blogger_id: tag:blogger.com,1999:blog-250956833460526415.post-5129331290565549229
-blogger_orig_url: https://scotthmccoy.blogspot.com/2020/01/swift-array-of-generics-of-mixed-types.html
 ---
 
-Most common data formats (Json, Plist, XML) support arrays of mixed types like: `["foo", 1, {"a":3}]` and I often find myself wanting to mirror that in Swift. For example, I often find myself wanting to make a generic AppSetting class that can consume/represent any data type, wraps UserDefaults and provides functionality like CustomStringConvertible:
+Most common data formats (Json, Plist, XML) support arrays of mixed types like: `["foo", 1, {"a":3}]` and I often find myself wanting to have something like that in Swift. For example, I often find myself wanting to make a generic AppSetting class that can consume/represent any data type, wraps getting and setting in UserDefaults and provides functionality like CustomStringConvertible:
 
 ```
 class AppSetting<T> {
@@ -21,7 +19,7 @@ class AppSetting<T> {
 }
 ```
 
-Unfortunately, once the generic class definition is resolved to a concrete type, say  `AppSetting<Int>` and `AppSetting<String>`, they're just as different from each other as an `Int` and a `String` are and you get the same "Don't mix types" errors if you try to put them into an array:
+Unfortunately, once the generic class definition is resolved to a concrete type, say  `AppSetting<Int>` and `AppSetting<String>`, they're just as different from each other as an `Int` and a `String` are and you get the same "Don't mix types" errors if you try to put a `String` and an `Int` into an array:
 
 ```
 let firstElem = AppSetting(1)
@@ -30,9 +28,9 @@ let arr = [firstElem, secondElem]
 🛑 Heterogeneous collection literal could only be inferred to '[Any]'; add explicit type annotation if this is intentional
 ```
 
-## Non-Solutions
+## Partial Solutions and Non-Solutions
 
-1. Making it an array of `AppSetting<Any>` doesn't work because that's it's own distinct type:
+1. Making the array of type  `AppSetting<Any>` but keeping the elements as `AppSetting<Int>` and `AppSetting<String>` doesn't work because  `AppSetting<Any>` is not a more generic type like `Any`, it's its own distinct type:
 
     ```
     let firstElem = AppSetting(1)
@@ -41,28 +39,35 @@ let arr = [firstElem, secondElem]
     🛑 Cannot convert value of type 'AppSetting<Int>' to expected element type 'AppSetting'
     ```
 
-2. Make the elements explicitly of type `AppSetting<Any>` compiles, but it wipes out the usefulness of generics. 
+2. Making the elements explicitly of type `AppSetting<Any>` compiles, but it completely wipes out the usefulness of generics since elements of the array are now explicitly `MyClass<Any>` rather than `MyClass<Int>` or `MyClass<String>`:
     ```
     let firstElem:AppSetting<Any> = AppSetting(1)
     let secondElem:AppSetting<Any> = AppSetting("Foo")
     let arr:[MyClass<Any>] = [firstElem, secondElem]
     ```
 
-    This wipes out the utility of having MyClass be generic since elements of the array are now explicitly `MyClass<Any>` rather than `MyClass<Int>` or `MyClass<String>`. 
-
-3. Making array of type  `Any` is arguably the most faithful mirror of the typeless JSON array we're trying to mimic, but we'd obviously like *some* kind of type checking:   
+3. Making the array of type  `Any` is arguably the most faithful mirror of JSON's typeless arrays but we'd obviously like *some* kind of type checking:   
     ```
     let firstElem = AppSetting(1)
     let secondElem = AppSetting("Foo")
     let arr:[Any] = [firstElem, secondElem]
     ```
 
-So what's the nost elegant way to get an array of mixed types, but with some type checking?
+So what's the nost elegant way to get heterogenous array but still have some type checking?
 
 
 ## Solutions
 
-1. Create a dummy protocol `AppSettingProtocol` which `AppSetting` conforms to and then make a `[AppSettingProtocol]` array, essentially *obscuring* the `AppSetting<T>` type. 
+1. Inheritance 
+    Make an abstract class with subclasses that explicitly expose a value of the the type they handle. 
+
+    ```
+    let arr:[AbstractSetting] = [StringSetting("Foo"), IntSetting(1)]
+    ```
+
+2. Dummy Protocol 
+    
+    Make an `AppSettingProtocol` which `AppSetting` conforms to and make an array of the dummy protocol. You essentially obscure the `AppSetting<T>` type, and then conditionally cast the array elements: 
     
     ```
     protocol AppSettingProtocol{}
@@ -78,54 +83,75 @@ So what's the nost elegant way to get an array of mixed types, but with some typ
     let firstElem = AppSetting(1)
     let secondElem = AppSetting("Foo")
     let arr:[AppSettingProtocol] = [firstElem, secondElem]
-    ```
-
-    This is sort of like having an abstract superclass.
-
-    It's tempting to add an `Associated Type` to the protocol so you know something about what's in the array, but Protocols with associated types have the same effective restrictions that Generics do and for many of the same reasons: 
     
-    ```
-    protocol MyProtocol {
-        associatedtype MyType    
+
+    let random = arr.randomElement()
+
+    if let intSetting = random as? AppSetting<Int> {
+        print(intSetting.data)
+    } else if let stringSetting = random as? AppSetting<String> {
+        print(stringSetting.data)
     }
-    "Protocol 'SettingProtocol' can only be used as a generic constraint because it has Self or associated type requirements"
     ```
-
-    It's also good to know that MyProtocol can't have Self requirements (like Equatable does) if you want to have it be the type of an array. This keeps you from making an array of Equatable which makes sense since if you could, you could have an array of objects of mixed types that might not be Equatable with each *other*. For example, two Doubles are Equatable, but you  [Self requirements](https://www.bignerdranch.com/blog/why-associated-type-requirements-become-generic-constraints/) like this in a little more depth. 
-
+    
+    You get *some* type checking in that the compiler knows which types are unrelated to the dummy protocol:
+    ```
+    if let intVersion = random as? Int { //⚠️ Cast from 'AppSettingProtocol?' to unrelated type 'Int' always fails
+        print(intVersion.data)
+    }
+    ```
+    
+    But wouldn't it be nice if the compiler forced you to enumerate all the possible casts of the element?
 
 
 4. Enums with Associated Values
 
-    Example from [SwiftyPlist](https://github.com/VinceBurn/SwiftyPlist/blob/master/Pod/Classes/Plist.swift):
+    Writing to one is elegant but reading the value back out gets more repetitious with each possible associated value since the switch must be exhaustive and each case must have at least one line of executable code: 
 
     ```
+    import Foundation
+
     enum EntityType {
         case string(String)
-        case number(NSNumber)
+        case int(Int)
+        case double(Double)
         case date(Date)
-        case data(Data)
-        case array([Plist])
-        case dictionary([String : Plist])
+        case array([EntityType])
+        case dictionary([String : EntityType])
     }
 
     let arr = [EntityType.string("Foo"), EntityType.date(Date())]
+
+
+    let element = arr[1]
+
+    switch element {
+        case .string(let string):
+            print("string: \(string)")
+        case .int(let int):
+            print("int: \(int).")
+        case .double(let double):
+            print("double: \(double).")
+        case .date(let date):
+            print("date: \(date).")
+            
+        case .array(_):
+            break
+        case .dictionary(_):
+            break
+    }    
     ``` 
 
-    As you can see, writing to an enum with an associated type is quite elegant. But getting a primitive value back out from one requires a lot of awful switch case code: 
-
-    My impulse was to immediately try to encapsulate the accessor code away behind a StringSetting or IntSetting class that knows exactly what data type it's managing and can expose a primitive property. Which brings me back around to my original idea...
-
-
-5. Just make an abstract class with very limited functionality and make subclasses that explicitly expose a primitive of the the type they handle:
-
-    ```
-    let arr:[AbstractSetting] = [StringSetting("Foo"), IntSetting(1)]
-    ```
+ 
 
 
 
-## The Type Erasure Pattern
+
+
+
+
+
+## The Type Erasure Pattern, AKA "Type-Erased Wrappers"  
 The Type Erasure Pattern is a solution to a *different* problem.
 
 You create 3 classes - an Abstract Base which subclassed in order to bind the generic type constraint to our protocol’s associated type, a Box, and a Public Wrapper. The 
@@ -302,3 +328,25 @@ You want to use classes when copying or comparing instances doesn't make sense (
 Instance lifetime is tied to external effects. The compiler does lots of optimization on value types' lifetimes but a class sticks around.
 When the class would be a "sink"; a write-only conduit to an external state.
 
+
+
+
+
+
+ 
+ 
+ 
+ 
+
+ This is sort of like having an abstract superclass.
+
+ It's tempting to add an `Associated Type` to the protocol so you know something about what's in the array, but Protocols with associated types have the same effective restrictions that Generics do and for many of the same reasons: 
+ 
+ ```
+ protocol MyProtocol {
+     associatedtype MyType    
+ }
+ "Protocol 'SettingProtocol' can only be used as a generic constraint because it has Self or associated type requirements"
+ ```
+
+ It's also good to know that MyProtocol can't have Self requirements (like Equatable does) if you want to have it be the type of an array. This keeps you from making an array of Equatable since if you could, you could have an array of objects of *mixed types* that might not be Equatable with each *other*. For example, two Doubles are Equatable, but a Double and an Int aren't. Big Nerd Ranch goes into this in a little more depth[here](https://www.bignerdranch.com/blog/why-associated-type-requirements-become-generic-constraints/). 

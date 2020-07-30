@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 🐦 Swift Property Wrappers
+title: 🐦 Swift - @propertyWrapper
 date: 2020-07-26 02:14 -0700
 ---
 
