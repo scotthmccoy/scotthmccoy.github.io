@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Swift - Beyond Crusty - Real World Protocols
+title: 🐦 Swift - Beyond Crusty - Real World Protocols
 date: 2020-08-04 22:56 -0700
 ---
 
