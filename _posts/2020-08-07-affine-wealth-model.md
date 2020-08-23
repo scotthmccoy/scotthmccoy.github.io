@@ -5,12 +5,12 @@ date: 2020-08-07 16:56 -0700
 ---
 
 ## Thoughts on the AWM as an Economic Model
-Sadly, AWM's notability isn't in its predictive power or the elegance of its mathematical model*. What's notable about AWM is that it makes some very interesting *observations*:
+Sadly, AWM's notability isn't in its predictive power or the elegance of its mathematical model\*. What's notable about AWM is that it makes some very interesting *observations*:
 
 1. There can exist a seemingly paradoxical game that has a positive expected value on each play but a negative one over time.
 2. It's both telling and worrying that that you *can* model a modern nation's wealth divide to within 2% of accuracy using agents interacting completely at random using only the chi variable (the potency of redistributive efforts) and that the only thing preventing an eventual slide into total oligarchy are those redistributive efforts.
 
-*In fact some folks on Reddit who sound like they really know what they're talking about complain that all it really accomplishes is creatig Lorenz curves in 3 variables when it usually only takes 2, and they say that this smells like either an overfit or a "geocentric model"; that it works, but takes more effort than is neccessary. 
+*In fact some folks on Reddit who sound like they really know what they're talking about complain that all it really accomplishes is creating Lorenz curves in 3 variables when it usually only takes 2, and they say that this smells like either an overfit or a "geocentric model"; that it works, but takes more effort than is neccessary. 
 
 ## Thoughts on the Code
 
