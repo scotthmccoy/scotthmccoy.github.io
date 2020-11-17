@@ -9,4 +9,7 @@ blogger_id: tag:blogger.com,1999:blog-250956833460526415.post-654708384054190400
 blogger_orig_url: https://scotthmccoy.blogspot.com/2015/07/osx-find-large-folders.html
 ---
 
-cd /<br />du -k |  awk '$1 &gt; 500000' | sort -nr
+```
+cd /
+du -k |  awk '$1 &gt; 500000' | sort -nr
+```
