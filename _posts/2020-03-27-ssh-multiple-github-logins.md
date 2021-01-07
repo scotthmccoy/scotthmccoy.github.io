@@ -47,4 +47,5 @@ Hi scotthmccoy! You've successfully authenticated, but GitHub does not provide s
 
 
 Then refer to the repo like so:
+`ssh://vrtcalsdkdev-github/vrtcalsdkdev/VrtcalSDK.git`
 ![]({{ site.url }}/images/multiple_ssh_github.png)
