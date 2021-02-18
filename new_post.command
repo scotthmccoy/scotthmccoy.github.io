@@ -25,7 +25,7 @@ function red {
 
 #prompt for post name
 read -p "Enter Post Name: " postname
-bundle exec jekyll compose "$postname"
+arch -x86_64 bundle exec jekyll compose "$postname"
 
 if [ $? = 0 ];
 then
