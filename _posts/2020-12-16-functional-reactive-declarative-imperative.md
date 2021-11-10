@@ -64,8 +64,8 @@ extension Array where Element == Int {
 
 * Stylistically, we define a problem and the changes we would like to see, as opposed to explaining it step by step.
 * We do not need to manage state in our functions like above where we managed the state of our empty array.
-* We don not have to worry as much about the order of execution.
-* We use less loops, conditions and use more built in methods, reusable functions and recursion.
+* We do not have to worry as much about the order of execution.
+* We use fewer loops & conditions and instead use more built-in methods, reusable functions, and recursion.
 
 
 # Reactive
@@ -92,4 +92,4 @@ manager.getCampaignById(id)
 );
 ```
 
-Note - Rx means "reactive extension" and the initialism has come to imply 
+Reactive generally means "asynchronous, event-driven, data stream informed".  Note - Rx means "reactive extension" and the initialism has come to imply Reactivity in general.
