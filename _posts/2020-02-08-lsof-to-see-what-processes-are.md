@@ -5,8 +5,32 @@ date: '2020-02-08T15:19:00.001-08:00'
 author: Scott McCoy
 tags: 
 modified_time: '2020-02-08T15:27:53.590-08:00'
-blogger_id: tag:blogger.com,1999:blog-250956833460526415.post-2533254933257213945
-blogger_orig_url: https://scotthmccoy.blogspot.com/2020/02/lsof-to-see-what-processes-are.html
 ---
 
-I learned a bit about how to see what's listening. If it doesn't say * in the rightmost column, the listed host is the only one with access. In this example, node is only accessible *from* localhost.<br /><br />sudo lsof -i -P -n | grep LISTEN<br /><br />systemd&nbsp; &nbsp; &nbsp; 1&nbsp; &nbsp; &nbsp; root&nbsp; &nbsp;29u&nbsp; IPv4&nbsp; &nbsp;85062376&nbsp; &nbsp; &nbsp; 0t0&nbsp; TCP *:111 (LISTEN)<br />httpd&nbsp; &nbsp; &nbsp; 119&nbsp; &nbsp; &nbsp; root&nbsp; &nbsp; 4u&nbsp; IPv6&nbsp; &nbsp;85063110&nbsp; &nbsp; &nbsp; 0t0&nbsp; TCP *:80 (LISTEN)<br />sendmail&nbsp; &nbsp;180&nbsp; &nbsp; &nbsp; root&nbsp; &nbsp; 4u&nbsp; IPv4&nbsp; &nbsp;85063338&nbsp; &nbsp; &nbsp; 0t0&nbsp; TCP 127.0.0.1:25 (LISTEN)<br />rpcbind&nbsp; &nbsp; 707&nbsp; &nbsp; &nbsp; &nbsp;rpc&nbsp; &nbsp; 4u&nbsp; IPv4&nbsp; &nbsp;85062376&nbsp; &nbsp; &nbsp; 0t0&nbsp; TCP *:111 (LISTEN)<br />rpcbind&nbsp; &nbsp; 707&nbsp; &nbsp; &nbsp; &nbsp;rpc&nbsp; &nbsp;11u&nbsp; IPv6&nbsp; &nbsp;93778193&nbsp; &nbsp; &nbsp; 0t0&nbsp; TCP *:111 (LISTEN)<br />httpd&nbsp; &nbsp; &nbsp;5967&nbsp; &nbsp; apache&nbsp; &nbsp; 4u&nbsp; IPv6&nbsp; &nbsp;85063110&nbsp; &nbsp; &nbsp; 0t0&nbsp; TCP *:80 (LISTEN)<br />httpd&nbsp; &nbsp; &nbsp;6058&nbsp; &nbsp; apache&nbsp; &nbsp; 4u&nbsp; IPv6&nbsp; &nbsp;85063110&nbsp; &nbsp; &nbsp; 0t0&nbsp; TCP *:80 (LISTEN)<br />httpd&nbsp; &nbsp; &nbsp;6059&nbsp; &nbsp; apache&nbsp; &nbsp; 4u&nbsp; IPv6&nbsp; &nbsp;85063110&nbsp; &nbsp; &nbsp; 0t0&nbsp; TCP *:80 (LISTEN)<br />httpd&nbsp; &nbsp; &nbsp;7369&nbsp; &nbsp; apache&nbsp; &nbsp; 4u&nbsp; IPv6&nbsp; &nbsp;85063110&nbsp; &nbsp; &nbsp; 0t0&nbsp; TCP *:80 (LISTEN)<br />httpd&nbsp; &nbsp; &nbsp;8282&nbsp; &nbsp; apache&nbsp; &nbsp; 4u&nbsp; IPv6&nbsp; &nbsp;85063110&nbsp; &nbsp; &nbsp; 0t0&nbsp; TCP *:80 (LISTEN)<br />node&nbsp; &nbsp; &nbsp;10934 lunchvote&nbsp; &nbsp;14u&nbsp; IPv4 1986748894&nbsp; &nbsp; &nbsp; 0t0&nbsp; TCP 127.0.0.1:5858 (LISTEN)<br />node&nbsp; &nbsp; &nbsp;10934 lunchvote&nbsp; &nbsp;18u&nbsp; IPv4 1986749280&nbsp; &nbsp; &nbsp; 0t0&nbsp; TCP 127.0.0.1:3001 (LISTEN)<br />sshd&nbsp; &nbsp; &nbsp;10984&nbsp; &nbsp; &nbsp; root&nbsp; &nbsp; 3u&nbsp; IPv4 1989274030&nbsp; &nbsp; &nbsp; 0t0&nbsp; TCP *:22 (LISTEN)<br />sshd&nbsp; &nbsp; &nbsp;10984&nbsp; &nbsp; &nbsp; root&nbsp; &nbsp; 4u&nbsp; IPv6 1989274032&nbsp; &nbsp; &nbsp; 0t0&nbsp; TCP *:22 (LISTEN)<br /><div><br /></div>
+`sudo lsof -i -P -n | grep LISTEN` 
+
+If it doesn't use an \* in the rightmost column then the listed host is the only one with access
+
+```
+launchd       1           root    9u  IPv6 0xd9193bc4a48ae439      0t0    TCP *:49152 (LISTEN)
+launchd       1           root   25u  IPv6 0xd9193bc4a48ae439      0t0    TCP *:49152 (LISTEN)
+rapportd    920     scottmccoy    6u  IPv4 0xd9193bc970d46101      0t0    TCP *:59670 (LISTEN)
+rapportd    920     scottmccoy    9u  IPv6 0xd9193bc4b13fdd59      0t0    TCP *:59670 (LISTEN)
+ControlCe  8919     scottmccoy   13u  IPv6 0xd9193bc4a48af1f9      0t0    TCP *:7000 (LISTEN)
+ControlCe  8919     scottmccoy   18u  IPv4 0xd9193bc970d840b1      0t0    TCP *:7000 (LISTEN)
+ControlCe  8919     scottmccoy   19u  IPv4 0xd9193bc970d800b1      0t0    TCP *:5000 (LISTEN)
+ControlCe  8919     scottmccoy   20u  IPv6 0xd9193bc4a48af8d9      0t0    TCP *:5000 (LISTEN)
+Google    29047     scottmccoy  122u  IPv4 0xd9193bc970d76b91      0t0    TCP 127.0.0.1:51963 (LISTEN)
+Adobe\x20 29941     scottmccoy   17u  IPv4 0xd9193bc970d715d1      0t0    TCP 127.0.0.1:15292 (LISTEN)
+Adobe\x20 29941     scottmccoy   20u  IPv4 0xd9193bc9719540b1      0t0    TCP 127.0.0.1:15393 (LISTEN)
+Adobe\x20 29941     scottmccoy   22u  IPv4 0xd9193bc970d4d5d1      0t0    TCP 127.0.0.1:16494 (LISTEN)
+node      35937     scottmccoy   32u  IPv4 0xd9193bc970d655d1      0t0    TCP 127.0.0.1:55767 (LISTEN)
+node      35937     scottmccoy   33u  IPv4 0xd9193bc971956101      0t0    TCP 127.0.0.1:55768 (LISTEN)
+node      35937     scottmccoy   36u  IPv4 0xd9193bc9712da101      0t0    TCP 127.0.0.1:45623 (LISTEN)
+node      35937     scottmccoy   37u  IPv4 0xd9193bc9712dcb41      0t0    TCP 127.0.0.1:56122 (LISTEN)
+node      58449     scottmccoy   22u  IPv6 0xd9193bc4b278e439      0t0    TCP *:8080 (LISTEN)
+```
+
+
+
+ 
