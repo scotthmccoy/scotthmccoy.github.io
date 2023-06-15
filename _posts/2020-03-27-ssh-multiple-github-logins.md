@@ -13,12 +13,6 @@ However, Github does not support multiple accounts sharing the same ssh key. One
 ~/.ssh/config
 
 ```
-#Vrtcal Github Enterprise account
-Host github.vrtcal.com
-HostName github.vrtcal.com
-User git
-IdentityFile ~/.ssh/id_rsa
-
 #personal account
 Host scotthmccoy-github
 HostName github.com
@@ -26,23 +20,40 @@ Port 22
 User git
 IdentityFile ~/.ssh/id_rsa
 
+#Vrtcal Github Enterprise account
+Host vrtcal-github
+HostName github.vrtcal.com
+User git
+IdentityFile ~/.ssh/id_rsa_vrtcal
+
 #vrtcalsdkdev account
 Host vrtcalsdkdev-github
 HostName github.com
 Port 22
 User git
 IdentityFile ~/.ssh/id_rsa_vrtcalsdkdev
+
+#scott-mccoy-modolabs account
+Host scott-mccoy-modolabs-github
+HostName github.com
+Port 22
+User git
+IdentityFile ~/.ssh/id_rsa_scott-mccoy-modolabs-github
 ```
 
 Test the connection on each account:
 ```
-scotts-mbp:ios-sdk scottmccoy$ ssh -T git@vrtcalsdkdev-github
-Hi vrtcalsdkdev! You've successfully authenticated, but GitHub does not provide shell access.
-```
-
-```
-scotts-mbp:ios-sdk scottmccoy$ ssh -T git@scotthmccoy-github
+scottmccoy@Scotts-MBP-M1 .ssh % ssh -T git@github.com
 Hi scotthmccoy! You've successfully authenticated, but GitHub does not provide shell access.
+
+scottmccoy@Scotts-MBP-M1 .ssh % ssh -T git@vrtcal-github              
+Hi scott! You've successfully authenticated, but GitHub does not provide shell access.
+
+scottmccoy@Scotts-MBP-M1 .ssh % ssh -T git@vrtcalsdkdev-github
+Hi vrtcalsdkdev! You've successfully authenticated, but GitHub does not provide shell access.
+
+scottmccoy@Scotts-MBP-M1 .ssh % ssh -T git@scott-mccoy-modolabs-github
+Hi scott-mccoy-modolabs! You've successfully authenticated, but GitHub does not provide shell access.
 ```
 
 
