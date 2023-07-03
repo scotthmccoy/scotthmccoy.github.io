@@ -1,13 +1,3 @@
----
-layout: post
-title: Various Threading Tools in iOS
-date: '2015-02-13T19:24:00.000-08:00'
-author: Scott McCoy
-tags: 
-modified_time: '2015-02-13T19:24:49.552-08:00'
-blogger_id: tag:blogger.com,1999:blog-250956833460526415.post-817701791019310262
-blogger_orig_url: https://scotthmccoy.blogspot.com/2015/02/threading-in-ios-notes.html
----
 
 You want to use the highest level of abstraction that makes sense:
 

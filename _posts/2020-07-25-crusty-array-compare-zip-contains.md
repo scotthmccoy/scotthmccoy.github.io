@@ -1,8 +1,3 @@
----
-layout: post
-title: 🐦 - Crusty Video clever arrayCompare function using zip and contains
-date: 2020-07-25 14:52 -0700
----
 
 This is an explanation for the nifty array compare implementation In the famous Crusty video at [38m and 38s](https://www.youtube.com/watch?v=xE5EcHuz52I#t=38m38s). Note: As cool as this is, it's kind of pointless. Arrays are value types so you can already do an  `==` on them so long as their type implements  `Comparable`. Implementing your own array compare is pointless unless you're using it to make a optimization that you know will be better than the compiler's own.
 

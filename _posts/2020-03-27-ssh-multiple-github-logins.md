@@ -1,11 +1,3 @@
----
-layout: post
-title: 🐙🐈 Git & Github - Multiple SSH Keys on the Same Machine
-date: '2020-03-27T17:54:47-0700'
-author: Scott McCoy
-tags: 
-modified_time: '2020-03-27T17:54:47-0700'
----
 
 To simplify access on github it’s a great idea to use ssh keys for authentication. To add one, click on your user, then settings, then SSH and GPG Keys, or just go to https://github.com/settings/keys.
 However, Github does not support multiple accounts sharing the same ssh key. One way to get around this is to create multiple entries in your ssh config file:

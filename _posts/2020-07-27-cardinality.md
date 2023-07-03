@@ -1,8 +1,3 @@
----
-layout: post
-title: Cardinality
-date: 2020-07-27 15:46 -0700
----
 
 
 From [this wiki page]():

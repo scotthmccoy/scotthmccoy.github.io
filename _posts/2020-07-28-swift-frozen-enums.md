@@ -1,8 +1,3 @@
----
-layout: post
-title: 🐦 Swift - Frozen Enums
-date: 2020-07-28 23:07 -0700
----
 
 From [here](https://medium.com/@jllnmercier/swift-unknown-and-frozen-attributes-8d4eea52d5ac):
 

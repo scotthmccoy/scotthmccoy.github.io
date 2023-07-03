@@ -1,8 +1,3 @@
----
-layout: post
-title: Using launchd instead of cron
-date: 2020-04-06 14:42 -0700
----
 
 
  

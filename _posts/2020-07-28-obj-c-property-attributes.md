@@ -1,8 +1,3 @@
----
-layout: post
-title: Obj-C Property Attributes
-date: 2020-07-28 15:13 -0700
----
 
 
 |  Name             |       Meaning                                                                                                              | Default |

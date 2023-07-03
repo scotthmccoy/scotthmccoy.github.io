@@ -1,8 +1,3 @@
----
-layout: post
-title: 🐦 Swift - Enum Based Linked Lists
-date: 2020-07-27 23:40 -0700
----
 
 
 ```

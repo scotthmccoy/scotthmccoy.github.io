@@ -1,13 +1,3 @@
----
-layout: post
-title: 🐦 Swift - Mocking
-date: '2015-09-17T15:30:00.001-07:00'
-author: Scott McCoy
-tags: 
-modified_time: '2015-10-08T15:26:07.117-07:00'
-blogger_id: tag:blogger.com,1999:blog-250956833460526415.post-8458479091898452779
-blogger_orig_url: https://scotthmccoy.blogspot.com/2015/09/mocking-in-swift.html
----
 
 ```
 func testDatabaseHasRecordsForSomeEntityReturnsFalseWhenFetchRequestReturnsEMPTYArray() {

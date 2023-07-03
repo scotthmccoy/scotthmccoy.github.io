@@ -1,8 +1,3 @@
----
-layout: post
-title: Class Clusters
-date: 2020-08-04 23:44 -0700
----
 
 It's a design pattern where an Abstract Class is actually a factory that that returns a concrete subclass depending on how you invoke its init:
 

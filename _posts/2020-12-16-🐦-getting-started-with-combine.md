@@ -1,8 +1,3 @@
----
-layout: post
-title: 🐦 Getting Started With Combine
-date: 2020-12-16 18:25 -0800
----
 
 
 Thoughts on Combine

@@ -1,8 +1,3 @@
----
-layout: post
-title: MVC, MVP and MVVM
-date: 2021-03-04 18:05 -0800
----
 
 From [this article](https://academy.realm.io/posts/eric-maxwell-mvc-mvp-and-mvvm-on-android/) and a bit from [this one](https://www.guru99.com/mvc-vs-mvvm.html):
 

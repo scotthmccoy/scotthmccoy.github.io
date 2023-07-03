@@ -1,11 +1,3 @@
----
-layout: post
-title: 🐦 Swift - Heterogeneous Arrays
-date: '2020-01-14T12:03:00.000-08:00'
-author: Scott McCoy
-tags: 
-modified_time: '2020-01-15T12:43:18.667-08:00'
----
 
 Most common data formats (Json, Plist, XML) support arrays of mixed types like: `["foo", 1, {"a":3}]` and I often find myself wanting to have something like that in Swift. For example, I often find myself wanting to make a generic AppSetting class that can consume/represent any data type, wraps getting and setting in UserDefaults and provides functionality like CustomStringConvertible:
 

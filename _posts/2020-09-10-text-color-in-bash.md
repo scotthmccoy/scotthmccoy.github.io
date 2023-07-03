@@ -1,8 +1,3 @@
----
-layout: post
-title: Text Color in Bash
-date: 2020-09-10 17:32 -0700
----
 
 Notes: 
 * `tput init` resets to the default color 

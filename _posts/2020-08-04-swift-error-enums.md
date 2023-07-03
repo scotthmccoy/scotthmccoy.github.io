@@ -1,8 +1,3 @@
----
-layout: post
-title: 🐦 Swift - Error Enums
-date: 2020-08-04 21:57 -0700
----
 
 ```
 enum SimulatorFetchError: Error, CustomStringConvertible {

@@ -1,8 +1,3 @@
----
-layout: post
-title: 🐦 Swift - Enums for Router, Theme and Binary Tree
-date: 2020-07-29 18:56 -0700
----
 
 ## Router Pattern
 ```

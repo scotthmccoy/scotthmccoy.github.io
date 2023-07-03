@@ -1,8 +1,3 @@
----
-layout: post
-title: 🐦 Swift - Crusty - Protocol Extensions
-date: 2020-07-25 16:09 -0700
----
 
 In the Crusty Video at [41m5s](https://www.youtube.com/watch?v=xE5EcHuz52I#t=41m5s)...
 

@@ -1,8 +1,3 @@
----
-layout: post
-title: 🐦 Swift - What is a Generator?
-date: 2020-07-27 15:41 -0700
----
 
 From [this blog post](https://thoughtbot.com/blog/swift-sequences), a `Generator` might be better named as `Enumerator`. I think they went with `Generator` since the formal definition of the word "enumerate" comes with an association with numbers, ordinality, etc:
 

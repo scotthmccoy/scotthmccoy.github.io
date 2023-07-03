@@ -1,8 +1,3 @@
----
-layout: post
-title: 🐦 Swift - Type Erasure
-date: 2020-07-30 17:16 -0700
----
 
 ## The Problem
 One of the things left incomplete in Swift is being able to use PATs as a first-class type:

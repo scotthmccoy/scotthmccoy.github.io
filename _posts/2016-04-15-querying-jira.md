@@ -1,12 +1,2 @@
----
-layout: post
-title: Querying JIRA
-date: '2016-04-15T14:57:00.001-07:00'
-author: Scott McCoy
-tags: 
-modified_time: '2016-04-15T14:57:20.674-07:00'
-blogger_id: tag:blogger.com,1999:blog-250956833460526415.post-6680257094183613293
-blogger_orig_url: https://scotthmccoy.blogspot.com/2016/04/querying-jira.html
----
 
         <br /><div class="p1"><span class="s1">Go to&nbsp;</span>https://jira.corp.openx.com/issues/ and create a query</div><div class="p1">Click on Export and open it as a new tab</div><div class="p1">Copy the URL and paste it into a curl call.</div><div class="p1"><br /></div><div class="p1"><br /></div><div class="p1"><span class="s1">Example:</span></div><div class="p1"><span class="s1">curl -D- -u USERNAME:PASSWORD -X GET -H "Content-Type: application/json" https://jira.corp.openx.com/sr/jira.issueviews:searchrequest-xml/temp/SearchRequest.xml?jqlQuery=status+%3D+Open+AND+assignee+in+%28currentUser%28%29%29&amp;tempMax=1500</span></div>

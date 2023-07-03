@@ -1,8 +1,3 @@
----
-layout: post
-title: Cocoapods CLI Tricks
-date: 2021-02-18 13:54 -0800
----
 
 Search for pods:
 

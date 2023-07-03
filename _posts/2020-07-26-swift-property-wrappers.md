@@ -1,8 +1,3 @@
----
-layout: post
-title: 🐦 Swift - @propertyWrapper
-date: 2020-07-26 02:14 -0700
----
 
 
 Property Wrappers are a neat way to define and reuse input validators. You just need to use the `@propertyWrapper` keyword and define a `wrappedValue`:

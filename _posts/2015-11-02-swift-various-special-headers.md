@@ -1,13 +1,3 @@
----
-layout: post
-title: 🐦 Swift - Various Special Headers
-date: '2015-11-02T10:43:00.003-08:00'
-author: Scott McCoy
-tags: 
-modified_time: '2015-11-02T10:43:37.191-08:00'
-blogger_id: tag:blogger.com,1999:blog-250956833460526415.post-86449267551797869
-blogger_orig_url: https://scotthmccoy.blogspot.com/2015/11/swift-various-special-headers.html
----
 
 ## ProductModuleName-Bridging-Header.h
 Import every Objective-C header I want to expose to Swift. Make sure the "Objective-C Bridging Header" build setting has a path to the file (it'll halt compilation if it doesn't)

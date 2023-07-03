@@ -1,8 +1,3 @@
----
-layout: post
-title: Imperative, Declarative, Functional, Reactive
-date: 2020-12-16 19:16 -0800
----
 
 
 # Imperative (Standard C, Java, etc)

@@ -1,11 +1,3 @@
----
-layout: post
-title: Use lsof to see what processes are listening on which ports
-date: '2020-02-08T15:19:00.001-08:00'
-author: Scott McCoy
-tags: 
-modified_time: '2020-02-08T15:27:53.590-08:00'
----
 
 `sudo lsof -i -P -n | grep LISTEN` 
 

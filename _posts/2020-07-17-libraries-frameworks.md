@@ -1,8 +1,3 @@
----
-layout: post
-title: Libraries & Frameworks
-date: 2020-07-17 10:17 -0700
----
 
 ## Files, Directories, Packages, Bundles and Frameworks
 A `package` is any directory that the Finder presents to the user as if it were a single file.

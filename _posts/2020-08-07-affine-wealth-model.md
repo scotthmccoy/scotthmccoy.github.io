@@ -1,8 +1,3 @@
----
-layout: post
-title: Affine Wealth Model
-date: 2020-08-07 16:56 -0700
----
 
 ## Thoughts on the AWM as an Economic Model
 Sadly, AWM's notability isn't in its predictive power or the elegance of its mathematical model\*. What's notable about AWM is that it makes some very interesting *observations*:
