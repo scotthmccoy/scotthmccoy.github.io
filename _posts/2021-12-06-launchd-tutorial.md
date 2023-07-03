@@ -1,9 +1,3 @@
----
-layout: post
-title: launchd tutorial
-date: 2021-12-06 10:29 -0800
----
-
 # Getting Started
 
 Put the script here: `/Users/Shared/`

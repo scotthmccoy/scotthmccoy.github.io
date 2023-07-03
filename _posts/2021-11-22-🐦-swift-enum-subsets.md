@@ -1,9 +1,3 @@
----
-layout: post
-title: 🐦 Enum Subsets
-date: 2021-11-22 16:39 -0800
----
-
 Swift Enums don't elegantly support enum intersecting with or being subsets of each other. For example, consider the following enums where Resource is a subset of Track. While you *could* use a common RawValue and then convert between them:
 
 ```
