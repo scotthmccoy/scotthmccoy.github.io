@@ -1,9 +1,3 @@
----
-layout: post
-title: Delete App in UI Test
-date: 2021-10-07 18:55 -0700
----
-
 This ended up causing "failure to get launch progress" errors in my UI Tests. It could still be useful someday as a way to automate deletion of an app on a device (though there's probably a script that could do this prior to launch).
 
 ```

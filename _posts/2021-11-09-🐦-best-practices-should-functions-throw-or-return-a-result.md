@@ -1,10 +1,3 @@
----
-layout: post
-title: 🐦 Best Practices - Should a Function Return a Result or Throw an Error?
-date: 2021-10-07 18:55 -0700
----
-
-
 It's generally better practice to return a `Result` rather than  `throw` an error. The reason for this is **Strongly Typed Errors**. For example, compare the following which uses `throws`:
 
 ```

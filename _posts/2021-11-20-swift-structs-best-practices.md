@@ -1,10 +1,4 @@
----
-layout: post
-title: 🐦 Structs - Best Practices
-date: 2021-11-20 16:05 -0800
----
- 
-All structs should implement `Equatable` (or `Comparable`, which includes `Equatable`) to support unit testing.
+ All structs should implement `Equatable` (or `Comparable`, which includes `Equatable`) to support unit testing.
  
 ## State Structs
 
