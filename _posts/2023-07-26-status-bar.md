@@ -20,7 +20,7 @@ extension UIUserInterfaceStyle: CustomStringConvertible {
 ```
 
 # UIStatusBarStyle
-The status bar styles have awkward names where the "lightContent" means the one you'd typically use for dark mode "darkContent" means the one you'd typically use for light mode. They make more sense when we consider that the status bar is typically translucent so the color of the bar is less significant than the color of its *content*.
+The status bar styles have awkward names where the "lightContent" means the one you'd typically use for dark mode "darkContent" means the one you'd typically use for light mode. They make more sense when we consider that the status bar is typically translucent so the color of the bar is less significant than the color of its *content* - you'd want to use darkContent (that is, the status bar has black text) when the app is in Light Mode (the status bar has a light background) and lightContent when (white text) when the status bar has a dark background.
 
 ```
 extension UIStatusBarStyle: CustomStringConvertible {
@@ -49,7 +49,7 @@ Modo's approach for theming the status bar is:
 * Have every view controller implement a `preferredStatusBarStyle` which returns a global theme's `UIStatusBarStyle` setting.
 * Have an view anchored to the *top* of the safe area where the status bar would be that can be given a background color, effectively giving the status bar a configurable background color.
 
-There is a bug(?) in iOS 13 and 16 where the statusBar's style will not update unless `childForStatusBarStyle` is implemented and `setNeedsStatusBarAppearanceUpdate()` is called.
+There is a bug(?) in iOS 13 and 16 where the statusBar's style will occasionally not update unless `childForStatusBarStyle` is implemented and `setNeedsStatusBarAppearanceUpdate()` is called. 
 
 ```
 class WorkaroundNavigationController: UINavigationController {
