@@ -1,7 +1,7 @@
 
 
 # UIUserInterfaceStyle
-A `UIViewController`'s `traitCollection.userInterfaceStyle` returns a UIUserInterfaceStyle that will tell you whether the app is in Dark Mode or Light Mode. You can also query `UIScreen.main.traitCollection.userInterfaceStyle` and listen for changes in `UIViewController.traitCollectionDidChange`.
+A `UIViewController`'s `traitCollection.userInterfaceStyle` returns a `UIUserInterfaceStyle` that will tell you whether the app is in Dark Mode or Light Mode. You can also query `UIScreen.main.traitCollection.userInterfaceStyle` or listen for changes in `UIViewController.traitCollectionDidChange`.
 
 These can be used to effectively respond to a user's desire to have apps conform to an OS-level setting for light/dark mode.
 
