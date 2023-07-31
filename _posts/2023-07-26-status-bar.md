@@ -61,6 +61,6 @@ class WorkaroundNavigationController: UINavigationController {
         didSet { setNeedsStatusBarAppearanceUpdate() }
     }
 }
-
+```
 
 
