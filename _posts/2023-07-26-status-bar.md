@@ -20,7 +20,7 @@ extension UIUserInterfaceStyle: CustomStringConvertible {
 ```
 
 # UIStatusBarStyle
-The status bar styles have awkward names where the "lightContent" means the one you'd typically use for dark mode "darkContent" means the one you'd typically use for light mode. They make more sense when we consider that the status bar is typically translucent so the color of the bar is less significant than the color of its *content* - you'd want to use darkContent (that is, the status bar has black text) when the app is in Light Mode (the status bar has a light background) and lightContent when (white text) when the status bar has a dark background.
+I generally associate the light and dark themes with light *mode* and dark *mode* so to me, the naming of UIStatusBarStyles felt a bit awkward at first: "lightContent" means the one you'd typically use for dark mode and "darkContent" means the one you'd typically use for light mode. However, since the status bar is typically translucent, the color of the *text* on the status bar matters a lot more than the bar's own color.
 
 ```
 extension UIStatusBarStyle: CustomStringConvertible {
