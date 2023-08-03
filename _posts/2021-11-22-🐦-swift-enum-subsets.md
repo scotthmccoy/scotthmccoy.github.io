@@ -1,4 +1,4 @@
-Swift Enums don't elegantly support enum intersecting with or being subsets of each other. For example, consider the following enums where Resource is a subset of Track. While you *could* use a common RawValue and then convert between them:
+Swift Enums don't elegantly support intersections or subsets. For example, consider the following enums where Resource is a subset of Track. You *could* use a common RawValue and then convert between them:
 
 ```
 enum Track : String {
