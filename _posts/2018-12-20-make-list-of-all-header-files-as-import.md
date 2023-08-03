@@ -1,2 +1,3 @@
-
-     <style type="text/css">p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.0px Menlo; color: #008000; background-color: #ffffff} </style>  <br /><div class="p1"><span style="color: black;">cd VrtcalSDK; find . | xargs basename | grep "\.h" | sort | awk '$0="#import \""$0"\""' | pbcopy</span></div><br />
+```
+cd VrtcalSDK; find . | xargs basename | grep "\.h" | sort | awk '$0="#import \""$0"\""' | pbcopy
+```
