@@ -1,5 +1,5 @@
-
 Highlight the max value of a range. Note that this must use absolute references (the dollar sign).
 
+![highlight1](https://github.com/scotthmccoy/scotthmccoy.github.io/assets/96747521/1cdf2423-c1c5-4af9-9d68-6112c7e57d4a)
 
-<a href="http://2.bp.blogspot.com/-IaMvjQsq4iY/W2nXe_VjQUI/AAAAAAAAnyA/BdK2Ay8Hum4IzT3MgiTjezswO-JXDPrcwCK4BGAYYCw/s1600/Screen%2BShot%2B2018-08-07%2Bat%2B10.29.21%2BAM.png" imageanchor="1"><img border="0" height="320" src="https://2.bp.blogspot.com/-IaMvjQsq4iY/W2nXe_VjQUI/AAAAAAAAnyA/BdK2Ay8Hum4IzT3MgiTjezswO-JXDPrcwCK4BGAYYCw/s320/Screen%2BShot%2B2018-08-07%2Bat%2B10.29.21%2BAM.png" width="273" /></a><br /><br /><br /><a href="http://1.bp.blogspot.com/-XI463YBKxCQ/W2nXgZH4ygI/AAAAAAAAnyI/QMFI6LRK_3ECvxyra8Pnf8_xfg-EGmbggCK4BGAYYCw/s1600/Screen%2BShot%2B2018-08-07%2Bat%2B10.31.15%2BAM.png" imageanchor="1"><img border="0" height="320" src="https://1.bp.blogspot.com/-XI463YBKxCQ/W2nXgZH4ygI/AAAAAAAAnyI/QMFI6LRK_3ECvxyra8Pnf8_xfg-EGmbggCK4BGAYYCw/s320/Screen%2BShot%2B2018-08-07%2Bat%2B10.31.15%2BAM.png" width="269" /></a>
+![highlight2](https://github.com/scotthmccoy/scotthmccoy.github.io/assets/96747521/ef5bafb5-12f3-4968-949c-eb649330043b)
