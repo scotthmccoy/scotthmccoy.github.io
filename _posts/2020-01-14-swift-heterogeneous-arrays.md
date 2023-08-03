@@ -105,7 +105,7 @@ let arr = [firstElem, secondElem] //🛑 Heterogeneous collection literal could 
     }    
     ``` 
 
-5. Use closures as adapters between the current scope and a wrapper type. The folks at Capital One used this approach [here](https://medium.com/capital-one-tech/an-alternative-to-type-erasure-for-generic-protocols-a9a48e96618a). And I describe a more formalized version of this method as "Operationalization" in my [Swift Type Erasure Post]({{ site.url }}/2020/07/30/swift-type-erasure.html).  
+5. Use closures as adapters between the current scope and a wrapper type. The folks at Capital One used this approach [here](https://medium.com/capital-one-tech/an-alternative-to-type-erasure-for-generic-protocols-a9a48e96618a). And I describe a more formalized version of this method as "Operationalization" in my [Swift Type Erasure Post](https://scotthmccoy.github.io/2020/07/30/type-erasure.html).
 
 ## Partial Solutions and Non-Solutions
 
