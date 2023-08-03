@@ -79,3 +79,11 @@ The ViewModel is now “informal”; no longer a separate Type and simply consis
 I find that the simpler a View is the less utility there is in having a formal ViewModel. For example, a typical RowView doesn’t deal with dynamic data or respond to user interaction. Since these are the services a ViewModel would provide, it doesn’t need one, formal or otherwise. In fact, while I can think of some use cases where a formal View Model might be a nice-to-have (say, a multipurpose View that can behave differently depending on which ViewModel it is used with) I can’t think of a use case where a formal ViewModel would actually be *required* to make MVVM work.
 
 It does take some added coding discipline to make sure that UI events are properly sent through a func defined on the view struct before being passed to a Model service, but I feel like this added discipline requirement is a small price to pay for a much more streamlined experience.
+
+
+
+## Note: I thought that Realmboard violated this, but you can just use an @Binding.
+
+One time it’s useful is when you have a widget subview that can manage its own data (RealmBoard). A Formal viewModel on the widget means that it’s easy to make changes to an isolated chunk of data and have the parent view’s viewModel (formal or no) subscribe to those changes without having to propagate the changes through a model service or global state object.
+
+I’d like to write up something about how “@State everything (except on Row Views)” + “Use id:self” makes this work great; that there are no issues with view invalidation even on a medium complexity app.
