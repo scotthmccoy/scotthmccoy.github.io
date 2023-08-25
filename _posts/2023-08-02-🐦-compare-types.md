@@ -14,10 +14,10 @@ func create<T: BlogPost>(blogType: T.Type) -> T {
 }
 ```
 
-Type: the type of an instance
-Metatype: the type of a type
-Static/Compile-time Metatype: the compile-time type of a construct
-Dynamic/Runtime Metatype: the run-time type of a construct
+- Type: the type of an instance
+- Metatype: the type of a type
+- Static/Compile-time Metatype: the compile-time type of a construct
+- Dynamic/Runtime Metatype: the run-time type of a construct
 
 Examples:
 
