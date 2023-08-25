@@ -1,2 +1,6 @@
 
-Borders add to the width and height, so use a BG instead. This obscures whatever's behind it, so use opacity too:<br /><br />background:blue;<br />opacity:0.4;<br /><br /><br />Note to self: opacity works on every browser that lightboxes work on, so why can't we use a 40% opacity div with a black background to create a dropshadow?
+Borders add to the width and height, so use a BG instead. This obscures whatever's behind it, so use opacity too:
+```
+background:blue;
+opacity:0.4;
+```
