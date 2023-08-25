@@ -1,2 +1,0 @@
-
-I noticed that the clock on linuxdev2 was about 25 minutes off and decided to correct it. Turns out there's a unix command that does this for you (naturally).<br /><br /><br />ntpdate 0.north-america.pool.ntp.org
