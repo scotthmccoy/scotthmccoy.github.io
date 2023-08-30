@@ -36,6 +36,10 @@ function green {
     color "$1" 2
 }
 
+function yellow {
+    color $1 3
+}
+
 green "Killing Xcode..."
 kill $(ps aux | grep 'Applications/Xcode.app/Contents/MacOS/Xcode' | grep -v 'grep' | awk '{print $2}')
 
