@@ -27,6 +27,10 @@ I was susprised to discover that Martin had a nasty enough reputation to warrant
 
 ***
 
+<img width="771" alt="image" src="https://github.com/scotthmccoy/scotthmccoy.github.io/assets/96747521/9413047d-22d6-4d9b-ab71-2438ce59ab09">
+
+***
+
 He's also had to apologize/qualify/explain poorly-received remarks several times:
 * https://gist.github.com/unclebob/2508746#file-apology
 * https://blog.cleancoder.com/uncle-bob/2017/08/14/WomenInTech.html
@@ -55,5 +59,3 @@ From [https://www.reddit.com/r/AskProgramming/comments/stc0hf/why_is_uncle_bob_s
 > Fourth: He's said some stuff on his blogs and on twitter that are either directly racist or misogynistic, or indirectly supportive of other people who have said racist or misogynistic things. I don't know the details, I stopped following or caring about him long before that happened because of all of the technical reasons. In any rate, most people these days seem to see talking about him much as a signal that you agree with his stance on those things, and so people who don't agree with that stance are distancing themselves from him. That said, I think most of the industry realize that his books are still regularly suggested to people who don't know much about him, and so I think it carries as much weight as people assume socially.
 
 I'll add more things as I find them; this is not meant to be an exhaustive list. I'm told that he's also said that women shouldn't be in programming and equated femininity with weakness in a ruby conf keynote, but I couldn't find direct quotes of that. Several folks pointed towards a twitter thread as evidence of wrongdoing that seems to have been scrubbed. Suffice my curiosity was satisfied. And granted, a lot of this is probably owing at least partially to the fact that he was born in 1951 and therefor 72 at the time of this writing, but it doesn't make his poor reputation management any less excusable.
-
-https://dev.to/bosepchuk/why-i-cant-recommend-clean-architecture-by-robert-c-martin-ofd
