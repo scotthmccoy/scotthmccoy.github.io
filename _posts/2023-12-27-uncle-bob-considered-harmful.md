@@ -6,9 +6,9 @@
 * He's been a proponent of [TDD](https://en.wikipedia.org/wiki/Test-driven_development)
 
 # Factorio
-Martin also has a sadly well-earned reputation for saying things that range from the merely cringey to actually hateful, a reputation I unfortunately didn't know anything about until somewhat recently, when Michal Kovařík, aka kovarex, the lead dev of Factorio, posted [Friday Fun Facts #366](https://factorio.com/blog/post/fff-366), mentioning Uncle Bob as an inspiration. Factorio is a game about engineering that is itself, so well-engineered itself that there are [memes](https://www.reddit.com/r/factorio/comments/i5cdl2/literally_unplayable/) about it, and the FFFs are often full of great programming advice.
+Martin also has such a bad reputation that many people refuse to speak at conferences if they know he will also be a speaker, a reputation I unfortunately didn't know anything about until Michal Kovařík, aka kovarex, the lead dev of Factorio, posted [Friday Fun Facts #366](https://factorio.com/blog/post/fff-366), mentioning Uncle Bob as an inspiration. Factorio is a game about engineering that is itself, so well-engineered itself that there are [memes](https://www.reddit.com/r/factorio/comments/i5cdl2/literally_unplayable/) about it, and the FFFs are often full of great programming advice.
 
-The response to FFF-366 on reddit was rather negative and [Kovarex's response](https://old.reddit.com/r/factorio/comments/o2ly6f/friday_facts_366_the_only_way_to_go_fast_is_to_go/h273tim/) - to "Take the cancel culture mentaility and shove it up your ass" which he then walked back to "Deplatforming is comparable to censorship under Soviet occupation". This [didn't go very well](https://www.reddit.com/r/GamerGhazi/comments/o34v6h/factorio_founder_rages_about_cancel_culture_after/).
+The response to FFF-366 on reddit was rather negative and [Kovarex's response](https://old.reddit.com/r/factorio/comments/o2ly6f/friday_facts_366_the_only_way_to_go_fast_is_to_go/h273tim/) - to "Take the cancel culture mentaility and shove it up your ass" which he then walked back to "Deplatforming is comparable to censorship under Soviet occupation". This [didn't go very well](https://www.reddit.com/r/GamerGhazi/comments/o34v6h/factorio_founder_rages_about_cancel_culture_after/) to the point that I almost stopped playing Factorio entirely.
 
 # Robert Martin's Reputation
 I was susprised to discover that Martin had a nasty enough reputation to warrant all this, so I did some digging:
@@ -25,6 +25,7 @@ I was susprised to discover that Martin had a nasty enough reputation to warrant
 
 <img width="592" alt="image" src="https://github.com/scotthmccoy/scotthmccoy.github.io/assets/96747521/b187dee2-79bc-40b2-b18b-8ddc996d04d8">
 
+***
 
 He's also had to apologize/qualify/explain poorly-received remarks several times:
 * https://gist.github.com/unclebob/2508746#file-apology
