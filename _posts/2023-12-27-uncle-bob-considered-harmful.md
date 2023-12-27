@@ -1,16 +1,16 @@
+# "Uncle Bob"
 [Robert Cecil Martin](https://en.wikipedia.org/wiki/Robert_C._Martin), also known as "Uncle Bob" has undeniably had a tremendous impact on programming: 
-* He codified [SOLID](https://en.wikipedia.org/wiki/SOLID) in 2000
-* Was a signatory for the [Agile Manifesto](https://en.wikipedia.org/wiki/Agile_software_development) in 2001 
-* Published [Clean Code](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882) in 2008
-* Propnent of [TDD](https://en.wikipedia.org/wiki/Test-driven_development)
+* He codified The [SOLID](https://en.wikipedia.org/wiki/SOLID) principles of Object Oriented Desgin in 2000
+* He was a signatory for the [Agile Manifesto](https://en.wikipedia.org/wiki/Agile_software_development) in 2001 
+* He published [Clean Code](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882) in 2008
+* He's been a proponent of [TDD](https://en.wikipedia.org/wiki/Test-driven_development)
 
-Martin also has a sadly well-earned reputation for saying things that range from the merely cringey to actually hateful, a reputation I unfortunately didn't know anything about until somewhat recently, when Michal Kovařík, aka kovarex, the lead dev of Factorio, posted [Friday Fun Facts #366](https://factorio.com/blog/post/fff-366), mentioning Uncle Bob as an inspiration. Factorio is a game about engineering that is, itself, so well-engineered itself that there are [memes](https://www.reddit.com/r/factorio/comments/i5cdl2/literally_unplayable/) about it, and the FFFs are often full of great programming advice and anecdotes.
+# Factorio
+Martin also has a sadly well-earned reputation for saying things that range from the merely cringey to actually hateful, a reputation I unfortunately didn't know anything about until somewhat recently, when Michal Kovařík, aka kovarex, the lead dev of Factorio, posted [Friday Fun Facts #366](https://factorio.com/blog/post/fff-366), mentioning Uncle Bob as an inspiration. Factorio is a game about engineering that is itself, so well-engineered itself that there are [memes](https://www.reddit.com/r/factorio/comments/i5cdl2/literally_unplayable/) about it, and the FFFs are often full of great programming advice.
 
-The response to FFF-366 on reddit was rather negative and [Kovarex's response](https://old.reddit.com/r/factorio/comments/o2ly6f/friday_facts_366_the_only_way_to_go_fast_is_to_go/h273tim/) - "Take the cancel culture mentaility and shove it up your ass" [didn't go very well](https://www.reddit.com/r/GamerGhazi/comments/o34v6h/factorio_founder_rages_about_cancel_culture_after/).
+The response to FFF-366 on reddit was rather negative and [Kovarex's response](https://old.reddit.com/r/factorio/comments/o2ly6f/friday_facts_366_the_only_way_to_go_fast_is_to_go/h273tim/) - to "Take the cancel culture mentaility and shove it up your ass" which he then walked back to "Deplatforming is comparable to censorship under Soviet occupation". This [didn't go very well](https://www.reddit.com/r/GamerGhazi/comments/o34v6h/factorio_founder_rages_about_cancel_culture_after/).
 
-<img width="910" alt="image" src="https://github.com/scotthmccoy/scotthmccoy.github.io/assets/96747521/bbb92fff-d382-40b7-a693-bc54e85d3a4a">
-
-
+# Robert Martin's Reputation
 I was susprised to discover that Martin had a nasty enough reputation to warrant all this, so I did some digging:
 
 ***
