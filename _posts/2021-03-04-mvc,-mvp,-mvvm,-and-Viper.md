@@ -33,7 +33,7 @@ On [https://www.reddit.com/r/iOSProgramming/comments/5pcebg/comment/dcqa1uj/], n
 
 # MVVM
 1. The View is now the entry point to the application instead of a middleman object.
-2. The Presenter/Controller has been rebranded again, this time to ViewModel. It is now owned by the view and explicitly uses the Observer design pattern, making it more reactive (if not outright reactive).
+2. The Presenter/Controller has been rebranded again, this time to ViewModel. It is now owned by the _view_ and explicitly uses the Observer design pattern, making it more reactive (if not outright reactive).
 3. The ViewModel does not have a reference to the View. Instead, the View watches the ViewModel's observable fields for updates and uses its own logic for deciding how to show those changes, typically through Data Bindings. In return, the ViewModel exposes functions that the View can call to handle user interactions.
 4. Critically, this means that the View *does not have to be mocked at all*! When testing, you only need to verify that the observable variables are set appropriately on the ViewModel when the Model changes, and how the ViewModel responds to its user interaction methods. There is no need to mock out the view for testing as there was with the MVP pattern. 🤯 Testing of the View is deferred to UI Tests/Integration tests.
 5. The View is often constructed using a declarative syntax: Android's Layout XML or SwiftUI's Views, VStacks and so forth.
