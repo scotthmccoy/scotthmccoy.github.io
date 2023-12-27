@@ -20,3 +20,17 @@ Note: This is how I'm used to writing apps. The second article mentions that MVC
 3. The ViewModel does not have a reference to the View. Instead, the View watches the ViewModel's observable fields for updates and uses its own logic for deciding how to show those changes. The ViewModel exposes functions that the View can call to handle user interactions.
 4. Critically, this means that the View *does not have to be mocked at all*! When testing, you only need to verify that the observable variables are set appropriately on the ViewModel when the Model changes. There is no need to mock out the view for testing as there was with the MVP pattern. 🤯
 5. The View is often constructed using a declarative syntax: Android's Layout XML or SwiftUI's Views, VStacks and so forth.
+
+# VIPER
+View, Interactor, Presenter, Entity, Router
+1. The Router is now the entry point,
+2. Router creates a Presenter, which is a "UIKit Independent Mediator". The Presenter seems to be analogous to a ViewModel in MVVM as it acts as event handler for the View
+3. 
+
+Notes:
+VIPER seems to be an attempt to fulfill on Clean Architecture from Uncle Bob (who I consider to be 
+VIPER does not seem to work well with SwiftUI: 
+
+
+
+
