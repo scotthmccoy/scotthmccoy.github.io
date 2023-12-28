@@ -15,6 +15,10 @@ I was susprised to discover that Martin had a nasty enough reputation to warrant
 
 ***
 
+<img width="984" alt="image" src="https://github.com/scotthmccoy/scotthmccoy.github.io/assets/96747521/8da04a0b-d263-4267-9cbd-037f9e7a98f9">
+
+***
+
 <img width="688" alt="image" src="https://github.com/scotthmccoy/scotthmccoy.github.io/assets/96747521/fd2ccef7-90e5-4aa8-af10-54932f262794">
 
 ***
