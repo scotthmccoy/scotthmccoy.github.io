@@ -23,8 +23,15 @@ I was susprised to discover that Martin had a nasty enough reputation to warrant
 
 ***
 
+<img width="592" alt="image" src="https://github.com/scotthmccoy/scotthmccoy.github.io/assets/96747521/82e7aee9-44ca-48a2-aebc-490652428f90">
+
+***
+
 <img width="388" alt="image" src="https://github.com/scotthmccoy/scotthmccoy.github.io/assets/96747521/93efa1e6-825b-41d2-ab5d-2be4379e6ba2">
 
+***
+
+<img width="596" alt="image" src="https://github.com/scotthmccoy/scotthmccoy.github.io/assets/96747521/7cf2e912-1c92-4670-8800-d88e68311255">
 
 ***
 
@@ -43,6 +50,9 @@ I was susprised to discover that Martin had a nasty enough reputation to warrant
 <img width="589" alt="image" src="https://github.com/scotthmccoy/scotthmccoy.github.io/assets/96747521/d83a0312-1c5f-4598-932c-f29b0bb67e53">
 
 ***
+
+From https://blog.wesleyac.com/posts/robert-martin,
+> Martin has a long, well known history of making sexist remarks in talks at conferences and in blog posts. He made sexist remarks during his 2009 RailsConf keynote. He later said that he "misspoke", but didn't remove the bit from his talk. in 2012, he apologized for making more sexist comments, but his apology for those remarks didn't stop him from writing a blog post with multiple sexist metaphors about female secretaries, harems, and concubines. He apologized, but that hasn't stopped him from defending James Damore. He has a long history of making sexist comments, apologizing for them, then doing the exact same things again and again.
 
 He's also had to apologize/qualify/explain poorly-received remarks several times:
 * https://gist.github.com/unclebob/2508746#file-apology
@@ -71,4 +81,4 @@ From [https://www.reddit.com/r/AskProgramming/comments/stc0hf/why_is_uncle_bob_s
 > 
 > Fourth: He's said some stuff on his blogs and on twitter that are either directly racist or misogynistic, or indirectly supportive of other people who have said racist or misogynistic things. I don't know the details, I stopped following or caring about him long before that happened because of all of the technical reasons. In any rate, most people these days seem to see talking about him much as a signal that you agree with his stance on those things, and so people who don't agree with that stance are distancing themselves from him. That said, I think most of the industry realize that his books are still regularly suggested to people who don't know much about him, and so I think it carries as much weight as people assume socially.
 
-I'll add more things as I find them; this is not meant to be an exhaustive list. I'm told that he's also said that women shouldn't be in programming and equated femininity with weakness in a ruby conf keynote, but I couldn't find direct quotes of that. Several folks pointed towards a twitter thread as evidence of wrongdoing that seems to have been scrubbed. Suffice it to say, my curiosity as to why my colleagues would dislike the man was more than satisfied. And granted, a lot of this is probably owing at least partially to the fact that he was born in 1951 and therefor 72 at the time of this writing, but it doesn't make his poor reputation management any less excusable in an era where that is a purchasable service.
+I'll add more things as I find them; this is not meant to be an exhaustive list. I'm told that he's also said that women shouldn't be in programming and equated femininity with weakness in a ruby conf keynote, but I couldn't find direct quotes of that. Several folks pointed towards a twitter thread as evidence of wrongdoing that seems to have been scrubbed. Suffice it to say, my curiosity as to why my colleagues would dislike the man was more than satisfied. And granted, a lot of this is probably owing at least partially to the fact that he was born in 1951 and therefor 72 at the time of this writing, but it doesn't make his poor reputation any less excusable in an era where reputation management is an easily purchasable service.
