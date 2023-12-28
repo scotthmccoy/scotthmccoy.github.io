@@ -1,7 +1,7 @@
 From [It's probably time to stop recommending Clean Code](https://qntm.org/clean):
 > Clean Code mixes together a disarming combination of strong, timeless advice and advice which is highly questionable or dated or both.
 
-Clean Code was first published by Robert Martin in 2008 and like him, it's aging poorly.
+Clean Code was first published by [Robert Martin](https://scotthmccoy.github.io/2023/12/27/uncle-bob-considered-harmful.html) in 2008 and like him, it's aging poorly.
 
 * The book is useless to newbies who would require handholding by a seasoned professional to point out what of the advice is situational, dogmatic, impractical, outdated, or contradictory.
 * It's of questionable value to a seasoned professional who might hope to sharpen fundamentals but might gain some intellectual contagion instead, like "code comments are bad".
