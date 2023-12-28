@@ -1,0 +1,19 @@
+```
+/*
+ Swift lacks an "is contained by", which makes state checks a bit ungainly to write/read.
+ The isIn function aims to help with that. For example, the following:
+
+ let systemSchemes = ["tel", "mailto", "sms", "itms"]
+ return systemSchemes.contains(urlScheme)
+
+ Is equivalent to:
+ 
+ return urlScheme.isIn(["tel", "mailto", "sms", "itms"])
+*/
+
+extension Equatable {
+    func isIn (_ rhs: any Collection<Self>) -> Bool {
+        rhs.contains(self)
+    }
+}
+```
