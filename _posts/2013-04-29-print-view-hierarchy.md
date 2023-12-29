@@ -1,2 +1,1 @@
-
-po [[UIWindow keyWindow] recursiveDescription]
+`po Window.keyWindow.recursiveDescription`
