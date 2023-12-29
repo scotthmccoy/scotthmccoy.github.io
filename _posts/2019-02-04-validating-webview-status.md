@@ -1,2 +1,46 @@
 
-Saving this in case I need to validate a webview more carefully. If we trust that the presence of an image named "cats" is sufficient to determine that the banner loaded then everything after "Validate the Banner" is superfluous.<br /><br />     <style type="text/css">p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.0px Menlo; color: #000000; background-color: #ffffff} p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; background-color: #ffffff; min-height: 14.0px} p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.0px Menlo; color: #008000; background-color: #ffffff} p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.0px Menlo; color: #000000; background-color: #ffffff; min-height: 13.0px} p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.0px Menlo; color: #2b839f; background-color: #ffffff} span.s1 {color: #0000ff} span.s2 {color: #000000} span.s3 {color: #2b839f} span.s4 {color: #a31515} </style>  <br /><div class="p1"><span class="Apple-converted-space">&nbsp; &nbsp; </span><span class="s1">func</span> testBanner() {</div><div class="p2"><br /></div><div class="p3"><span class="s2"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; </span></span>//Launch the app</div><div class="p1"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="s1">let</span> app = <span class="s3">XCUIApplication</span>()</div><div class="p1"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; </span>app.<span class="s3">launch</span>()</div><div class="p4"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;</span></div><div class="p3"><span class="s2"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; </span></span>//Tap create and load</div><div class="p1"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="s1">let</span> buttons = app.<span class="s3">buttons</span></div><div class="p1"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; </span>buttons[<span class="s4">"btnBannerCreate"</span>].<span class="s3">tap</span>()</div><div class="p1"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; </span>buttons[<span class="s4">"btnBannerLoad"</span>].<span class="s3">tap</span>()</div><div class="p4"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;</span></div><div class="p1"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; </span>buttons[<span class="s4">"btnBannerCreate"</span>].<span class="s3">tap</span>()</div><div class="p1"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; </span>buttons[<span class="s4">"btnBannerLoad"</span>].<span class="s3">tap</span>()</div><div class="p4"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;</span></div><div class="p3"><span class="s2"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; </span></span>//Wait for the banner to load and the cat image to appear</div><div class="p1"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="s3">waitForExists</span>(element:app.<span class="s3">images</span>[<span class="s4">"cats"</span>])</div><div class="p4"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;</span></div><div class="p3"><span class="s2"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; </span></span>//Validate the banner:</div><div class="p3"><span class="s2"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; </span></span>//Expect a single VrtcalBanner with the accessibility ID of "bannerBottom", and get all its child webviews.</div><div class="p5"><span class="s2"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; </span></span><span class="s1">let</span><span class="s2"> webviews = app.</span>otherElements<span class="s2">[</span><span class="s4">"bannerBottom"</span><span class="s2">].</span>webViews<span class="s2">.</span>allElementsBoundByIndex</div><div class="p1"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="s3">XCTAssertEqual</span>(webviews.<span class="s3">count</span>,1)</div><div class="p1"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="s1">guard</span> <span class="s1">let</span> webView = webviews.<span class="s3">first</span> <span class="s1">else</span> {</div><div class="p1"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="s1">return</span></div><div class="p1"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; </span>}</div><div class="p4"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;</span></div><div class="p3"><span class="s2"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; </span></span>//Expect a single visible image in the webView.</div><div class="p3"><span class="s2"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; </span></span>//The tracking pixel is set to 0x0, so it will not be picked up by XCUITest.</div><div class="p1"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="s1">let</span> imagesInWebView = webView.<span class="s3">images</span>.<span class="s3">allElementsBoundByIndex</span></div><div class="p1"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="s3">XCTAssertEqual</span>(imagesInWebView.<span class="s3">count</span>,1)</div><div class="p4"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;</span></div><div class="p3"><span class="s2"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; </span></span>//Get the image and expect its alt text to be "cats"</div><div class="p1"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="s1">let</span> catImage = imagesInWebView.<span class="s3">first</span>!</div><div class="p1"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="s3">XCTAssertEqual</span>(catImage.<span class="s3">label</span>, <span class="s4">"cats"</span>)</div><div class="p1"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; </span>catImage.<span class="s3">tap</span>()</div><div class="p4"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;</span></div><div class="p3"><span class="s2"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; </span></span>//Return to the app</div><div class="p1"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; </span>app.<span class="s3">activate</span>()</div><div class="p4"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;</span></div><div class="p3"><span class="s2"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; </span></span>//Destroy the banner</div><div class="p1"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; </span>buttons[<span class="s4">"btnBannerDestroy"</span>].<span class="s3">tap</span>()</div><div class="p1"><span class="Apple-converted-space">&nbsp; &nbsp; </span>}</div><br />
+Saving this in case I need to validate a webview more carefully. If we trust that the presence of an image named "cats" is sufficient to determine that the banner loaded then everything after "Validate the Banner" is superfluous.
+
+```
+  func testBanner() {
+
+        //Launch the app
+        let app = XCUIApplication()
+        app.launch()
+        
+        //Tap create and load
+        let buttons = app.buttons
+        buttons["btnBannerCreate"].tap()
+        buttons["btnBannerLoad"].tap()
+        
+        buttons["btnBannerCreate"].tap()
+        buttons["btnBannerLoad"].tap()
+        
+        //Wait for the banner to load and the cat image to appear
+        waitForExists(element:app.images["cats"])
+        
+        //Validate the banner:
+        //Expect a single VrtcalBanner with the accessibility ID of "bannerBottom", and get all its child webviews.
+        let webviews = app.otherElements["bannerBottom"].webViews.allElementsBoundByIndex
+        XCTAssertEqual(webviews.count,1)
+        guard let webView = webviews.first else {
+            return
+        }
+        
+        //Expect a single visible image in the webView.
+        //The tracking pixel is set to 0x0, so it will not be picked up by XCUITest.
+        let imagesInWebView = webView.images.allElementsBoundByIndex
+        XCTAssertEqual(imagesInWebView.count,1)
+        
+        //Get the image and expect its alt text to be "cats"
+        let catImage = imagesInWebView.first!
+        XCTAssertEqual(catImage.label, "cats")
+        catImage.tap()
+        
+        //Return to the app
+        app.activate()
+        
+        //Destroy the banner
+        buttons["btnBannerDestroy"].tap()
+    }
+```
