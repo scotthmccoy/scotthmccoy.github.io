@@ -36,3 +36,5 @@ scottmccoy@Scotts-MBP-M1 scootys-armor-swap % cat info.json | jq '.version = "fo
   "description": "Adds a key binding (default: the \"\\\" key) that equips the next armor in your inventory and sets your player color to the color that was last used with that armor. Rapidly cycle among color-coded armors specialized for different purposes!"
 }
 ```
+
+While jq is *very powerful*, I'd place the readability of its syntax somewhere around perl-level. I reccommend using jq to fetch data and another language (for example, command-line swift) to walk arrays, transform data, and then, if neccessary use jq again to write it back to the json file.
