@@ -1,2 +1,1 @@
-
-cat foo.json | jq<br /><br />*pretty printed json*
+`cat foo.json | jq`
