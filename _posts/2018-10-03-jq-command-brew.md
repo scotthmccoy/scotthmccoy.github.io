@@ -15,7 +15,7 @@ scottmccoy@Scotts-MBP-M1 scootys-armor-swap % cat info.json | jq
 ```
 
 
-Or to fetch values. For example, assume foo.json contains the following:
+Or to fetch values:
 ```
 scottmccoy@Scotts-MBP-M1 scootys-armor-swap % cat info.json | jq '.version'        
 "1.2.1"
