@@ -1,7 +1,7 @@
 Google sheets does a nice job of applying color to ranges of numbers, but not such a great job with strings.
 
 # A Number Code
-This method involves adding a code that conditional formatting can search for
+This method involves simply adding a color name that conditional formatting can search for:
 <img width="641" alt="image" src="https://github.com/scotthmccoy/scotthmccoy.github.io/assets/1480870/50d7700f-313f-422c-bd41-69e3f870833b">
 
 
