@@ -1,3 +1,5 @@
+Note that most key issues with github enterprise don't require you to re-issue keys, just restart the server, so start with that.
+
 # How to update github ssh keys
 
 Run the following:
