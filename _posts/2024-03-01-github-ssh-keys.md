@@ -6,24 +6,24 @@ Note that most key issues with github enterprise don't require you to re-issue k
 
 2. Run the following:
 
-`ssh-keygen -t ed25519 -C "scott.mccoy@vrtcal.com"`
+    `ssh-keygen -t ed25519 -C "scott.mccoy@vrtcal.com"`
 
 3. Name the file according to the usage & date so you can tell the keys apart:
 
-`/Users/scottmccoy/.ssh/vrtcal_2024_03_01`
+    `/Users/scottmccoy/.ssh/vrtcal_2024_03_01`
 
 4. Add the private key to the keychain:
 
-`ssh-add --apple-use-keychain ~/.ssh/vrtcal_2024_03_01`
+    `ssh-add --apple-use-keychain ~/.ssh/vrtcal_2024_03_01`
 
 5. Cat the public key (the .pub one) out and copy it
 
-`cat /Users/scottmccoy/.ssh/vrtcal_2024_03_01.pub`
+    `cat /Users/scottmccoy/.ssh/vrtcal_2024_03_01.pub`
 
 6. Paste it into github
 
-`ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP/SuWM4Tv0cwp82Jj89FAj2Tn3CEy67g2t0wj/g78e7 scott.mccoy@vrtcal.com`
+    `ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP/SuWM4Tv0cwp82Jj89FAj2Tn3CEy67g2t0wj/g78e7 scott.mccoy@vrtcal.com`
 
 7. Test the connection
 
-`ssh -T git@github.vrtcal.com`
+    `ssh -T git@github.vrtcal.com`
