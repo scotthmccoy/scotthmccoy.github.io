@@ -1,4 +1,10 @@
-This command line swift script consumes a text file containing output from exiftool and sorts photos by distance to provided GPS coordinates
+This command line swift script consumes a text file containing output from exiftool and sorts photos by distance to provided GPS coordinates. The conversion of GPS degrees to miles is interesting. 
+
+TODO:
+1. It can handle about 22 photos per second on my laptop which is pretty slow with a large photo library, so it could probably use a status bar like this one: https://github.com/jkandzi/Progress.swift/blob/master/Sources/Progress.swift
+2. It'd be nice if it could limit the output to photos within a distance of the location, maybe a half mile by default
+3. It'd be especially nice if it would copy the matching photos to a directory
+
 
 ```
 #!/usr/bin/swift
