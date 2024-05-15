@@ -1,4 +1,4 @@
-When filtering AnyClass - that is, uninstantiated types - for conformance to a Protocol it can be tricky to know what version of `.Type` and `.self` to use to get a strongly typed result.
+When filtering types for conformance to a Protocol it can be tricky to know what version of `.Type` and `.self` to use to get a strongly typed result.
 
 # Simple inline Version
 Use `compactMap`, `as?` and `.Type` to get an array that you can invoke `Proto` funcs on.
