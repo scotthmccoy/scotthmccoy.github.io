@@ -1,6 +1,8 @@
 ---
 render_with_liquid: false
+templateEngineOverride: md
 ---
+
 
 Neat usage of RegexBuilder to transform all text between occurances of two tokens. Useful for transforming the contents of a tag, or in this case, compacting multi-line labels in app.debugDescription.
 
