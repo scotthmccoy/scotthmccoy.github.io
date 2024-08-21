@@ -12,18 +12,28 @@ Note that most key issues with github enterprise don't require you to re-issue k
 
     `/Users/scottmccoy/.ssh/vrtcal_2024_03_01`
 
-4. Add the private key to the keychain:
+4. Add the private key to ssh agent:
 
     `ssh-add --apple-use-keychain ~/.ssh/vrtcal_2024_03_01`
 
-5. Cat the public key (the .pub one) out and copy it
+5. Add the key to ssh config so that the key will be added to ssh agent upon next reboot:
+   `touch ~/.ssh/config`
+   Then, add the following to ~/.ssh/config:
+   ```
+   Host github.com
+    AddKeysToAgent yes
+    UseKeychain yes
+    IdentityFile ~/.ssh/vrtcal_2024_03_01
+   ```
+
+6. Cat the public key (the .pub one) out and copy it
 
     `cat /Users/scottmccoy/.ssh/vrtcal_2024_03_01.pub`
 
-6. Paste it into github
+7. Paste it into github
 
     `ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP/SuWM4Tv0cwp82Jj89FAj2Tn3CEy67g2t0wj/g78e7 scott.mccoy@vrtcal.com`
 
-7. Test the connection
+8. Test the connection
 
     `ssh -T git@github.vrtcal.com`
