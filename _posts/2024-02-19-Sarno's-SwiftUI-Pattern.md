@@ -1,3 +1,7 @@
+---
+title: 'I love pizza!'
+---
+
 In [this youtube video](https://www.youtube.com/watch?v=OpJcInSZpc8&list=PLwvDm4Vfkdphr2Dl4sY4rS9PLzPdyi8PM&index=16), Nick Sarno talks about a pattern for implementing MVVM in SwiftUI that has served him well.
 
 ```
