@@ -1,3 +1,7 @@
+---
+title: 'CLI to Uninstall an App'
+---
+
 This is possible with the following brews:
 
 ```
