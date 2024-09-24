@@ -1,3 +1,7 @@
+---
+title: 'GitHub SSH Keys'
+---
+
 Note that most key issues with github enterprise don't require you to re-issue keys, just restart the server, so start with that.
 
 # How to update github ssh keys
@@ -16,24 +20,27 @@ Note that most key issues with github enterprise don't require you to re-issue k
 
     `ssh-add --apple-use-keychain ~/.ssh/vrtcal_2024_03_01`
 
-5. Add the key to ssh config so that the key will be added to ssh agent upon next reboot:
-   `touch ~/.ssh/config`
-   Then, add the following to ~/.ssh/config:
-   ```
-   Host github.com
+5. Make the config file if it doesn't exist
+   
+    `touch ~/.ssh/config`
+  
+7. Add the following to ~/.ssh/config:
+   
+    ```
+    Host github.com
     AddKeysToAgent yes
     UseKeychain yes
     IdentityFile ~/.ssh/vrtcal_2024_03_01
-   ```
+    ```
 
-6. Cat the public key (the .pub one) out and copy it
-
+9. Cat the public key (the .pub one) out and copy it
+    
     `cat /Users/scottmccoy/.ssh/vrtcal_2024_03_01.pub`
 
-7. Paste it into github
-
+11. Paste it into github
+    
     `ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP/SuWM4Tv0cwp82Jj89FAj2Tn3CEy67g2t0wj/g78e7 scott.mccoy@vrtcal.com`
 
-8. Test the connection
-
+13. Test the connection
+    
     `ssh -T git@github.vrtcal.com`
