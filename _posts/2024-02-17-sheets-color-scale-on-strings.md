@@ -1,4 +1,9 @@
-Google sheets does a nice job of applying color to ranges of numbers, but not such a great job with strings.
+---
+title: Google Sheets - Color Scale on a String Column
+---
+
+
+Google sheets does a nice job of applying color to ranges of numbers, but not such a great job with strings. Here are 3 different methods for automatically color-coding a string column:
 
 # A Number Code
 This method involves simply adding a color name that conditional formatting can search for:
