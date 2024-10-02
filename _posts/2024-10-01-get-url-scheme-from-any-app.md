@@ -1,4 +1,5 @@
 
+Save this as `download.command`
 ```
 #!/bin/zsh
 
