@@ -25,5 +25,6 @@ Asynchrony is a separate concept (even though related in some contexts). It refe
 https://stackoverflow.com/questions/4844637/what-is-the-difference-between-concurrency-parallelism-and-asynchronous-methods
 
 
+
 [This Article](https://learningswift.brightdigit.com/asynchronous-multi-threaded-parallel-world-of-swift/) discusses the distinction and some ways to deal with making a DispatchQueue concurrent/parallel.
 
