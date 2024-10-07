@@ -1,3 +1,7 @@
+---
+title: Concurrency, Parallelism, Asynchrony, and Multithreading
+---
+
 - Concurrency is the umbrella term; it means two or more things are in progress at once. 
   
 - Asynchrony: This means that your program performs non-blocking operations. For example, it can initiate a request for a remote resource via HTTP and then go on to do some other task while it waits for the response to be received. It’s a bit like when you send an email and then go on with your life without waiting for a response. Think of DispatchQueue.async.
