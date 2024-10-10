@@ -1,3 +1,7 @@
+---
+title: AsyncStream - A Worse Alternative to CurrentValueSubject
+---
+
 On https://stackoverflow.com/questions/78192688/how-to-make-an-actors-isolated-state-observable, Scott Thompson says 
 > people have run into many problems trying to mix async Swift and Combine. It's generally better to use one or the other. To use async swift then state would be a async sequence and you would monitor it from outside of the actor using a for loop over the sequence.
 
