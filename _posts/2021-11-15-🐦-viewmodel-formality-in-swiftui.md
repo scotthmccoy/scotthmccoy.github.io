@@ -1,9 +1,13 @@
+---
+title: (Deprecated) ViewModel Formality 
+---
+
 A ViewModel’s responsibility is to:
 1. Translate UI Events from the user into Model interactions
 2. Publish data from the Model for the view to Observe
 3. Encapsulate this functionality such that it is testable independent of the View (Which it does not reference) and the Model (which does not reference it).
 
-Possibly owing to its origins in other languages/environments, a typical set of expectations of the ViewModel includes that it be:
+A typical set of expectations of the ViewModel includes that it be:
 
 * An instance member of the View that owns it
 * Of a type only used with that View, perhaps being defined as a namespace-child of that View
@@ -47,6 +51,7 @@ extension MyView {
 }
 ```
 
+**Note: I have come to accept that is is an anti-pattern. ViewModels should absolutely be segregated so that they can isolate data, be tested separately, etc.**
 
 This pattern requires so much boilerplate struct-access code to have to test and maintain that I wonder if it borders on MVVM dogmatism. The code can be simplified to:
 
