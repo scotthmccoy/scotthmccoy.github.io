@@ -7,7 +7,7 @@ On (This StackOverflow Question)[https://stackoverflow.com/questions/78192688/ho
 
 I've cobbled together an AsyncStream version of an observable actor, but unlike a Publisher, requires a Task dedicated to awaiting outputs from the iterator.
 
-It also doesn't work all the way, and I can't be bothered to fix it. You can see in the output that the Apple and Banana subscribers each only get a portion of the intended output. I'm sure I could figure out how to get the actor to provide a unique stream to each subscriber, store the subscribers in a dict or something, and cancel them to free up the dedicated Tasks, but at that point I feel like I would have just re-created the Observable Actor.
+It doesn't quite work - you can see in the output that the Apple and Banana subscribers each only get a portion of the intended output. I'm sure I could figure out how to get the actor to provide a unique stream to each subscriber, store the subscribers in a dict or something, and cancel them to free up the dedicated Tasks, but at that point I feel like I would have just re-created the CurrentValueSubject on the Observable Actor.
 
 ```
 import UIKit
