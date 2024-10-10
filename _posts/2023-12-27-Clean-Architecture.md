@@ -1,5 +1,5 @@
 
-From https://softwareengineering.stackexchange.com/questions/371966/is-clean-architecture-by-bob-martin-a-rule-of-thumb-for-all-architectures-or-i:
+From ()[https://softwareengineering.stackexchange.com/questions/371966/is-clean-architecture-by-bob-martin-a-rule-of-thumb-for-all-architectures-or-i]:
 
 > The Clean Architecture is largely Robert C. Martin's re-branding and evolution of related approaches like the Onion Architecture by Jeffrey Palermo (2008) and the Hexagonal Architecture (“Ports and Adapters”) by Alistair Cockburn and others (< 2008).
 > 
