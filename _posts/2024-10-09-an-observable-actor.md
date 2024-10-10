@@ -38,8 +38,21 @@ Task {
 
     await actor.message(param:10)
     await actor.message(param:20)
+    
+    print ("adding another subscriber...")
+    let subscription3 = await actor.observableState?.sink { value in
+        print("🦀 \(value)")
+    }
+    
+    print("Sending more messages...")
     await actor.message(param:30)
     await actor.message(param:40)
+    
+    print("cancelling 🍌...")
+    subscription2?.cancel()
+    
+    await actor.message(param:50)
+    await actor.message(param:60)
 }
 ```
 
@@ -53,11 +66,23 @@ setting state: 10
 setting state: 20
 🍎 20
 🍌 20
+adding another subscriber...
+🦀 20
+Sending more messages...
 setting state: 30
 🍎 30
+🦀 30
 🍌 30
 setting state: 40
 🍎 40
+🦀 40
 🍌 40
+cancelling 🍌...
+setting state: 50
+🍎 50
+🦀 50
+setting state: 60
+🍎 60
+🦀 60
 ```
 
