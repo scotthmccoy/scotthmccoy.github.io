@@ -1,5 +1,5 @@
 ---
-title: (Deprecated) ViewModel Formality 
+title: (Deprecated) ViewModel Formality in SwiftUI
 ---
 
 A ViewModel’s responsibility is to:
