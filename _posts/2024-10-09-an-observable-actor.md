@@ -1,5 +1,4 @@
 ```
-
 import UIKit
 import Combine
 import PlaygroundSupport
@@ -85,4 +84,11 @@ setting state: 60
 🍎 60
 🦀 60
 ```
+
+This works in Swift 5.10.1, but in 6.0, fails with  `'self'-isolated value of type '() async -> ()' passed as a strongly transferred parameter; later accesses could race` and `Sending 'anyPublisher' risks causing data races`:
+<img width="957" alt="image" src="https://github.com/user-attachments/assets/0a4b9109-f482-46dc-86f4-03b1efc9b062">
+
+
+
+
 
