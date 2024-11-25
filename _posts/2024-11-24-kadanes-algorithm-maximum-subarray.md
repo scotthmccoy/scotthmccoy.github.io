@@ -1,6 +1,9 @@
 
 
 ```
+import UIKit
+
+
 extension Array<Int> {
 
     //Kadane's Algorithm
@@ -28,13 +31,11 @@ extension Array<Int> {
             let potentialNewSum = currentSum + tuple.element
             
             if tuple.element > potentialNewSum {
-                print("start over: \(tuple.element)")
                 // Start the window over here
                 currentSum = tuple.element
                 startIndex = tuple.offset
                 endIndex = tuple.offset
             } else {
-                print("increase window: \(tuple.element)")
                 // Increase the end of the window to include the new element
                 currentSum = potentialNewSum
                 endIndex = tuple.offset
@@ -51,5 +52,9 @@ extension Array<Int> {
 
 }
 
-[1,2,3,1,-10,5,6].maximumSubarray()
+let arraySlice = [-19,1,2,3,1,-10,6].maximumSubarray()
+
+print(arraySlice)
+print(arraySlice.startIndex)
+print(arraySlice.endIndex)
 ```
