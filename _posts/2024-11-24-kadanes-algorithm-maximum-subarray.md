@@ -3,7 +3,6 @@
 ```
 import UIKit
 
-
 extension Array<Int> {
 
     //Kadane's Algorithm
@@ -49,12 +48,32 @@ extension Array<Int> {
         }
         return self[bestStartIndex...bestEndIndex]
     }
+    
+    func maxProfit() -> Int {
+        guard count >= 2 else {
+            return 0
+        }
 
+        var last:Int? = nil
+        let changes:[Int] = self.compactMap {
+            if last != nil {
+                let ret = $0 - last!
+                last = $0
+                return ret
+            } else {
+                last = $0
+                return nil
+            }
+        }
+
+        let bestRange = changes.maximumSubarray()
+        
+        let buyPrice = self[bestRange.startIndex]
+        let sellPrice = self[bestRange.endIndex]
+        
+        let profit = sellPrice - buyPrice
+
+        return Swift.max(0,profit)
+    }
 }
-
-let arraySlice = [-19,1,2,3,1,-10,6].maximumSubarray()
-
-print(arraySlice)
-print(arraySlice.startIndex)
-print(arraySlice.endIndex)
 ```
