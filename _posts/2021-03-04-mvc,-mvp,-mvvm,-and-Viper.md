@@ -13,6 +13,31 @@ The [MVP](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter) so
 3. The Presenter uses as little as possible in the way of Android or iOS specific APIs.
 4. Like MVC, MVP needs a robust model and the discipline to maintain its separate areas of concern or else the Presenter bloats up.
 
+# MVVM
+John Gossman, a Microsoft WPF and Silverlight architect, announced [MVVM](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel) on his blog in 2005, but it wasn't widely acknowledged as a healthy architecture pattern on iOS until SwiftUI/Combine allowed for proper data bindings.
+
+1. The View is now the entry point to the application instead of a middleman object.
+2. The Presenter/Controller has been rebranded again, this time to ViewModel. It is now owned by the _view_ and explicitly uses the Observer design pattern, making it more reactive (if not outright reactive).
+3. The ViewModel does not have a reference to the View. Instead, the View watches the ViewModel's observable fields for updates and uses its own logic for deciding how to show those changes, typically through Data Bindings. In return, the ViewModel exposes functions that the View can call to handle user interactions.
+4. Critically, this means that the View *does not have to be mocked at all*! When testing, you only need to verify that the observable variables are set appropriately on the ViewModel when the Model changes, and how the ViewModel responds to its user interaction methods. There is no need to mock out the view for testing as there was with the MVP pattern. 🤯 Testing of the View is deferred to UI Tests/Integration tests.
+5. The View is often constructed using a declarative syntax: Android's Layout XML or SwiftUI's Views, VStacks and so forth.
+
+
+# Clean Architecture, Hexagonal Architecture and Ports & Adapters
+It's widely accepted that Robert Martin's Clean Architecture (2008) is just a rebranding of Hexagonal Architecture (AKA "Ports and Adapters" by Dr. Alistair Cockburn, 2005). Martin essentially admits to this on his [blog](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html):
+
+> "The diagram at the top of this article [Clean Architecture] is an attempt at integrating all these architectures [including Hexagonal, Onion, etc] into a single actionable idea."
+
+Clean, Hex and P&A all say to decouple your architecture into 3 layers: 
+- a data fetch/store layer
+- a business logic layer
+- a presentation layer
+
+Hex/P&A explicity says to use interfaces ("ports") and concrete implementations ("adapters") to accomplish this. Clean Architecture asserts that there should also be Entities (which seems to be a given? How else are you going to marshall data around your application?) and Use Cases where all your business logic lives.
+
+
+
+
 # VIPER
 The earliest reference to VIPER that I could find is [this 2014 article](https://www.objc.io/issues/13-architecture/viper/). It's an attempt to apply Robert Martin's Clean Architecture (2008) to iOS.
 
@@ -39,28 +64,6 @@ I also used to think that VIPER was dogmatic and over-engineered, but for any ap
 - On [/r/iOSProgramming](https://www.reddit.com/r/iOSProgramming/comments/5pcebg/comment/dcqa1uj/), n0damage says "VIPER is what happens when former enterprise Java programmers invade the iOS world. It imposes so much abstraction and structure that maintainability of code is reduced, not improved."
 - [VIPER For SwiftUI? Please. No.](https://betterprogramming.pub/viper-for-swiftui-please-no-ee61ce99694c)
 
-
-# Clean Architecture, Hexagonal Architecture and Ports & Adapters
-It's widely accepted that Robert Martin's Clean Architecture (2008) is just a rebranding of Hexagonal Architecture (AKA "Ports and Adapters" by Dr. Alistair Cockburn, 2005). Martin essentially admits to this on his [blog](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html):
-
-> "The diagram at the top of this article [Clean Architecture] is an attempt at integrating all these architectures [including Hexagonal, Onion, etc] into a single actionable idea."
-
-Clean, Hex and P&A all say to decouple your architecture into 3 layers: 
-- a data fetch/store layer
-- a business logic layer
-- a presentation layer
-
-Hex/P&A explicity says to use interfaces ("ports") and concrete implementations ("adapters") to accomplish this. Clean Architecture asserts that there should also be Entities (which seems to be a given? How else are you going to marshall data around your application?) and Use Cases where all your business logic lives.
-
-
-# MVVM
-John Gossman, a Microsoft WPF and Silverlight architect, announced [MVVM](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel) on his blog in 2005, but it wasn't widely acknowledged as a healthy architecture pattern on iOS until SwiftUI/Combine allowed for proper data bindings.
-
-1. The View is now the entry point to the application instead of a middleman object.
-2. The Presenter/Controller has been rebranded again, this time to ViewModel. It is now owned by the _view_ and explicitly uses the Observer design pattern, making it more reactive (if not outright reactive).
-3. The ViewModel does not have a reference to the View. Instead, the View watches the ViewModel's observable fields for updates and uses its own logic for deciding how to show those changes, typically through Data Bindings. In return, the ViewModel exposes functions that the View can call to handle user interactions.
-4. Critically, this means that the View *does not have to be mocked at all*! When testing, you only need to verify that the observable variables are set appropriately on the ViewModel when the Model changes, and how the ViewModel responds to its user interaction methods. There is no need to mock out the view for testing as there was with the MVP pattern. 🤯 Testing of the View is deferred to UI Tests/Integration tests.
-5. The View is often constructed using a declarative syntax: Android's Layout XML or SwiftUI's Views, VStacks and so forth.
 
 
 # TCA (The Composable Architecture) 
