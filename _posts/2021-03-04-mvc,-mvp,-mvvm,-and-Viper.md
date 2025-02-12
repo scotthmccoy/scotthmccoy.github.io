@@ -14,7 +14,7 @@ The model–view–presenter software pattern originated in the early 1990s at T
 4. Like MVC, MVP needs a robust model and the discipline to maintain its separate areas of concern or else the Presenter bloats up.
 
 # VIPER
-The earliest reference to VIPER that I could find is [this 2014 article](https://www.objc.io/issues/13-architecture/viper/). It's an attempt to apply Robert Martin's Clean Architecture to iOS.
+The earliest reference to VIPER that I could find is [this 2014 article](https://www.objc.io/issues/13-architecture/viper/). It's an attempt to apply Robert Martin's Clean Architecture (2008) to iOS.
 
 View, Interactor, Presenter, Entity, Router
 1. The View is a UIViewController+UIView. It is intended to be directly manipulated by the Presenter. Like other patterns the View is now intended to be as dumb as possible. 
@@ -23,7 +23,7 @@ View, Interactor, Presenter, Entity, Router
 4. The Entities are models used by the Interactor - Database, Cache, API, etc.
 5. The Router is now the entry point, creating Presenters as needed and handling the logic for when to push and pop VCs from your navigation stack. In SwiftUI, this can be 
 
-## Praise for VIPER
+### Praise for VIPER
 Though VIPER was invented before SwiftUI, it actually works quite well with it. A Presenter can @Publish to a View and a Router can be implemented as a NavigationView that switches on a singleton enum state to determine which View is shown to the user:
 
 ![image](https://github.com/user-attachments/assets/162023fd-d7f2-4f21-8f09-ae0a7e768fcd)
@@ -33,15 +33,17 @@ I also used to think that VIPER was dogmatic and over-engineered, but for any ap
 
 - I actually really _like_ the idea of decoupling navigation logic from the View - it gives you a bird's eye view into the navigation flow of your app instead of having to sus it out from storyboards, segues and NavigationLinks.
 - I also really like having business logic confined to Interactors (and therefor having the biz logic itself being individually testable) rather than having biz logic be sprinkled throughout the Repository - this lets the Repo be a _very_ simple CRUD Facade. I haven't tried this out yet but I suspect that it'd be nice in practice.
-- I was already standardizing to having a Data/Domain Object split in all my projects, but VIPER's "E" seems to heavily imply that your Data Layer only emits domain objects, not NSManagedObjects or whatever.
+- I was already standardizing to having a Data/Domain Object split in all my projects, but VIPER's "E" seems to heavily imply that your Data Layer only emits domain objects, not NSManagedObjects or whatever. 
 
-## Criticism of VIPER:
+### Criticism of VIPER:
 - On [/r/iOSProgramming](https://www.reddit.com/r/iOSProgramming/comments/5pcebg/comment/dcqa1uj/), n0damage says "VIPER is what happens when former enterprise Java programmers invade the iOS world. It imposes so much abstraction and structure that maintainability of code is reduced, not improved."
 - [VIPER For SwiftUI? Please. No.](https://betterprogramming.pub/viper-for-swiftui-please-no-ee61ce99694c)
 
 
 # Clean Architecture, Hexagonal Architecture and Ports & Adapters
-It's widely accepted that Robert Martin's Clean Architecture (2008) is just rebranded Hexagonal Architecture (AKA "Ports and Adapters" by Dr. Alistair Cockburn, 2005). He essentially admits to this in his writeup by saying Clean Architecture isn't its own architecture but an attempt to categorize various architectures but only mentions Hex/P&A.
+It's widely accepted that Robert Martin's Clean Architecture (2008) is just rebranded Hexagonal Architecture (AKA "Ports and Adapters" by Dr. Alistair Cockburn, 2005). Martin essentially admits to this on his [blog](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html):
+
+> "The diagram at the top of this article [Clean Architecture] is an attempt at integrating all these architectures [including Hexagonal, Onion, etc] into a single actionable idea."
 
 Clean, Hex and P&A all say "decouple your architecture into 3 layers: a data fetch/store layer, a business logic layer and a presentation layer". Hex/P&A explicity says to use interfaces ("ports") and concrete implementations ("adapters") to accomplish this. Clean Architecture asserts that there should also be Entities (which seems to be a given? How else are you going to marshall data around your application?) and Use Cases where all your business logic lives.
 
