@@ -14,31 +14,37 @@ The model–view–presenter software pattern originated in the early 1990s at T
 4. Like MVC, MVP needs a robust model and the discipline to maintain its separate areas of concern or else the Presenter bloats up.
 
 # VIPER
-The earliest reference to VIPER that I could find is [this 2014 article](https://www.objc.io/issues/13-architecture/viper/). It's an attempt to apply Clean Architecture to iOS.
+The earliest reference to VIPER that I could find is [this 2014 article](https://www.objc.io/issues/13-architecture/viper/). It's an attempt to apply Robert Martin's Clean Architecture to iOS.
 
 View, Interactor, Presenter, Entity, Router
 1. The View is a UIViewController+UIView. It is intended to be directly manipulated by the Presenter. Like other patterns the View is now intended to be as dumb as possible. 
-2. The Presenter is where the bloat happens. It talks to the View, The Router and the Interactor. It is a "UIKit-Independent Mediator". The Presenter seems to be analogous to a ViewModel in MVVM as it acts as event handler for the View. 
-3. The Interactor talks to data-providing services, typically over the internet and provides Entity objects to the Presenter. This seems like a nice carve-out from the vaugely described "Model" of other patterns. 
+2. The Presenter is where the bloat happens. It talks to the View, The Router and the Interactor. It is a "UIKit-Independent Mediator"; it doesn't know anything about how UIKit works. The Presenter seems to be analogous to a ViewModel in MVVM as it acts as event handler for the View. 
+3. The Interactor owns the business logic (What Clean Architecture called the "Use Cases") and talks to data-providing services (API, Database, etc). The interactor doesn't deal with  Entity objects to the Presenter. This explicit home for business logic (AKA the "Use Cases" in Clean Architecture) honestly seems like a nice carve-out from the vaugely described "Model" of other patterns. 
 4. The Entities are models used by the Interactor - Database, Cache, API, etc.
 5. The Router is now the entry point, creating Presenters as needed and handling the logic for when to push and pop VCs from your navigation stack. In SwiftUI, this can be 
 
+## Praise for VIPER
+Though VIPER was invented before SwiftUI, it actually works quite well with it. A Presenter can @Publish to a View and a Router can be implemented as a NavigationView that switches on a singleton enum state to determine which View is shown to the user:
+
+![image](https://github.com/user-attachments/assets/162023fd-d7f2-4f21-8f09-ae0a7e768fcd)
+Credit to [This Guy's](https://www.youtube.com/watch?v=REggLXHMAqQ) video on how to make a Router work in SwiftUI.
+
+I also used to think that VIPER was dogmatic and over-engineered, but for any app more complex than KD Scoring, I now think it's actually a pretty great fit. 
+
+- I actually really _like_ the idea of decoupling navigation logic from the View - it gives you a bird's eye view into the navigation flow of your app instead of having to sus it out from storyboards, segues and NavigationLinks.
+- I also really like having business logic confined to Interactors (and therefor having the biz logic itself being individually testable) rather than having biz logic be sprinkled throughout the Repository - this lets the Repo be a _very_ simple CRUD Facade. I haven't tried this out yet but I suspect that it'd be nice in practice.
+- I was already standardizing to having a Data/Domain Object split in all my projects, but VIPER's "E" seems to heavily imply that your Data Layer only emits domain objects, not NSManagedObjects or whatever.
+
 ## Criticism of VIPER:
-According to [VIPER For SwiftUI? Please. No.](https://betterprogramming.pub/viper-for-swiftui-please-no-ee61ce99694c), Micheal Long argues that while VIPER is a great architecture for UIKit, it's a terrible fit for SwiftUI:
+- On [/r/iOSProgramming](https://www.reddit.com/r/iOSProgramming/comments/5pcebg/comment/dcqa1uj/), n0damage says "VIPER is what happens when former enterprise Java programmers invade the iOS world. It imposes so much abstraction and structure that maintainability of code is reduced, not improved."
+- [VIPER For SwiftUI? Please. No.](https://betterprogramming.pub/viper-for-swiftui-please-no-ee61ce99694c)
 
-1. It relies way too much on the Delegate pattern, probably because that was the style at the time ([June 2014](https://www.objc.io/issues/13-architecture/viper/))
-2. In SwiftUI, since a View is a struct, not a class, the Presenter can't hold a _reference_ to one.
-3. It was an answer to the wrong question, "How Do We Fix Massive-ViewController?", instead of "Why is the VC so large in the first place?".
 
-He asserts that MVC made for large ViewControllers because UIKit makes composition hard; that doing something like as adding a Popover in UIKit requires a clunky maze of NavigationControllers, Xib creation, popOverViewControllerDidDoAThing delegate messaging and so forth. SwiftUI makes it much, much easier to just compose a view and pass its subviews a reference to the ViewModel. As such, VIPER is attempting to solve a problem that doesn't exist as much anymore.
+# Clean Architecture, Hexagonal Architecture and Ports & Adapters
+It's widely accepted that Robert Martin's Clean Architecture (2008) is just rebranded Hexagonal Architecture (AKA "Ports and Adapters" by Dr. Alistair Cockburn, 2005). He essentially admits to this in his writeup by saying Clean Architecture isn't its own architecture but an attempt to categorize various architectures but only mentions Hex/P&A.
 
-He also says that VIPER achieves its ends by over-focusing on the Single Responsibility Principle. It decomposes the Massive View Controller anti-pattern into perhaps _too many_ pieces to the point that a significant percentage of the app's code exists _just to manage VIPER_. He proposes that perhaps a code generator should even be used. 
+Clean, Hex and P&A all say "decouple your architecture into 3 layers: a data fetch/store layer, a business logic layer and a presentation layer". Hex/P&A explicity says to use interfaces ("ports") and concrete implementations ("adapters") to accomplish this. Clean Architecture asserts that there should also be Entities (which seems to be a given? How else are you going to marshall data around your application?) and Use Cases where all your business logic lives.
 
-This makes sense, since VIPER seems to be an attempt to fulfill on Clean Architecture from Uncle Bob (who I consider to be [problematic, dogmatic, and somewhat outdated](https://scotthmccoy.github.io/2023/12/27/uncle-bob-considered-harmful.html)), and Bob has long had a tendency to promote decomposition to a somewhat absurd degree.
-
-Bob claimed that his Clean Architecture (2008) was him trying to take "various" architectural patterns and describe them, including Hexagonal/Ports and Adapters (Dr. Alistair Cockburn, 2005). He didn't name his new philosophy Clean Architecture**s**, though, so I take that with a grain of salt. All three of them say "decouple your architecture into layers: a data fetch/store layer, a business logic layer, a presentation layer". Hex/P&A explicity says to use interfaces ("ports") and concrete implementations ("adapters") to accomplish this, and CA asserts that there Entities (but that seems to be a given - how else are you going to marshall data around your application?) and Use Cases where all your business logic lives.
-
-On [/r/iOSProgramming](https://www.reddit.com/r/iOSProgramming/comments/5pcebg/comment/dcqa1uj/), n0damage says "VIPER is what happens when former enterprise Java programmers invade the iOS world. It imposes so much abstraction and structure that maintainability of code is reduced, not improved."
 
 # MVVM
 John Gossman, a Microsoft WPF and Silverlight architect, announced MVVM on his blog in 2005, but it wasn't really applicable on iOS until SwiftUI/Combine allowed for proper data bindings.
