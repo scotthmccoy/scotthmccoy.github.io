@@ -1,12 +1,12 @@
 # MVC
-Trygve Reenskaug created MVC in the late 1970's while working on Smalltalk-79 as a visiting scientist at the Xerox Palo Alto Research Center (PARC).
+Trygve Reenskaug created [MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) in the late 1970's while working on Smalltalk-79 as a visiting scientist at the Xerox Palo Alto Research Center (PARC).
 
 1. Views are just bags of properties that the Controller has to know a lot about and update directly, like grabbing a particular textField by its ID and setting its string value.
 2. The View and Controller are so tightly coupled that the code of one is rarely modified without affecting the other.
 3. MVC works best with a very robust, fully fleshed-out Model and the discipline to maintain its robustness over time. It's easy for the Controller to slowly accumulate business logic, making it bloated and brittle.
 
 # MVP
-The model–view–presenter software pattern originated in the early 1990s at Taligent, a joint venture of Apple, IBM, and Hewlett-Packard.
+The [MVP](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter) software pattern originated in the early 1990s at Taligent, a joint venture of Apple, IBM, and Hewlett-Packard.
 
 1. The View's properties are now private and it gates access to them via an implemented interface/protocol. Instead of fighting the natural tendency for the View/ViewController (iOS) or View/Activity (Android) to go hand-in-hand, we lean into it instead.
 2. The Controller has been re-branded to Presenter and is much more abstract. It can interact with any object that implements the interface, and uses it to tell the view what to display instead of how. This means it is much more testable! In a Unit Test you can init a Presenter with a MockView that implements the expected protocol.
@@ -41,24 +41,23 @@ I also used to think that VIPER was dogmatic and over-engineered, but for any ap
 
 
 # Clean Architecture, Hexagonal Architecture and Ports & Adapters
-It's widely accepted that Robert Martin's Clean Architecture (2008) is just rebranded Hexagonal Architecture (AKA "Ports and Adapters" by Dr. Alistair Cockburn, 2005). Martin essentially admits to this on his [blog](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html):
+It's widely accepted that Robert Martin's Clean Architecture (2008) is just a rebranding of Hexagonal Architecture (AKA "Ports and Adapters" by Dr. Alistair Cockburn, 2005). Martin essentially admits to this on his [blog](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html):
 
 > "The diagram at the top of this article [Clean Architecture] is an attempt at integrating all these architectures [including Hexagonal, Onion, etc] into a single actionable idea."
 
-Clean, Hex and P&A all say "decouple your architecture into 3 layers: a data fetch/store layer, a business logic layer and a presentation layer". Hex/P&A explicity says to use interfaces ("ports") and concrete implementations ("adapters") to accomplish this. Clean Architecture asserts that there should also be Entities (which seems to be a given? How else are you going to marshall data around your application?) and Use Cases where all your business logic lives.
+Clean, Hex and P&A all say to decouple your architecture into 3 layers: 
+- a data fetch/store layer
+- a business logic layer
+- a presentation layer
+
+Hex/P&A explicity says to use interfaces ("ports") and concrete implementations ("adapters") to accomplish this. Clean Architecture asserts that there should also be Entities (which seems to be a given? How else are you going to marshall data around your application?) and Use Cases where all your business logic lives.
 
 
 # MVVM
-John Gossman, a Microsoft WPF and Silverlight architect, announced MVVM on his blog in 2005, but it wasn't really applicable on iOS until SwiftUI/Combine allowed for proper data bindings.
+John Gossman, a Microsoft WPF and Silverlight architect, announced [MVVM](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel) on his blog in 2005, but it wasn't widely acknowledged as a healthy architecture pattern on iOS until SwiftUI/Combine allowed for proper data bindings.
 
 1. The View is now the entry point to the application instead of a middleman object.
 2. The Presenter/Controller has been rebranded again, this time to ViewModel. It is now owned by the _view_ and explicitly uses the Observer design pattern, making it more reactive (if not outright reactive).
 3. The ViewModel does not have a reference to the View. Instead, the View watches the ViewModel's observable fields for updates and uses its own logic for deciding how to show those changes, typically through Data Bindings. In return, the ViewModel exposes functions that the View can call to handle user interactions.
 4. Critically, this means that the View *does not have to be mocked at all*! When testing, you only need to verify that the observable variables are set appropriately on the ViewModel when the Model changes, and how the ViewModel responds to its user interaction methods. There is no need to mock out the view for testing as there was with the MVP pattern. 🤯 Testing of the View is deferred to UI Tests/Integration tests.
 5. The View is often constructed using a declarative syntax: Android's Layout XML or SwiftUI's Views, VStacks and so forth.
-
-
-
-
-
-
