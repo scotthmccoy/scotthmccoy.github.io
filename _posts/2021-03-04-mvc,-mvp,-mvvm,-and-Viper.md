@@ -61,3 +61,11 @@ John Gossman, a Microsoft WPF and Silverlight architect, announced [MVVM](https:
 3. The ViewModel does not have a reference to the View. Instead, the View watches the ViewModel's observable fields for updates and uses its own logic for deciding how to show those changes, typically through Data Bindings. In return, the ViewModel exposes functions that the View can call to handle user interactions.
 4. Critically, this means that the View *does not have to be mocked at all*! When testing, you only need to verify that the observable variables are set appropriately on the ViewModel when the Model changes, and how the ViewModel responds to its user interaction methods. There is no need to mock out the view for testing as there was with the MVP pattern. 🤯 Testing of the View is deferred to UI Tests/Integration tests.
 5. The View is often constructed using a declarative syntax: Android's Layout XML or SwiftUI's Views, VStacks and so forth.
+
+
+# TCA (The Composable Architecture) 
+Composable architecture has origins in the concepts of composable commerce, service-oriented architecture (SOA), and APIs. It's also based on the idea of building applications from interchangeable building blocks.
+
+Gartner coined the term "composable commerce" in [June 2020](https://www.gartner.com/en/documents/3986490).
+
+[The Composable Architecture (TCA)](https://www.pointfree.co/collections/composable-architecture) library was developed by Point-Free to help developers build applications using SwiftUI.
