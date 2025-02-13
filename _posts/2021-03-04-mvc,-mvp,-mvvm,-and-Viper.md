@@ -71,4 +71,4 @@ Composable architecture has origins in the concepts of composable commerce, serv
 
 Gartner coined the term "composable commerce" in [June 2020](https://www.gartner.com/en/documents/3986490).
 
-[The Composable Architecture (TCA)](https://www.pointfree.co/collections/composable-architecture) library was developed by Point-Free to help developers build applications using SwiftUI.
+[The Composable Architecture (TCA)](https://www.pointfree.co/collections/composable-architecture) library was developed by Point-Free to help developers build applications using SwiftUI. I plan on looking into it at some point.
