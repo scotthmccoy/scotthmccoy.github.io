@@ -1,3 +1,6 @@
+---
+title: Kadane's Algorithm - Find the Maximum Sub-Array
+---
 
 For an array of mixed positive and negative numbers, what is the sub-array with the maximum total sum? For example:
 ```
