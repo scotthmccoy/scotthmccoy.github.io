@@ -1,4 +1,14 @@
 
+For an array of mixed positive and negative numbers, what is the sub-array with the maximum total sum? For example:
+```
+Input: nums = [-2,1,-3,4,-1,2,1,-5,4]
+Output: 6
+Explanation: The subarray [4,-1,2,1] has the largest sum 6.
+```
+
+Note that the negative numbers have to be pretty big in order to act as effective "fenceposts", and if there are no negative numbers, the whole array is the maximum subarray. 
+
+Finding maximum subarrays can be useful for finding, for example, [finding the optimal range days in which to have invested in a stock market](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/).
 
 ```
 import UIKit
