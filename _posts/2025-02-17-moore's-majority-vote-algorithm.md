@@ -1,3 +1,8 @@
+---
+title: Moore's Majority Vote Algorithm - Find Most Commonly Occurring Element
+---
+
+
 ```
     func majorityElement(_ nums: [Int]) -> Int {
         // https://en.wikipedia.org/wiki/Boyer%E2%80%93Moore_majority_vote_algorithm
