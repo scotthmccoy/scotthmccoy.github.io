@@ -1,3 +1,7 @@
+---
+title: Dijkstra's Dutch National Flag Algorithm
+---
+
 https://en.wikipedia.org/wiki/Dutch_national_flag_problem
 
 ```
