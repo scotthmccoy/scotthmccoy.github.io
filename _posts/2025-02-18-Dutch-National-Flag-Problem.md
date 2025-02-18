@@ -4,11 +4,12 @@ title: Dijkstra's Dutch National Flag Algorithm
 
 https://en.wikipedia.org/wiki/Dutch_national_flag_problem
 
+Lovely algorithm that sorts an array into 3 parts (like the Dutch flag 🇳🇱) in-place, using no additional space beyond a few control variables.
+
 ```
 var array = [1,1,2,1,3,2,3,2]
 
 dutchSort(arr: &array, mid: 2)
-
 
 /*
 procedure three-way-partition(A : array of values, mid : value):
