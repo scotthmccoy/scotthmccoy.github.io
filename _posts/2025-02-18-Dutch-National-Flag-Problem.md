@@ -4,7 +4,9 @@ title: Dijkstra's Dutch National Flag Algorithm
 
 https://en.wikipedia.org/wiki/Dutch_national_flag_problem
 
-Lovely algorithm that sorts an array into 3 parts (like the Dutch flag 🇳🇱) in-place, using no additional space beyond a few control variables.
+This lovely algorithm sorts an array into 3 parts (like the Dutch flag 🇳🇱!), in O(n) time, in-place, while using no additional space beyond a few control variables.
+
+It works by having the top group grow down from the top of the array, the bottom group grow up from the bottom, and keeping the middle group just above the bottom. 
 
 ```
 var array = [1,1,2,1,3,2,3,2]
