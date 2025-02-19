@@ -144,7 +144,9 @@ extension String {
 ```
 
 Using that `match` func to tokenize a string:
+```
 let result = "foo:123,bar:456,baz:567".match("(.*?):([0-9]+)(,|$)")
+```
 Output:
 ```
 [["foo:123,", "foo", "123", ","], ["bar:456,", "bar", "456", ","], ["baz:567", "baz", "567", ""]]
