@@ -19,6 +19,8 @@ Regular Expressions - replace a minus sign at the beginning of the line
 `processed = processed.replacingOccurrences(of: "^\\-", with: "", options: .regularExpression)`
 
 
+
+Common String Extensions:
 ```
 extension StringProtocol {
     func index<S: StringProtocol>(of string: S, options: String.CompareOptions = []) -> Index? {
@@ -50,7 +52,21 @@ extension String {
         let ret = self.components(separatedBy:str).count - 1
         return ret
     }
-    
+
+    func match(_ regex: String) -> [[String]] {
+        let nsString = self as NSString
+        return (try? NSRegularExpression(
+            pattern: regex,
+            options: [])
+        )?.matches(
+            in: self,
+            options: [],
+            range: NSMakeRange(0, nsString.length)
+        ).map { match in
+            (0..<match.numberOfRanges).map { match.range(at: $0).location == NSNotFound ? "" : nsString.substring(with: match.range(at: $0)) }
+        } ?? []
+    }
+
     public func groupMatch(regex:String, groupNumber:Int) -> String? {
         let regex = try! NSRegularExpression(pattern:regex)
         
@@ -114,4 +130,26 @@ extension String {
         })
     }
 }
+```
+
+Using that `match` func to tokenize a string:
+let result = "foo:123,bar:456,baz:567".match("(.*?):([0-9]+)(,|$)")
+Output:
+```
+[["foo:123,", "foo", "123", ","], ["bar:456,", "bar", "456", ","], ["baz:567", "baz", "567", ""]]
+```
+
+Though you'd be better off with:
+```
+let arr = "foo:123,bar:456,baz:567"
+    .components(separatedBy: ",")
+    .map {
+        $0.components(separatedBy: ":")
+    }
+print(arr)
+```
+
+Output:
+```
+[["foo", "123"], ["bar", "456"], ["baz", "567"]]
 ```
