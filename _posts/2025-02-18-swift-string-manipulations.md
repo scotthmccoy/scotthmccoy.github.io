@@ -1,16 +1,21 @@
 Remove Whitespace from start and end of string
+
 `.trimmingCharacters(in: .whitespacesAndNewlines)`
 
 Tokenize
+
 `.components(separatedBy: " ")`
 
 Convert to [Character], get first 4 chars (indicies 0, 1, 2 and 3):
+
 `Array(string)[0..<4]`
 
 Convert Character to Int
+
 `char.wholeNumberValue!`
 
 Regular Expressions - replace a minus sign at the beginning of the line
+
 `processed = processed.replacingOccurrences(of: "^\\-", with: "", options: .regularExpression)`
 
 
