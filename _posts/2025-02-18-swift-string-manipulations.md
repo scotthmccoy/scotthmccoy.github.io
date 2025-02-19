@@ -14,9 +14,17 @@ Convert Character to Int
 
 `char.wholeNumberValue!`
 
-Regular Expressions - replace a minus sign at the beginning of the line
+Replace Strings, Normal:
+
+```
+let aString = "This is my string"
+let newString = aString.replacingOccurrences(of: " ", with: "+", options: .literal, range: nil)
+```
+
+Replace Strings, Regex: remove a minus sign at the beginning of the line
 
 `processed = processed.replacingOccurrences(of: "^\\-", with: "", options: .regularExpression)`
+
 
 
 
