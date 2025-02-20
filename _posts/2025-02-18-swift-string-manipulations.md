@@ -1,6 +1,10 @@
-Remove Whitespace from start and end of string
+Remove CharacterSet (in this case, whitespace) from start and end of string
 
 `.trimmingCharacters(in: .whitespacesAndNewlines)`
+
+Remove CharacterSet from whole string
+
+`var processed = s.components(separatedBy: CharacterSet.alphanumerics.inverted).joined()`
 
 Tokenize
 
@@ -25,8 +29,11 @@ Replace Strings, Regex: remove a minus sign at the beginning of the line
 
 `processed = processed.replacingOccurrences(of: "^\\-", with: "", options: .regularExpression)`
 
-Subscripting with Int:
+Subscripting with Int
+
 ```
+let left = lowerCase[0...upperBound]
+
 extension StringProtocol {
     subscript(offset: Int) -> Character { self[index(startIndex, offsetBy: offset)] }
     subscript(range: Range<Int>) -> SubSequence {
