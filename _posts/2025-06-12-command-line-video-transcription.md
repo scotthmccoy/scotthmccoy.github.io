@@ -1,12 +1,10 @@
-Convert a video to mp4 audio:
+I used [Hear](https://github.com/sveinbjornt/hear?tab=readme-ov-file) very effectively to transcribe audio. It didn't appear to go any faster when it was audio, but here's how to convert a video to mp4 audio anyways:
 ```
 brew install ffmpeg
 ffmpeg -i input.mp4 -vn -acodec copy output.mp4
 ```
 
-I used [Hear](https://github.com/sveinbjornt/hear?tab=readme-ov-file) very effectively to transcribe audio. It didn't appear to go any faster when it was audio.
-
-I couldn't install it to `/usr/local/bin/` without disabling security and rebooting.
+Note: I couldn't install Hear to `/usr/local/bin/` without disabling security and rebooting.
 
 Example invocation:
 
