@@ -1,9 +1,9 @@
 Links:
 ```
-cat prs.html | grep Link--primary | uniq | sed -r 's/.*>([^<]+)</\1/g' > foo.txt
+cat prs.html | grep Link--primary | sort | uniq | sed -r 's/.*href="([^"]+).*/\1/g'
 ```
 
 Titles:
 ```
-cat prs.html | grep Link--primary | uniq | sed -r 's/.*>(.+)<\/a>/\1/g' > foo.txt
+cat prs.html | grep Link--primary | uniq | sed -r 's/.*>([^<]+)<\/a>/\1/g'
 ```
