@@ -4,7 +4,7 @@ brew install ffmpeg
 ffmpeg -i input.mp4 -vn -acodec copy output.mp4
 ```
 
-Note: I couldn't install Hear to `/usr/local/bin/` without disabling security and rebooting.
+Note: I couldn't install Hear to `/usr/local/bin/` without disabling security and rebooting, so I dropped it into `~/Documents/hear` along with the swift script below.
 
 Example invocation:
 
