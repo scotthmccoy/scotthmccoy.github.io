@@ -110,7 +110,7 @@ func convertFile(path: String) {
     let lines = transcript.split(separator: "\n")
 
     // Walk the array
-    var output = lines.reduce("") { (accumulator, item) in
+    let output = lines.reduce("") { (accumulator, item) in
 
         // For timestamp lines, replace the separator with a tab and add a tab at the end
         if item.contains(" --> ") {
