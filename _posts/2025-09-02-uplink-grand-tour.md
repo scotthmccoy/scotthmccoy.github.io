@@ -88,10 +88,7 @@ If you do all the ARC missions perfectly, Revelation is at v3.0 and Faith is at 
 
 **No other factors other than the software versions affect this**, including doing the Mole mission or manually sending all the Uplink Agents to jail!
 
-So why does it seem like your infections keep getting purged?
-
-
-https://gitlab.com/matt81093/uplink-source-code/-/blob/master/uplink/src/world/computer/computer.cpp?ref_type=heads#L618
+So why does it seem like your infections keep getting purged? Well...
 
 
 ## Revelation’s Automatic Propagation Is Horribly Bugged
