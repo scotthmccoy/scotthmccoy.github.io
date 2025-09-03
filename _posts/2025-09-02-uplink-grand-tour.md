@@ -1,11 +1,15 @@
+# Grand Tour
+If you're working for ARC, the final mission is a fucking pain. You have 15 minutes to infect 20 machines, already a challenging task made more difficult by the remaining Uplink Agents regularly wiping away your progress with Faith. Many complain the the mission is nearly impossible, with many suggesting that the final version of Revelation you receive from ARC is a rush job with a bug in it that prevents it from actually spreading - so you may as well use Revelation v1.0 instead because it knocks a system offline for several hours and can't be fixed with Faith. Others suggest that killing or imprisoning all the other Uplink agents helps.
 
-**Running Revelation**
+However, the game's source code is available, and it tells a very different story... 
 
-[Running Revelation from the CLI](https://gitlab.com/matt81093/uplink-source-code/-/blob/master/uplink/src/interface/remoteinterface/consolescreen_interface.cpp?ref_type=heads#L615) calls the [3-param version of RunRevelation](https://gitlab.com/matt81093/uplink-source-code/-/blob/master/uplink/src/world/generator/plotgenerator.cpp?ref_type=heads#L841) in the plot generator.
+## Running Revelation in the Command Line
 
-it scores your hack, giving you a success value is 3 if all security is disabled or bypassed, 2 if some are, and 1 if none are.
+[Running Revelation from the CLI](https://gitlab.com/matt81093/uplink-source-code/-/blob/master/uplink/src/interface/remoteinterface/consolescreen_interface.cpp?ref_type=heads#L615) calls [A 3-param version of RunRevelation](https://gitlab.com/matt81093/uplink-source-code/-/blob/master/uplink/src/world/generator/plotgenerator.cpp?ref_type=heads#L841) in the plot generator.
 
-This is reduced by 1 if there’s a trace in progress (and there almost always is when you’re running stuff on the CLI):
+This func scores your hack, giving you a success value of 3 if all security is disabled or bypassed, 2 if some are, and 1 if none are.
+
+This is reduced by 1 if there’s a trace in progress (and there almost always is when you’re running a command on the CLI):
 
 ```
   ...
@@ -41,9 +45,8 @@ This is reduced by 1 if there’s a trace in progress (and there almost always i
   ...
 ```
 
+This 3-param version of RunRevelation eventually calls a [4-param version](https://gitlab.com/matt81093/uplink-source-code/-/blob/master/uplink/src/world/generator/plotgenerator.cpp?ref_type=heads#L941) which is what actually tells the machine to become infected, but only if the success value of the hack was greater than 0:
 
-
-The func then calls the [4-param version of RunRevelation](https://gitlab.com/matt81093/uplink-source-code/-/blob/master/uplink/src/world/generator/plotgenerator.cpp?ref_type=heads#L941) which will tell the machine to become infected, but only if the success value is greater than 0:
 ```
 void PlotGenerator::RunRevelation ( char *ip, float version, bool playerresponsible, int success )
 {
@@ -70,92 +73,36 @@ void PlotGenerator::RunRevelation ( char *ip, float version, bool playerresponsi
 
     if ( version <= 1.0 )
        	NewsRevelationUsed ( ip, success );
-
-/*
-	//
-	// Now deploy the virus, based on that success value
-	//
-
-	if ( success == 0 ) {												// They manage to stop the virus from running
-
-	}
-	else if ( success == 1 ) {											// Infect this computer only before it is stopped
-
-		comp->InfectWithRevelation ();
-
-	}
-	else if ( success == 2 ) {											// Infect a lot of related computers
-
-		comp->InfectWithRevelation ();
-
-		DArray <Computer *> *comps = game->GetWorld ()->computers.ConvertToDArray ();
-		UplinkAssert (comps);
-
-		for ( int i = 0; i < comps->Size (); ++i ) {
-			if ( comps->ValidIndex (i) ) {
-
-				Computer *remotecomp = comps->GetData (i);
-				UplinkAssert (remotecomp);
-
-				if ( strcmp ( remotecomp->companyname, comp->companyname ) == 0 )
-					if ( NumberGenerator::RandomNumber ( 2 ) == 0 )
-						remotecomp->InfectWithRevelation ();
-
-			}
-		}
-
-		delete comps;
-
-	}
-	else if ( success == 3 ) {											// Infect all computers owned by this company
-
-		comp->InfectWithRevelation ();
-
-		DArray <Computer *> *comps = game->GetWorld ()->computers.ConvertToDArray ();
-		UplinkAssert (comps);
-
-		for ( int i = 0; i < comps->Size (); ++i ) {
-			if ( comps->ValidIndex (i) ) {
-
-				Computer *remotecomp = comps->GetData (i);
-				UplinkAssert (remotecomp);
-
-				if ( strcmp ( remotecomp->companyname, comp->companyname ) == 0 )
-					remotecomp->InfectWithRevelation ();
-
-			}
-		}
-
-		delete comps;
-
-	}
-*/
-
-#endif			//DEMOGAME
 }
 ```
 
-This means that despite what ARC tells you about their hopes to improve Revelation to the point that it doesn't need security disabled in order to propagate in the [post-Darwin mission email](https://gitlab.com/matt81093/uplink-source-code/-/blob/master/uplink/src/world/generator/plotgenerator.cpp?ref_type=heads#L4164), 
-
-
-https://gitlab.com/matt81093/uplink-source-code/-/blob/master/uplink/src/world/generator/plotgenerator.cpp?ref_type=heads#L3779
-
-Faith
-The time between Faith launches is 3 - (version_faith - version_revelation) with a minimum of 1 minute, and its chance of successfully fixing a system is (1.0 - (comp->isinfected_revelation - version) / 2.0) ), with a minimum of 33%.
-
-If you do all the ARC missions perfectly, Revelation is at version 3.0 and Faith is at 0.2, so you’re looking at Faith running every 5.8 minutes (or twice during the 15 minute time limit on Grand Tour), with a 33% chance each time to purge a single infected machine both times.
-
-No other factors other than the software versions affect this including doing the Mole mission or manually sending all the Uplink Agents to jail.
+Note that it _doesn't care about what version of Revelation you're running_! Despite what ARC tells you in the [post-Darwin mission email](https://gitlab.com/matt81093/uplink-source-code/-/blob/master/uplink/src/world/generator/plotgenerator.cpp?ref_type=heads#L4164), if you have an active trace when you run it (and you almost always will), **you need to make sure that at least 1 security system is bypassed or disabled or else the machine will not get infected**.
 
 
 
-Revelation’s Automatic Propagation
-If the version is 1.0 or lower, the machine crashes immediately, stays offline for a long time and Revelation does not reproduce. 
 
-If it’s higher than 1.0, then 3 minutes after successfully infecting a machine (TIME_REVELATIONREPRODUCE) it will reset the machine and then spread to 2 new random systems. I’m pretty sure this automatic doubling was the intended path to victory with the player meant to hack 4-5 systems which then repeatedly double by themselves to reach the goal of 20 systems.
+## Faith
+It turns out that the way the game simulates Arunmor-aligned agents working against you is really quite simple.
 
-However, these automatic propagations use the 3 param version of RunRevelation instead of directly calling the 4 param version. I think this is a bug as the 3 param version seems to have been intended for when the player does the infection given that it checks the player’s current trace status. 
+Once the mission starts, [RunFaith](https://gitlab.com/matt81093/uplink-source-code/-/blob/master/uplink/src/world/generator/plotgenerator.cpp?ref_type=heads#L899) [gets called](https://gitlab.com/matt81093/uplink-source-code/-/blob/master/uplink/src/world/generator/plotgenerator.cpp?ref_type=heads#L2861) every `3 - (version_faith - version_revelation)` minutes with a minimum of 1 minute, and its chance of successfully fixing a system is `(1.0 - (comp->isinfected_revelation - version) / 2.0) )`, with a minimum of 33%.
 
-Since the machines are randomly choses, all security systems on them are going to be active which gives you a base success value of 1, and given that in the middle of Grand Tour you’re probably like mad, you almost always suffer the -1 penalty for being actively traced which means that the automatic propagation effect always fails unless you aren’t doing any hacking!
+If you do all the ARC missions perfectly, Revelation is at v3.0 and Faith is at v0.2, so you’re looking at Faith running twice during the 15 minute time limit for Grand tour: once at 5m48s into Grand tour and a second time at 11m36s, with a 33% chance each time to purge a single infected machine.
 
-I’m pretty sure this is why so many guides instruct you to hack about bunch of machines and pre-install the virus, then return to them later and batch-run the virus and then sit back and watch it spread. This strategy “batch job then do jack shit” strategy works because the virus is propagating itself while the player is not being actively traced!
+**No other factors other than the software versions affect this**, including doing the Mole mission or manually sending all the Uplink Agents to jail!
+
+So why does it seem like your infections keep getting purged?
+
+
+https://gitlab.com/matt81093/uplink-source-code/-/blob/master/uplink/src/world/computer/computer.cpp?ref_type=heads#L618
+
+
+## Revelation’s Automatic Propagation Is Horribly Bugged
+When a machine gets infected, if the Revelation version is v1.0 or lower, [the machine crashes immediately](https://gitlab.com/matt81093/uplink-source-code/-/blob/master/uplink/src/world/computer/computer.cpp?ref_type=heads#L154), stays offline for a long time and Revelation does not reproduce. Even though the player is unable to connect to a machine destroyed by Revelation v1.0 to try and run Faith on it, the game's simulation of enemy agents don't have this restriction. The game [just randomly picks an infected machine every so often and tries to fix it](https://gitlab.com/matt81093/uplink-source-code/-/blob/master/uplink/src/world/generator/plotgenerator.cpp#L2854).
+
+If the Revelation version being used is higher than 1.0, then the virus [takes 3 minutes to cook](https://gitlab.com/matt81093/uplink-source-code/-/blob/master/uplink/src/world/computer/computer.cpp?ref_type=heads#L627) and then destroys the machine and then attempts to spread to 2 new random systems. However, the virus tends not to spread, leading many to assume that enemy agents are aggressively cleaning up Revelation infections by installing Faith.
+
+This is because the way the viral spread is simulated uses the [3-param version of RunRevelation](https://gitlab.com/matt81093/uplink-source-code/-/blob/master/uplink/src/world/computer/computer.cpp?ref_type=heads#L641) instead of the [4-param version](https://gitlab.com/matt81093/uplink-source-code/-/blob/master/uplink/src/world/generator/plotgenerator.cpp#L941). I'm certain this is a bug because it effectively treats the player as being the one uploading the virus instead of the virus itself! The code checks the player's current trace status, _no matter which other machine they are currently connected to_ and if they are actively being traced by that machine, the viral spread fails unless the machine the virus was spreading to somehow had at least 1 security system disabled.
+
+No wonder so many people find the mission almost impossible! If you use the best version of Revelation you have available, the faster you work, the more likely it is to backfire and result in the virus disappearing rather than spreading.
+
+I’m pretty sure this is why so many guides advocate for a “batch job then do jack shit” strategy: pre-hack a bunch of machines and install v3.0 but don't run it, then return to each later and run the virus program as fast as possible "to overwhelm Arunmor agents" and then crucially, sit back and watch it spread. The strategy actually works because sitting back and watching it spread means you're not actively being traced!
