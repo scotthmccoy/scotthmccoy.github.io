@@ -113,4 +113,4 @@ I’m pretty sure this is why so many guides advocate for a “batch job then do
 3. Make sure you have at least 1 security system bypassed or disabled when running Revelation on the command line or the machine will 
 not get infected.
 4. Keep an eye on your Revelation Tracker or better yet, run a stopwatch. Exactly 3 minutes after you ran Revelation on the command line, make sure you're not being actively traced. You can be cracking a password, setting up programs to run, whatever, just make sure you're not being traced or the viral spread will fail due to the bug.
-5. Get another 1-2 machines hacked after that and then stop. You only need about 6 infected machines and at least 6 minutes left at which point you can stop doing anything and the viral propagation will do the rest for you.
+5. Get another 1-2 machines hacked after that and then [just stop and let the virus do the work for you](https://www.youtube.com/watch?v=JBxkney44eg). You only need about 6 infected machines and at least 6 minutes left to be guaranteed a [kill screen](https://www.youtube.com/watch?v=H6viHHbIxt0).
