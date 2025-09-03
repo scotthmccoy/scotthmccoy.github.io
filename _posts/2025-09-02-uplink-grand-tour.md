@@ -42,7 +42,7 @@ This is because the way the viral spread is simulated uses the [3-param version 
 
 This means if you are hacking as fast as possible, you're likely being actively traced most of the time which would mean that during those propagation events Revelation burns itself out instead of propagating. The harder you work, the worse it gets! 
 
-I’m pretty sure this is why so many guides advocate for either using v1.0 of Revelation, hacking a bunch of machines before the mission gets started or my personal favorite, the “batch job then do jack shit” strategy: hack a bunch of machines and install v3.0 but _don't_ run it, then return to each machine about 5 minutes into the mission and run the virus as fast as possible "to overwhelm Arunmor agents" and crucially, sit back and watch it spread. The strategy actually works because sitting back and watching it spread means you're not actively being traced!
+I’m pretty sure this is why so many guides advocate for either using v1.0 of Revelation or hacking a bunch of machines before the mission gets started. My personal favorite is the “batch job then do jack shit” strategy: hack a bunch of machines and install v3.0 but _don't_ run it, then return to each machine about 5 minutes into the mission and run the virus as fast as possible "to overwhelm Arunmor agents" and crucially, sit back and watch it spread. The strategy actually works because of the sitting back - it means you're not actively being traced!
 
 ## TLDR for Beating Grand Tour
 1. Don't fuck up the story missions - Revelation should be at 3.0 and Faith at only v0.2.
@@ -52,3 +52,6 @@ not get infected.
 4. Don't bother clearing logs from InterNIC afterwards - in the next 15 minutes you're either getting disavowed by Uplink or destroying the entire internet.
 5. Keep an eye on your Revelation Tracker. Better yet, run a stopwatch. Exactly 3 minutes after you ran Revelation on the command line, make sure you're not being actively traced, and you should see an infection dissappear from the tracker and 2 new ones arrive. Just make sure you're not being traced at those 3-minute marks or the viral spread will fail due to the bug.
 6. This should get you to about 6 machines by the 5-ish minute mark which is more than enough. It will [double to 12](https://www.youtube.com/watch?v=JBxkney44eg) at 8m, and then double again to 24 by 11m [so long as you just chill out and let the virus do the work for you](https://www.youtube.com/watch?v=H6viHHbIxt0).
+
+<img width="800" height="800" alt="image" src="https://github.com/user-attachments/assets/c7ecb9cd-5783-44c6-a75d-2011aa165539" />
+
