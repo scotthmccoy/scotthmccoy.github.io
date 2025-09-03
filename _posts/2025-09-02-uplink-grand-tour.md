@@ -1,4 +1,4 @@
-# Grand Tour
+# Uplink - Grand Tour
 If you're working for ARC, the final mission is a fucking pain. You have 15 minutes to infect 20 machines, already a challenging task made more difficult by the remaining Uplink Agents regularly wiping away your progress with Faith. Many complain the the mission is nearly impossible, with many suggesting that the final version of Revelation you receive from ARC is a rush job with a bug in it that prevents it from actually spreading - so you may as well use Revelation v1.0 instead because it knocks a system offline for several hours and can't be fixed with Faith. Others suggest that killing or imprisoning all the other Uplink agents helps.
 
 However, the game's source code is available, and it tells a very different story... 
