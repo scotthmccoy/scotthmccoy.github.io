@@ -1,7 +1,5 @@
 # Uplink - Grand Tour
-Uplink's final challenge for the ARC side is to infect 20 machines with the Revelation virus in 15 minutes. This already challenging task is made much more difficult by the remaining Arunmor-aligned Uplink Agents seemingly wiping away your progress with the Faith countervirus every time you make some headway. Many complain the the mission is nearly impossible, with many suggesting that the final version of Revelation you receive from ARC is a rush job with a bug in it that prevents it from actually spreading - so you may as well use Revelation v1.0 instead because it knocks a system offline for several hours and can't be fixed with Faith. Others suggest that killing or imprisoning all the other Uplink agents helps.
-
-However, the game's source code is available, and it tells a very different story... 
+Uplink's final challenge for the ARC side is to infect 20 machines with the Revelation virus in 15 minutes. This already challenging task is made much more difficult by the remaining Arunmor-aligned Uplink Agents seemingly wiping away your progress with the Faith countervirus every time you make some headway. Many complain the the mission is nearly impossible, with some suggesting that the final version of Revelation you receive from ARC is canonically a rush job with a bug in it that prevents it from actually spreading. This is weirdly close to the truth, and the game's source code reveals...
 
 ## Running Revelation in the Command Line
 
