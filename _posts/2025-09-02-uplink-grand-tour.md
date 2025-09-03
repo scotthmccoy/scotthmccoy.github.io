@@ -44,7 +44,7 @@ This means if you are hacking as fast as possible, you're likely being actively 
 
 I’m pretty sure this is why so many guides advocate for either using v1.0 of Revelation, hacking a bunch of machines before the mission gets started or my personal favorite, the “batch job then do jack shit” strategy: hack a bunch of machines and install v3.0 but _don't_ run it, then return to each machine about 5 minutes into the mission and run the virus as fast as possible "to overwhelm Arunmor agents" and crucially, sit back and watch it spread. The strategy actually works because sitting back and watching it spread means you're not actively being traced!
 
-## TLDR for beating Grand Tour
+## TLDR for Beating Grand Tour
 1. Don't fuck up the story missions - Revelation should be at 3.0 and Faith at only v0.2.
 2. Use the best version of Revelation you can. Ignore advice to use v1.0.
 3. Make sure you have at least 1 security system bypassed or disabled when running Revelation on the command line or the machine will 
