@@ -1,5 +1,5 @@
 # Uplink - Grand Tour
-If you're working for ARC, the final mission is a fucking pain. You have 15 minutes to infect 20 machines, already a challenging task made more difficult by the remaining Uplink Agents regularly wiping away your progress with Faith. Many complain the the mission is nearly impossible, with many suggesting that the final version of Revelation you receive from ARC is a rush job with a bug in it that prevents it from actually spreading - so you may as well use Revelation v1.0 instead because it knocks a system offline for several hours and can't be fixed with Faith. Others suggest that killing or imprisoning all the other Uplink agents helps.
+Uplink's final challenge for the ARC side is to infect 20 machines with the Revelation virus in 15 minutes. This already challenging task is made much more difficult by the remaining Arunmor-aligned Uplink Agents seemingly wiping away your progress with the Faith countervirus every time you make some headway. Many complain the the mission is nearly impossible, with many suggesting that the final version of Revelation you receive from ARC is a rush job with a bug in it that prevents it from actually spreading - so you may as well use Revelation v1.0 instead because it knocks a system offline for several hours and can't be fixed with Faith. Others suggest that killing or imprisoning all the other Uplink agents helps.
 
 However, the game's source code is available, and it tells a very different story... 
 
@@ -106,3 +106,11 @@ This is because the way the viral spread is simulated uses the [3-param version 
 No wonder so many people find the mission almost impossible! If you use the best version of Revelation you have available, the faster you work, the more likely it is to backfire and result in the virus disappearing rather than spreading.
 
 I’m pretty sure this is why so many guides advocate for a “batch job then do jack shit” strategy: pre-hack a bunch of machines and install v3.0 but don't run it, then return to each later and run the virus program as fast as possible "to overwhelm Arunmor agents" and then crucially, sit back and watch it spread. The strategy actually works because sitting back and watching it spread means you're not actively being traced!
+
+## TLDR for beating Grand Tour
+1. Don't fuck up the story missions - Revelation should be at 3.0 and Arunmor should have Faith at only v0.2.
+2. Use the best version of Revelation you can. Ignore advice to use v1.0.
+3. Make sure you have at least 1 security system bypassed or disabled when running Revelation on the command line or the machine will 
+not get infected.
+4. Keep an eye on your Revelation Tracker or better yet, run a stopwatch. Exactly 3 minutes after you ran Revelation on the command line, make sure you're not being actively traced. You can be cracking a password, setting up programs to run, whatever, just make sure you're not being traced or the viral spread will fail due to the bug.
+5. Get another 1-2 machines hacked after that and then stop. You only need about 6 infected machines and at least 6 minutes left at which point you can stop doing anything and the viral propagation will do the rest for you.
