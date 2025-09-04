@@ -14,7 +14,7 @@ This `success` value is reduced by 1 if there’s a trace in progress (and there
 
 RunRevelation takes that `success` value and calls a [different function with the same name that takes 4 parameters instead of 3](https://gitlab.com/matt81093/uplink-source-code/-/blob/master/uplink/src/world/generator/plotgenerator.cpp?ref_type=heads#L941). This 4-param version of RunRevelation checks if the `success` value was greater than 0 and then infects the machine.
 
-Interestingly, _it doesn't care what version of Revelation you're running_! Despite what ARC tells you in the [post-Darwin mission email](https://gitlab.com/matt81093/uplink-source-code/-/blob/master/uplink/src/world/generator/plotgenerator.cpp?ref_type=heads#L4164) about how they hope the final version of Revelation will be able to infect other machines without needing security systems bypassed or disabled, the success value if you have an active trace when you run it (and you almost always will), **you need to make sure that at least 1 security system is bypassed or disabled or else the machine will not get infected**.
+Interestingly, _it doesn't care what version of Revelation you're running_! Despite what ARC tells you in the [post-Darwin mission email](https://gitlab.com/matt81093/uplink-source-code/-/blob/master/uplink/src/world/generator/plotgenerator.cpp?ref_type=heads#L4164) about how they hope the final version of Revelation will be able to infect other machines without needing security systems bypassed or disabled, you **always** need to make sure that at least 1 security system is bypassed or disabled or else the machine will not get infected.
 
 
 
